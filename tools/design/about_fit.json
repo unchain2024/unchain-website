@@ -1,0 +1,29 @@
+[
+  { "name": "CAL biz head(54)", "text": "分散した情報をつな", "weight": 700, "w": 482.2, "h": 50.8, "gaps": 8, "size": 54 },
+  { "name": "CAL biz lead(16)", "text": "組織の文脈を理解し、意思決定を資産へ変えるAI。", "weight": 400, "w": 355.1, "h": 14.8, "gaps": 22, "size": 16 },
+
+  { "name": "japan h2 L1 @72", "text": "すべては、", "weight": 700, "w": 286.3, "h": 62.7, "gaps": 4, "size": 72 },
+  { "name": "japan h2 L2 @72", "text": "日本から。", "weight": 700, "w": 290.4, "h": 67.2, "gaps": 4, "size": 72 },
+  { "name": "japan h2 L2 @68", "text": "日本から。", "weight": 700, "w": 290.4, "h": 67.2, "gaps": 4, "size": 68 },
+  { "name": "japan body L1 @16", "text": "私たちは、組織と人の可能性をAIで解き放つAIカンパニーです。", "weight": 400, "w": 448.4, "h": 14.8, "gaps": 29, "size": 16 },
+
+  { "name": "lead h2 L1 @54", "text": "異なる強みを、", "weight": 700, "w": 340.5, "h": 50.9, "gaps": 6, "size": 54 },
+  { "name": "lead name @20", "text": "朴 善優", "weight": 700, "w": 63.7, "h": 18.8, "gaps": 3, "size": 20 },
+  { "name": "lead role @14", "text": "共同創業者 兼 CEO", "weight": 400, "w": 118, "h": 13, "gaps": 12, "size": 14 },
+
+  { "name": "dei h2 @54", "text": "一人ひとりの違いを、組織の力へ。", "weight": 700, "w": 825.3, "h": 50.8, "gaps": 15, "size": 54 },
+  { "name": "dei eyebrow @14", "text": "DIVERSITY, EQUITY & INCLUSION", "family": "'Roboto Mono', monospace", "weight": 400, "w": 241.2, "gaps": 28, "size": 14 },
+  { "name": "dei title @20", "text": "ダイバーシティ", "weight": 700, "w": 133.3, "h": 18.9, "gaps": 6, "size": 20 },
+
+  { "name": "co h2 @54", "text": "会社情報", "weight": 700, "w": 213.4, "h": 50.5, "gaps": 3, "size": 54 },
+  { "name": "co label @14", "text": "企業名", "weight": 400, "w": 40, "h": 13, "gaps": 2, "size": 14 },
+  { "name": "co value @14 w500", "text": "UNCHAIN株式会社", "weight": 500, "w": 120, "h": 13, "gaps": 11, "size": 14 },
+  { "name": "co value @14 w700", "text": "UNCHAIN株式会社", "weight": 700, "w": 120, "h": 13, "gaps": 11, "size": 14 },
+  { "name": "co value @14 w400", "text": "UNCHAIN株式会社", "weight": 400, "w": 120, "h": 13, "gaps": 11, "size": 14 },
+
+  { "name": "drawer name @32", "text": "朴 善優", "weight": 700, "w": 101.9, "h": 30, "gaps": 3, "size": 32 },
+  { "name": "drawer bio @14", "text": "Forbesが選出した「日本のAI企業トップ50」に選出されたAIス", "weight": 400, "w": 391.5, "h": 13.1, "gaps": 29, "size": 14 },
+
+  { "name": "prin num01 @20 w700", "text": "01", "weight": 700, "w": 19.5, "h": 15.0, "gaps": 1, "size": 20 },
+  { "name": "prin num02 @20 w700", "text": "02", "weight": 700, "w": 23.5, "h": 15.0, "gaps": 1, "size": 20 }
+]

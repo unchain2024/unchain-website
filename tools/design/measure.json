@@ -1,0 +1,12 @@
+[
+ ["banner","nav > div:first-child"],
+ ["banner.link","nav > div:first-child a"],
+ ["banner.text","nav > div:first-child a span"],
+ ["hero","[data-home='hero']"],
+ ["about","#s-about"],
+ ["business","#s-business"],
+ ["news","#s-news"],
+ ["join","#s-join"],
+ ["cta","#s-cta"],
+ ["footer","footer"]
+]

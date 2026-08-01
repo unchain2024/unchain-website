@@ -1,0 +1,22 @@
+[
+  { "name": "CAL biz head(54)", "text": "分散した情報をつな", "weight": 700, "w": 482.2, "h": 50.8, "gaps": 8, "size": 54 },
+  { "name": "CAL biz lead(16)", "text": "組織の文脈を理解し、意思決定を資産へ変えるAI。", "weight": 400, "w": 355.1, "h": 14.8, "gaps": 22, "size": 16 },
+
+  { "name": "hero h1 ニュース", "text": "ニュース", "weight": 700, "w": 263.3, "h": 55.4, "gaps": 3, "size": 72 },
+  { "name": "hero body L1", "text": "UNCHAINの最新情報、プロダクトアップデート、イベント・登", "weight": 400, "w": 456.3, "h": 15, "gaps": 30, "size": 16 },
+
+  { "name": "filter label 言語", "text": "言語", "weight": 400, "w": 30.6, "h": 14.2, "gaps": 1, "size": 14 },
+  { "name": "filter label カテゴリ", "text": "カテゴリ", "weight": 400, "w": 58.7, "h": 14.4, "gaps": 3, "size": 14 },
+  { "name": "select value すべて", "text": "すべて", "weight": 400, "w": 42.9, "h": 13.8, "gaps": 2, "size": 16 },
+
+  { "name": "pill News @400", "text": "News", "weight": 400, "w": 35.5, "h": 10.3, "gaps": 3, "size": 14 },
+  { "name": "pill Press release @400", "text": "Press release", "weight": 400, "w": 86.6, "h": 10.4, "gaps": 12, "size": 14 },
+  { "name": "pill Announcement @400", "text": "Announcement", "weight": 400, "w": 99.2, "h": 10.3, "gaps": 11, "size": 14 },
+
+  { "name": "card title 2026 @700", "text": "2026", "weight": 700, "w": 39.1, "h": 12, "gaps": 3, "size": 16 },
+  { "name": "card title 展 @700", "text": "展", "weight": 700, "w": 15.1, "h": 14.3, "gaps": 0, "size": 16 },
+  { "name": "card date @400", "text": "2026.07.07", "weight": 400, "w": 70.3, "h": 10.5, "gaps": 9, "size": 14 },
+
+  { "name": "pager 25", "text": "25", "weight": 400, "w": 17.7, "h": 12, "gaps": 1, "size": 16 },
+  { "name": "pager 1", "text": "1", "weight": 400, "w": 4.6, "h": 11.6, "gaps": 0, "size": 16 }
+]

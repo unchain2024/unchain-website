@@ -1,0 +1,62 @@
+[
+ {
+  "name": "hero.h1",
+  "design": "public/news/Frame 2147226133.svg",
+  "x": 76,
+  "y": 112,
+  "w": 284,
+  "h": 100,
+  "mode": "light",
+  "dy": 108
+ },
+ {
+  "name": "hero.body",
+  "design": "public/news/Frame 2147226133.svg",
+  "x": 70,
+  "y": 218,
+  "w": 478,
+  "h": 78,
+  "mode": "light",
+  "dy": 108
+ },
+ {
+  "name": "list.langLabel",
+  "design": "public/news/Section.svg",
+  "x": 111,
+  "y": 94,
+  "w": 50,
+  "h": 34,
+  "mode": "light",
+  "section": "s-list"
+ },
+ {
+  "name": "list.langValue",
+  "design": "public/news/Section.svg",
+  "x": 128,
+  "y": 143,
+  "w": 62,
+  "h": 33,
+  "mode": "light",
+  "section": "s-list"
+ },
+ {
+  "name": "list.catLabel",
+  "design": "public/news/Section.svg",
+  "x": 742,
+  "y": 93,
+  "w": 78,
+  "h": 35,
+  "mode": "light",
+  "section": "s-list"
+ },
+ {
+  "name": "list.catValue",
+  "design": "public/news/Section.svg",
+  "x": 758,
+  "y": 143,
+  "w": 62,
+  "h": 33,
+  "mode": "light",
+  "section": "s-list"
+ }
+]

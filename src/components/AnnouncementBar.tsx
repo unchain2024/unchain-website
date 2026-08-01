@@ -1,55 +1,46 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { X } from "lucide-react";
 import { useLang } from "@/lib/language";
+import {
+  dismissAnnouncement,
+  useAnnouncementVisible,
+} from "@/lib/announcement";
+import { banner } from "@/components/home/content";
+import { ArrowRight, Close } from "@/components/home/icons";
 
-const barText = {
-  ja: {
-    message: "UNCHAINがプレシードで3500万円を調達",
-    cta: "詳しく見る →",
-  },
-  en: {
-    message: "UNCHAIN raises ¥35M in Pre-Seed",
-    cta: "Read more →",
-  },
-};
-
-const AnnouncementBar = ({ onVisibilityChange }: { onVisibilityChange?: (visible: boolean) => void }) => {
+/**
+ * Information banner — `public/home/Information banner.svg`.
+ * 1440x40, solid black, centred message + trailing arrow, dismiss at the right.
+ */
+const AnnouncementBar = () => {
   const { lang, localePath } = useLang();
-  const t = barText[lang];
-  const [dismissed, setDismissed] = useState(() =>
-    sessionStorage.getItem("announcement-dismissed") === "true"
-  );
+  const t = banner[lang];
+  const visible = useAnnouncementVisible();
 
-  if (dismissed) return null;
+  if (!visible) return null;
 
   const dismiss = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setDismissed(true);
-    sessionStorage.setItem("announcement-dismissed", "true");
-    onVisibilityChange?.(false);
+    dismissAnnouncement();
   };
 
   return (
-    <div className="relative bg-black h-10">
+    <div className="relative h-10 bg-black">
       <Link
-        to={localePath("/news")}
-        className="flex items-center justify-center h-full px-8 sm:px-12 hover:opacity-80 transition-opacity"
+        to={localePath(t.href)}
+        className="flex h-full items-center justify-center gap-4 pl-6 pr-14 transition-opacity hover:opacity-80 sm:pl-14"
       >
-        <span className="text-[11px] sm:text-sm font-semibold text-white tracking-wide">
+        <span className="truncate text-[12px] leading-none text-white sm:text-[14px]">
           {t.message}
         </span>
-        <span className="text-[10px] sm:text-xs text-white/60 ml-2 sm:ml-4">
-          {t.cta}
-        </span>
+        <ArrowRight className="hidden shrink-0 text-hd-banner sm:block" />
       </Link>
       <button
         onClick={dismiss}
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors"
-        aria-label="Dismiss"
+        aria-label={t.dismiss}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-hd-banner transition-colors hover:text-white sm:right-8"
       >
-        <X className="w-3.5 h-3.5" />
+        <Close />
       </button>
     </div>
   );

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700;900&family=Roboto+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -253,5 +253,54 @@
 
   .hero-letter-spacing {
     letter-spacing: 0.08em;
+  }
+}
+
+/* ─── Article body (CMS HTML) ───────────────────────── */
+
+/* Author-written HTML on the news article page, held to the type scale the design
+   export fixes for the copy around it — 16/22 #414651 on a 44px paragraph pitch, a
+   20/28 bold heading, and the export's own 16px card rounding on any figure. */
+@layer components {
+  .article-prose > *:first-child {
+    @apply mt-0;
+  }
+  .article-prose p,
+  .article-prose ul,
+  .article-prose ol,
+  .article-prose blockquote {
+    @apply mt-[22px] text-[16px] leading-[22px] text-hd-body-ink;
+  }
+  .article-prose h1,
+  .article-prose h2,
+  .article-prose h3 {
+    @apply mt-[40.5px] text-[20px] font-bold leading-[28px] text-black;
+  }
+  .article-prose h1 + *,
+  .article-prose h2 + *,
+  .article-prose h3 + * {
+    @apply mt-[20.5px];
+  }
+  .article-prose ul {
+    @apply list-disc pl-5;
+  }
+  .article-prose ol {
+    @apply list-decimal pl-5;
+  }
+  .article-prose li + li {
+    @apply mt-1;
+  }
+  .article-prose a {
+    @apply text-hd-navy underline underline-offset-4;
+  }
+  .article-prose strong {
+    @apply font-bold text-black;
+  }
+  .article-prose blockquote {
+    @apply border-l-4 border-hd-navy pl-4;
+  }
+  .article-prose img,
+  .article-prose video {
+    @apply mt-[22px] h-auto w-full rounded-2xl;
   }
 }

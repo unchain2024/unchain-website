@@ -1,0 +1,11 @@
+[
+ {"name":"foot.links","design":"public/home/Footer - Desktop.svg","section":"footer","x":550,"y":50,"w":200,"h":230,"mode":"dark"},
+ {"name":"foot.divider","design":"public/home/Footer - Desktop.svg","section":"footer","x":300,"y":300,"w":600,"h":30,"mode":"dark"},
+ {"name":"foot.copyright","design":"public/home/Footer - Desktop.svg","section":"footer","x":45,"y":345,"w":400,"h":45,"mode":"dark"},
+ {"name":"foot.legal","design":"public/home/Footer - Desktop.svg","section":"footer","x":930,"y":345,"w":465,"h":45,"mode":"dark"},
+ {"name":"news.title1","design":"public/home/Section-1.svg","section":"news","x":115,"y":550,"w":400,"h":55,"mode":"light"},
+ {"name":"news.date1","design":"public/home/Section-1.svg","section":"news","x":115,"y":610,"w":90,"h":30,"mode":"light"},
+ {"name":"news.pill1","design":"public/home/Section-1.svg","section":"news","x":115,"y":505,"w":90,"h":45,"mode":"light"},
+ {"name":"join.btn","design":"public/home/Section-2.svg","section":"join","x":1130,"y":245,"w":210,"h":80,"mode":"dark"},
+ {"name":"nav.logo","design":"public/home/Hero.svg","section":"hero","x":30,"y":10,"w":170,"h":50,"mode":"dark"}
+]

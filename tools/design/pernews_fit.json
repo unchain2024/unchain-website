@@ -1,0 +1,19 @@
+[
+  { "name": "CAL biz head(54)", "text": "分散した情報をつな", "weight": 700, "w": 482.2, "h": 50.8, "gaps": 8, "size": 54 },
+  { "name": "CAL card date(14)", "text": "2026.07.07", "weight": 400, "w": 70.3, "h": 10.5, "gaps": 9, "size": 14 },
+  { "name": "CAL card title(16)", "text": "展", "weight": 700, "w": 15.1, "h": 14.3, "gaps": 0, "size": 16 },
+
+  { "name": "art title L1", "text": "UNCHAIN株式会社、", "weight": 700, "spacing": -0.047, "w": 461.5, "h": 50.5, "size": 54 },
+  { "name": "art title L2", "text": "「NEXT BUSINESS EXPO", "weight": 700, "spacing": -0.047, "w": 564.9, "h": 46.6, "size": 54 },
+  { "name": "art title L3", "text": "SUMMER 2026」に出展", "weight": 700, "spacing": -0.047, "w": 573.4, "h": 50.2, "size": 54 },
+
+  { "name": "art pill お知らせ", "text": "お知らせ", "weight": 400, "w": 53.2, "h": 12.9, "gaps": 3, "size": 14 },
+  { "name": "art date", "text": "2026.07.07", "weight": 400, "w": 70.3, "h": 10.5, "gaps": 9, "size": 14 },
+  { "name": "art author", "text": "Christian Park", "weight": 400, "w": 91.3, "h": 10.7, "gaps": 13, "size": 14 },
+  { "name": "art lead @700", "text": "UNCHAIN株式会社は、2026年7月16日（木）・17日（金）に東京都立産業貿易センター", "weight": 700, "w": 633.8, "h": 15.3, "gaps": 45, "size": 16 },
+  { "name": "art body JP line", "text": "UNCHAIN株式会社は、2026年7月16日（木）・17日（金）に東京都立産業貿易センター浜松町", "weight": 400, "w": 676.7, "h": 15.2, "gaps": 51, "size": 16 },
+  { "name": "art h2 出展概要", "text": "出展概要", "weight": 700, "w": 77.1, "h": 18.7, "gaps": 3, "size": 20 },
+
+  { "name": "rel head 関連ニュース", "text": "関連ニュース", "weight": 700, "spacing": -0.012, "w": 312.3, "h": 50.4, "size": 54 },
+  { "name": "rel btn すべてのニュース", "text": "すべてのニュース", "weight": 400, "w": 122.5, "h": 13.8, "gaps": 7, "size": 16 }
+]

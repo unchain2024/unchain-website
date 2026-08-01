@@ -1,0 +1,50 @@
+[
+ {
+  "name": "01-banner",
+  "design": "tools/design/.work/shots/news-design-full.png",
+  "y": 0,
+  "h": 40,
+  "bg": "#000000",
+  "dy": 0
+ },
+ {
+  "name": "02-nav",
+  "design": "tools/design/.work/shots/news-design-full.png",
+  "y": 40,
+  "h": 68,
+  "bg": "#ffffff",
+  "dy": 40
+ },
+ {
+  "name": "03-hero",
+  "design": "tools/design/.work/shots/news-design-full.png",
+  "y": 108,
+  "h": 403,
+  "bg": "#ffffff",
+  "dy": 108
+ },
+ {
+  "name": "04-list",
+  "design": "tools/design/.work/shots/news-design-full.png",
+  "y": 511,
+  "h": 2159,
+  "bg": "#ffffff",
+  "dy": 511
+ },
+ {
+  "name": "05-cta",
+  "design": "tools/design/.work/shots/news-design-full.png",
+  "y": 2670,
+  "h": 597,
+  "bg": "#ffffff",
+  "dy": 2670
+ },
+ {
+  "name": "06-footer",
+  "design": "tools/design/.work/shots/news-design-full.png",
+  "y": 3267,
+  "h": 430,
+  "bg": "#ffffff",
+  "dy": 3267
+ }
+]
