@@ -66,7 +66,7 @@ const SiteFooter = () => {
                 <UnchainLogo className="h-[31.4px] w-[141px] text-white" />
               </Link>
 
-              <nav className="flex flex-col gap-[23px] lg:mt-[4px] lg:justify-self-start">
+              <nav className="grid grid-flow-col grid-rows-3 gap-x-12 gap-y-[23px] lg:mt-[4px] lg:justify-self-start">
                 {t.links.map((link) => (
                   <Link
                     key={link.label}

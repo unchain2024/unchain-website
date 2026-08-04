@@ -9,10 +9,15 @@ import ArticleView from "@/components/news/ArticleView";
 import RelatedNews from "@/components/news/RelatedNews";
 import CtaSection from "@/components/home/CtaSection";
 import SiteFooter from "@/components/home/SiteFooter";
-import { getLocalized, type Article } from "@/components/news/types";
+import {
+  byNewest,
+  dedupeById,
+  getLocalized,
+  type Article,
+  type ArticleKind,
+} from "@/components/news/types";
 import { article as articleCopy } from "@/components/news/content";
 import { useLang } from "@/lib/language";
-import { useAnnouncementVisible } from "@/lib/announcement";
 import { supabase } from "@/lib/supabase";
 import {
   SITE_URL,
@@ -113,15 +118,28 @@ const NewsPage = () => {
   const fetchArticles = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("articles")
-        .select("*")
-        .eq("is_draft", false)
-        .eq("is_hidden", false)
-        .order("created_at", { ascending: false });
+      // Blogs were folded into the news section, so the page reads both tables and shows
+      // one list. They share a shape; the only thing added is which one a row came from,
+      // which is what the category filter and the card pill go on.
+      const published = (table: string) =>
+        supabase
+          .from(table)
+          .select("*")
+          .eq("is_draft", false)
+          .eq("is_hidden", false)
+          .order("created_at", { ascending: false });
 
-      if (error) throw error;
-      setArticles(data || []);
+      const [news, blogs] = await Promise.all([published("articles"), published("blogs")]);
+      if (news.error) throw news.error;
+      if (blogs.error) throw blogs.error;
+
+      const tag = (rows: unknown[] | null, kind: ArticleKind) =>
+        ((rows ?? []) as Article[]).map((row) => ({ ...row, kind }));
+
+      // Two sorted lists concatenated are not sorted, so re-sort the merge.
+      setArticles(
+        dedupeById([...tag(news.data, "news"), ...tag(blogs.data, "blog")]).sort(byNewest)
+      );
     } catch (err: any) {
       console.error("Error fetching articles:", err);
       setError(err.message);
@@ -200,12 +218,11 @@ const NewsPage = () => {
 const ArticleFallback = ({ loading, error }: { loading: boolean; error: string | null }) => {
   const { lang, localePath } = useLang();
   const t = articleCopy[lang];
-  const bannerVisible = useAnnouncementVisible();
 
   return (
     <section
       data-nav-theme="light"
-      className={`w-full bg-white ${bannerVisible ? "pt-[108px]" : "pt-[68px]"}`}
+      className="w-full bg-white pt-[68px]"
     >
       <div className="mx-auto w-full max-w-[680px] px-6 py-32 text-center lg:px-0">
         {loading ? (

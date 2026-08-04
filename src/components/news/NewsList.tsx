@@ -6,7 +6,7 @@ import NewsCard from "./NewsCard";
 import NewsFilters from "./NewsFilters";
 import Pagination from "./Pagination";
 import { PER_PAGE, list } from "./content";
-import { categoriesOf, type Article } from "./types";
+import type { Article } from "./types";
 
 /**
  * The filters, the card grid and the pager — `public/news/Section.svg` (1440x2159).
@@ -14,6 +14,9 @@ import { categoriesOf, type Article } from "./types";
  * A 120px gutter rather than the 80px the hero and the other pages use, three 384px
  * columns with a 24px gutter, and rows on a 442.07px pitch. The export lays out four rows
  * of three, which is where the twelve-per-page in `content.ts` comes from.
+ *
+ * `articles` holds news and blog rows together. The category dropdown filters on which of
+ * the two a row is, and its default — "all" — shows both interleaved by date.
  */
 const NewsList = ({
   articles,
@@ -33,8 +36,6 @@ const NewsList = ({
   const [category, setCategory] = useState("all");
   const [page, setPage] = useState(1);
 
-  const categories = useMemo(() => categoriesOf(articles), [articles]);
-
   const filtered = useMemo(
     () =>
       articles.filter((article) => {
@@ -45,10 +46,8 @@ const NewsList = ({
         if (language === "ja" && !hasJa) return false;
         if (language === "en" && !hasEn) return false;
 
-        if (category !== "all") {
-          const cats = (article.category ?? "").split(",").map((c) => c.trim());
-          if (!cats.includes(category)) return false;
-        }
+        // "all" keeps both kinds; otherwise the dropdown names the one to keep.
+        if (category !== "all" && article.kind !== category) return false;
         return true;
       }),
     [articles, category, lang, language]
@@ -73,7 +72,6 @@ const NewsList = ({
         <NewsFilters
           language={language}
           category={category}
-          categories={categories}
           onLanguage={setLanguage}
           onCategory={setCategory}
         />
@@ -112,7 +110,9 @@ const NewsList = ({
           )}
         </div>
 
-        {!loading && !error && filtered.length > 0 && (
+        {/* Gate on the page count, not on having results: `Pagination` renders nothing for
+            a single page, and a wrapper around nothing would still add its 58.77px. */}
+        {!loading && !error && totalPages > 1 && (
           <div className="mt-16 lg:mt-[58.77px]">
             <Pagination page={current} total={totalPages} onPage={goTo} />
           </div>

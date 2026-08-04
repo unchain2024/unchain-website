@@ -1,5 +1,15 @@
-/** The `articles` row as the news page reads it. */
+import type { ArticleSection } from "@/lib/articleLinks";
+
+/**
+ * Which table a row came from. Blogs were folded into the news section, so both live in
+ * one list and one grid; this is what the category filter and the card pill read, and it
+ * is set where the rows are fetched rather than stored in the database.
+ */
+export type ArticleKind = ArticleSection;
+
+/** An `articles` or `blogs` row as the news page reads it — the two share a shape. */
 export interface Article {
+  kind: ArticleKind;
   id: string;
   slug?: string | null;
   category?: string;
@@ -53,15 +63,23 @@ export const formatCardDate = (iso: string) => {
   return `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())}`;
 };
 
-/** Every distinct category across the given rows, "external" excluded — it is a badge. */
-export const categoriesOf = (articles: Article[]) => {
-  const cats = new Set<string>();
-  for (const a of articles) {
-    if (!a.category) continue;
-    for (const c of a.category.split(",")) {
-      const t = c.trim();
-      if (t && t.toLowerCase() !== "external") cats.add(t);
-    }
-  }
-  return [...cats].sort();
+/**
+ * Newest first, the order both tables are queried in — needed again after merging them,
+ * because two separately sorted lists concatenated are not sorted.
+ */
+export const byNewest = (a: Article, b: Article) =>
+  new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+
+/**
+ * Drop repeated ids, keeping the first — news, in the order the merge concatenates.
+ *
+ * `buildSlugIndex` reads a repeated row as a slug collision and discriminates every copy,
+ * which would change a live article URL. The two tables are disjoint today, so this only
+ * matters if a row is ever copied between them during a content migration — but that is
+ * precisely the case that would otherwise break quietly. `api/og.ts` does the same, so
+ * both sides derive the same slugs.
+ */
+export const dedupeById = (articles: Article[]) => {
+  const seen = new Set<string>();
+  return articles.filter((a) => !seen.has(a.id) && seen.add(a.id));
 };

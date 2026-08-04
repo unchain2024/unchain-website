@@ -29,13 +29,39 @@ type Props = {
 };
 
 /**
+ * Where the panel sits, so it opens over the card that was clicked: the first member's
+ * on the left, the last member's on the right, anything between centred.
+ *
+ * All three are `left` values rather than a mix of `left`/`right`/translate, which is what
+ * lets the panel slide between them when prev/next changes the member — a transition
+ * cannot animate to or from `auto`, and a translate would fight the enter animation's own
+ * transform. `calc(100% - 512px)` is the 480px panel plus its 32px inset, so at the
+ * design's 1440 width the right-hand position lands on the export's own x=928.
+ */
+const PANEL_X = {
+  left: "sm:left-8",
+  center: "sm:left-[calc(50%-240px)]",
+  right: "sm:left-[calc(100%-512px)]",
+} as const;
+
+/** Slide in from the nearest edge; the centred one just rises. */
+const PANEL_FROM = {
+  left: { x: -24 },
+  center: { y: 24 },
+  right: { x: 24 },
+} as const;
+
+/**
  * Leader detail drawer — `public/about/section1.svg`, with the two 480x836 variants in
  * `Frame 2147226178*.svg`.
  *
- * A 480px panel inset 32px from the top, right and bottom of the viewport over a dimmed,
- * blurred page (5% black plus the export's own `backdrop-filter: blur(50px)`). Inside:
- * name and role on 40px padding, a 299x329.75 photo frame holding the mosaic and the
- * portrait, the bio, then prev/next centred 40px off the bottom.
+ * A 480px panel inset 32px from the top and bottom of the viewport over a dimmed, blurred
+ * page (5% black plus the export's own `backdrop-filter: blur(50px)`). Inside: name and
+ * role on 40px padding, a 299x329.75 photo frame holding the mosaic and the portrait, the
+ * bio, then prev/next centred 40px off the bottom.
+ *
+ * Horizontally it tracks the open member's card — see PANEL_X. The export only draws the
+ * third card's state, which is the right-hand position.
  *
  * The portrait overhangs the frame's left edge by 10.76px and is clipped by it, exactly
  * as the export draws it.
@@ -44,6 +70,14 @@ const LeaderDrawer = ({ members, index, onClose, onSelect, labels }: Props) => {
   const open = index !== null;
   const member = open ? members[index] : null;
   const panelRef = useRef<HTMLDivElement>(null);
+  const place: keyof typeof PANEL_X =
+    index === null || members.length < 2
+      ? "right"
+      : index === 0
+        ? "left"
+        : index === members.length - 1
+          ? "right"
+          : "center";
 
   // Escape to close, arrows to walk the list — the drawer takes the page over while it is
   // open, so it owns the keyboard.
@@ -86,11 +120,11 @@ const LeaderDrawer = ({ members, index, onClose, onSelect, labels }: Props) => {
             role="dialog"
             aria-modal="true"
             aria-label={member.name}
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 24 }}
+            initial={{ opacity: 0, ...PANEL_FROM[place] }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, ...PANEL_FROM[place] }}
             transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-            className="absolute inset-x-4 bottom-4 top-4 flex flex-col overflow-y-auto rounded-2xl border border-hd-card-line bg-white p-6 outline-none sm:inset-x-auto sm:bottom-8 sm:right-8 sm:top-8 sm:w-[480px] sm:px-10 sm:pb-10 sm:pt-[46px]"
+            className={`absolute inset-x-4 bottom-4 top-4 flex flex-col overflow-y-auto rounded-2xl border border-hd-card-line bg-white p-6 outline-none sm:bottom-8 sm:right-auto sm:top-8 sm:w-[480px] sm:px-10 sm:pb-10 sm:pt-[46px] sm:transition-[left] sm:duration-300 ${PANEL_X[place]}`}
           >
             {/* The export sets the name 8.8px below the 40px padding — it is drawn on a
                 taller line than its 32px type — so the panel's top padding carries that

@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/language";
-import { useAnnouncementVisible } from "@/lib/announcement";
 import { japan } from "./content";
 import { Torii } from "./art/JapanArt";
 
@@ -18,15 +17,11 @@ import { Torii } from "./art/JapanArt";
 const JapanSection = () => {
   const { lang } = useLang();
   const t = japan[lang];
-  // The fixed header paints the banner, but it occupies 40px at the top of the page in
-  // the design, so reserve exactly that while it is showing.
-  const bannerVisible = useAnnouncementVisible();
-
   return (
     <section
       data-nav-theme="light"
       data-probe="s-japan"
-      className={`w-full overflow-hidden bg-white ${bannerVisible ? "pt-[108px]" : "pt-[68px]"}`}
+      className="w-full overflow-hidden bg-white pt-[68px]"
     >
       <div className="relative mx-auto w-full max-w-[1440px] lg:h-[482px]">
         <Torii

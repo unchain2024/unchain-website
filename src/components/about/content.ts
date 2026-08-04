@@ -44,8 +44,10 @@ export const mission = {
 
 export const vision = {
   ja: {
+    // The export sets this heading in English on the Japanese page; it is Japanese here
+    // instead, broken after the particle so both lines clear the body column at x=860.
     eyebrow: "VISION",
-    heading: ["Make Industries AI", "Native From Japan"],
+    heading: ["日本のすべての産業を", "AIネイティブに"],
     body: [
       "AIを一機能として加えるのではなく、組織と産業そのものがAIを前提に設計・進化していく状態へ。",
       "日本に蓄積された世界トップレベルの知見と技術を次世代へ継承し、ここで生まれた変革を世界へ広げます。",
@@ -241,7 +243,6 @@ export const company = {
       { label: "設立", value: "2025年7月" },
       { label: "資本金", value: "200万円" },
       { label: "従業員数", value: "10名（業務委託を含む）" },
-      { label: "事業内容", value: ["Neuronの開発・提供", "AI Native Advisor"] },
       { label: "所在地", value: "東京都渋谷区道玄坂1丁目10番8号" },
       { label: "主要取引銀行", value: ["住信SBIネット銀行", "みずほ銀行"] },
       { label: "顧問弁護士", value: "AZX総合法律事務所" },
@@ -256,7 +257,6 @@ export const company = {
       { label: "Founded", value: "July 2025" },
       { label: "Capital", value: "¥2,000,000" },
       { label: "Employees", value: "10 (including contractors)" },
-      { label: "Business", value: ["Development and delivery of Neuron", "AI Native Advisor"] },
       { label: "Address", value: "1-10-8 Dogenzaka, Shibuya-ku, Tokyo" },
       { label: "Banks", value: ["SBI Sumishin Net Bank", "Mizuho Bank"] },
       { label: "Legal counsel", value: "AZX Law Offices" },

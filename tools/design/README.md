@@ -244,7 +244,9 @@ Two about probes need a note. The `japan.*` ones carry an explicit `dy: 108` ins
 while its section box starts at 0 — every other probe resolves through its `s-*` section
 instead. And the leader drawer only exists after a click, so it is captured separately —
 scroll the leadership section to +31 (the framing `section1.svg` uses), click a card's
-button, then screenshot. The news `hero.*` probes carry the same `dy: 108` for the same
+button, then screenshot. Click the **third** card: the drawer opens over the card it was
+opened from (left / centred / right), and only the right-hand position is the x=928 the
+export draws. Its internal geometry is the same wherever it opens. The news `hero.*` probes carry the same `dy: 108` for the same
 reason.
 
 `ink.mjs` and `sample.mjs` resolve a probe's `section` name to the live y offset
@@ -260,22 +262,40 @@ photo resampling (the design embeds full-size PNGs, the build ships resized WebP
 text antialiasing — the design's type is outlined vector, the build's is live font
 rendering, so glyph edges never match pixel-for-pixel.
 
-The business page lands the same way: every section boundary is within 1px of the export
-(hero 515, neuron 1943, advisor 1226, cta 597, footer 430) and the whole page is 4750
-against the design's 4751, the 1px coming from the exports' fractional panel heights.
-`compare.mjs` reports 2–3% per section, all of it photo resampling and glyph edges — the
-banner's 7.5% is the same white-on-black type over a 40px strip, where a one-pixel edge is
-a large share of a small area.
+The business page lands the same way: hero 515, neuron 1943 (panel 1910.2 against the
+export's 1910.19), advisor 1226 and cta 597 all sit within 1px of the export, the residue
+coming from the exports' fractional panel heights. `compare.mjs` reports 2–3% per section,
+all of it photo resampling and glyph edges.
+
+Two things it reports are *expected* divergence rather than drift, because the page reuses
+shared components that have since moved on from the exports:
+
+- The design begins with a 40px information banner. That component was removed from the
+  site, so the build has no such band — which is why `business_sections.json` carries a
+  separate `y` (build) and `dy` (design) per section instead of one shared offset.
+- `SiteFooter` was restyled to two link columns and is now 313px against the export's 430,
+  so `05-footer` reports ~7%. The business page renders whatever the shared footer is; the
+  export is simply older.
 
 The about page lands the same way: every section boundary is within 1px of the export
-(japan 590 including the header, mission 992, vision 352, principles 728, leadership 893
-against 892, dei 725, company 987, cta 597, footer 430) and the whole page is 6294
-against the design's 6293. Every `ink.mjs` probe is within 1px vertically and 2px
-horizontally. `compare.mjs` reports 0.8–2.6% per section — the banner's 7.5% and the
-navigation's 8.7% are the shared components, and are the same white-on-black-type-over-a-
-small-area effect noted above.
+(mission 992, vision 352, principles 728, leadership 893 against 892, dei 725, cta 597,
+footer 430), and every `ink.mjs` probe is within 1px vertically and 2px horizontally.
+`compare.mjs` reports 0.8–2.6% per section — the banner's 7.5% and the navigation's 8.7%
+are the shared components, and are the same white-on-black-type-over-a-small-area effect
+noted above.
 
-Two about residuals are deliberate rather than drift:
+Two sections have since been changed on purpose and no longer match their export's height,
+so `compare.mjs` will show them shifted. The hero is the header's height plus the export's
+482, and the header is 68px alone or 108px with the banner showing. The company table had
+its 事業内容 row dropped, which takes 88px off the export's 987 — retake the design
+baseline against a matching `about_page.html` before reading a company diff.
+
+Several about residuals are deliberate rather than drift:
+
+- The vision heading is Japanese copy (日本のすべての産業をAIネイティブに) where the export
+  sets English on the Japanese page, so `vision.h2` only matches the export on `/en/about`.
+  Because Japanese ink starts higher in the line box than Latin, that heading's size and
+  the margin above it both follow the language — see the comments in `VisionSection.tsx`.
 
 - `japan.h2` is 12px wider than the export (`dw=+12`). The design's Japanese font gives
   `。` more right bearing than Noto Sans JP does, so the ink runs further into the last

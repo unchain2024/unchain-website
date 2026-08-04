@@ -1,5 +1,5 @@
 import { useLang } from "@/lib/language";
-import { filters } from "./content";
+import { filters, kinds } from "./content";
 
 /**
  * The two filter dropdowns — `public/news/Section.svg`, the pair of 570x50 pills at
@@ -70,18 +70,17 @@ const Field = ({
 const NewsFilters = ({
   language,
   category,
-  categories,
   onLanguage,
   onCategory,
 }: {
   language: string;
   category: string;
-  categories: string[];
   onLanguage: (v: string) => void;
   onCategory: (v: string) => void;
 }) => {
   const { lang } = useLang();
   const t = filters[lang];
+  const k = kinds[lang];
 
   return (
     // 570 + 60 + 570 across the 1200 content width.
@@ -97,12 +96,17 @@ const NewsFilters = ({
           { value: "en", label: t.english },
         ]}
       />
+      {/* Two categories, plus the "all" default that shows both together. */}
       <Field
         probe="filter-category"
         label={t.category}
         value={category}
         onChange={onCategory}
-        options={[{ value: "all", label: t.all }, ...categories.map((c) => ({ value: c, label: c }))]}
+        options={[
+          { value: "all", label: t.all },
+          { value: "news", label: k.news },
+          { value: "blog", label: k.blog },
+        ]}
       />
     </div>
   );

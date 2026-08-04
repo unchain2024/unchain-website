@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/language";
-import { useAnnouncementVisible } from "@/lib/announcement";
 import { hero } from "./content";
 import { Megaphone } from "./art/HeroArt";
 
@@ -18,15 +17,11 @@ import { Megaphone } from "./art/HeroArt";
 const NewsHero = () => {
   const { lang } = useLang();
   const t = hero[lang];
-  // The fixed header paints the banner, but it occupies 40px at the top of the page in
-  // the design, so reserve exactly that while it is showing.
-  const bannerVisible = useAnnouncementVisible();
-
   return (
     <section
       data-nav-theme="light"
       data-probe="s-hero"
-      className={`w-full overflow-hidden bg-white ${bannerVisible ? "pt-[108px]" : "pt-[68px]"}`}
+      className="w-full overflow-hidden bg-white pt-[68px]"
     >
       <div className="relative mx-auto w-full max-w-[1440px] lg:h-[403px]">
         <Megaphone className="pointer-events-none absolute right-[195.9px] top-[37.4px] hidden h-[324.479px] w-[415.039px] select-none lg:block" />

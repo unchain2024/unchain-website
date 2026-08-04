@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/language";
-import { useAnnouncementVisible } from "@/lib/announcement";
 import ArticleContent from "./ArticleContent";
 import { article as copy } from "./content";
 import { formatCardDate, getLocalized, type Article } from "./types";
@@ -40,7 +39,6 @@ const PILL_HAIRLINE = {
 const ArticleView = ({ article }: { article: Article }) => {
   const { lang } = useLang();
   const t = copy[lang];
-  const bannerVisible = useAnnouncementVisible();
 
   const title = getLocalized(article, "title", lang);
   // "external" is a flag on the row, not a label to show.
@@ -59,7 +57,7 @@ const ArticleView = ({ article }: { article: Article }) => {
     <section
       data-nav-theme="light"
       data-probe="s-article"
-      className={`w-full bg-white ${bannerVisible ? "pt-[108px]" : "pt-[68px]"}`}
+      className="w-full bg-white pt-[68px]"
     >
       <article className="mx-auto w-full max-w-[680px] px-6 pb-24 pt-16 lg:px-0 lg:pb-[98.9px] lg:pt-[100.5px]">
         {/* Above the fold, so this reveals on mount rather than on scroll. */}

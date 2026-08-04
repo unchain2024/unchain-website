@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/language";
-import { useAnnouncementVisible } from "@/lib/announcement";
 import { hero } from "./content";
 import { ChevronRight } from "@/components/home/icons";
 import { HeroStar } from "./art/HeroArt";
@@ -15,14 +14,10 @@ import { HeroStar } from "./art/HeroArt";
 const BusinessHero = () => {
   const { lang } = useLang();
   const t = hero[lang];
-  // The fixed header draws the announcement bar, but it occupies 40px at the top of
-  // the page in the design, so reserve exactly that while it is showing.
-  const bannerVisible = useAnnouncementVisible();
-
   return (
     <section
       data-nav-theme="light"
-      className={`w-full overflow-hidden bg-white ${bannerVisible ? "pt-10" : ""}`}
+      className="w-full overflow-hidden bg-white"
     >
       <div className="relative mx-auto w-full max-w-[1440px] lg:h-[515px]">
         <HeroStar className="pointer-events-none absolute right-4 top-6 hidden h-[220px] w-[220px] select-none md:block lg:right-[11.0069%] lg:top-1/2 lg:h-auto lg:w-[27.7083%] lg:-translate-y-1/2" />

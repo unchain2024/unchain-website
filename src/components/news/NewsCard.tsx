@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLang } from "@/lib/language";
 import { articlePath } from "@/lib/articleLinks";
-import { list } from "./content";
+import { kinds, list } from "./content";
 import { formatCardDate, getLocalized, type Article } from "./types";
 import { PlaceholderCard } from "./art/PlaceholderArt";
 
@@ -23,22 +24,25 @@ const NewsCard = ({ article, slug }: { article: Article; slug: string }) => {
 
   const title = getLocalized(article, "title", lang);
   const isExternal = Boolean(article.is_external && article.external_url);
-  // The first category the row carries; "external" is a flag, not a label.
-  const category = (article.category ?? "")
-    .split(",")
-    .map((c) => c.trim())
-    .find((c) => c && c.toLowerCase() !== "external");
+  // Some older rows point at storage objects that have since been deleted. The design has
+  // a placeholder for a row with no image, so use it for one whose image will not load
+  // either, rather than leaving an empty frame.
+  const [imageFailed, setImageFailed] = useState(false);
+  // The pill names which of the section's two categories the row is, so it matches what
+  // the category dropdown filters on and every card has one.
+  const category = kinds[lang][article.kind];
 
   const body = (
     <>
       <div className="relative w-full overflow-hidden rounded-2xl bg-hd-panel">
         {/* 384 x 243.07 in the export. */}
         <div className="aspect-[384/243.07] w-full">
-          {article.image_url ? (
+          {article.image_url && !imageFailed ? (
             <img
               src={article.image_url}
               alt=""
               loading="lazy"
+              onError={() => setImageFailed(true)}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             />
           ) : (
@@ -47,25 +51,21 @@ const NewsCard = ({ article, slug }: { article: Article; slug: string }) => {
         </div>
       </div>
 
-      {/* The slot keeps its 28px whether or not the row carries a category, so a row
-          without one still lines its title and date up with the rest of the grid. */}
       <div data-probe="card-pill" className="mt-[16.5px] h-7">
-        {category && (
-          <span
-            className="inline-flex h-7 items-center rounded-full border border-transparent px-4 text-[14px] leading-none text-black"
-            style={{
-              // A 1px hairline that runs #A2BFEE at the top to #0E3067 at the bottom,
-              // over white — paint the fill on the padding box and the gradient on the
-              // border box so the ring stays exactly 1px on a fully rounded pill.
-              backgroundImage:
-                "linear-gradient(#fff, #fff), linear-gradient(359.65deg, #0E3067 10.35%, #A2BFEE 100%)",
-              backgroundOrigin: "border-box",
-              backgroundClip: "padding-box, border-box",
-            }}
-          >
-            {category}
-          </span>
-        )}
+        <span
+          className="inline-flex h-7 items-center rounded-full border border-transparent px-4 text-[14px] leading-none text-black"
+          style={{
+            // A 1px hairline that runs #A2BFEE at the top to #0E3067 at the bottom,
+            // over white — paint the fill on the padding box and the gradient on the
+            // border box so the ring stays exactly 1px on a fully rounded pill.
+            backgroundImage:
+              "linear-gradient(#fff, #fff), linear-gradient(359.65deg, #0E3067 10.35%, #A2BFEE 100%)",
+            backgroundOrigin: "border-box",
+            backgroundClip: "padding-box, border-box",
+          }}
+        >
+          {category}
+        </span>
       </div>
 
       <h3

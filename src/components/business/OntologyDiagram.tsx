@@ -14,77 +14,87 @@ import * as glyph from "./art/OntologyIcons";
  * can be selected, searched and translated — the design outlines them to paths,
  * which would have made the whole figure a picture.
  *
- * The figure is a scale drawing: `x/y/w` and the icon offset are the export's own
- * numbers, rebased so the panel's top-left is 0,0. Pill widths are fixed rather
- * than intrinsic because the node names are entity labels that read the same in
- * both locales, so nothing here reflows.
+ * The figure is a scale drawing: every number below is the export's own, rebased so
+ * the panel's top-left is 0,0.
+ *
+ * Pills are anchored on their *centre* and sized to their content rather than pinned
+ * to the export's left edge and width. In English that lands within a pixel of the
+ * drawing (the padding and gap below are the export's, so the intrinsic width comes
+ * out the same); in Japanese the labels have wildly different measures, and growing
+ * symmetrically about the drawn centre is what keeps them from colliding with their
+ * neighbours or running off the panel.
  *
  * The whole group was drawn at 0.863845 scale in Figma, which is why the constants
  * are awkward: a 40px pill is 34.55, a 20px icon slot 17.28, a 16px label 13.82.
  */
 type Chip = {
-  id: string;
-  label: string;
-  /** Pill origin and width, in panel coordinates. */
-  x: number;
+  id: keyof typeof ontologyLabels.en.nodes;
+  /** Pill centre, in panel coordinates. */
+  cx: number;
   y: number;
-  w: number;
-  /** Left offset of the glyph inside the pill — it is not a uniform slot. */
-  ix: number;
   Icon: (p: { className?: string }) => JSX.Element;
 };
 
-/* The nine data sources feeding the graph. Labels sit 41.4 in from the pill edge. */
+/** Width of the glyph slot: 20px for a source, 14px for a graph node, both scaled. */
+const SOURCE_SLOT = 17.28;
+const NODE_SLOT = 12.09;
+
+/* The nine data sources feeding the graph. */
 const SOURCES: Chip[] = [
-  { id: "pm", label: "Project management tools", x: 92.01, y: 86.32, w: 213.29, ix: 17.28, Icon: glyph.IconProjectTools },
-  { id: "workforce", label: "Workforce management", x: 357.21, y: 86.32, w: 201.29, ix: 15.55, Icon: glyph.IconWorkforce },
-  { id: "docs", label: "Document storage", x: 71.28, y: 148.51, w: 167.29, ix: 15.55, Icon: glyph.IconDocStorage },
-  { id: "erp", label: "ERP", x: 289.83, y: 148.51, w: 81.29, ix: 15.55, Icon: glyph.IconErp },
-  { id: "warehouse", label: "Data warehouse", x: 422.86, y: 148.51, w: 153.29, ix: 15.55, Icon: glyph.IconWarehouse },
-  { id: "chat", label: "Chat tools", x: 32.47, y: 210.71, w: 117.29, ix: 16.41, Icon: glyph.IconChat },
-  { id: "email", label: "Email", x: 200.92, y: 210.71, w: 88.29, ix: 15.55, Icon: glyph.IconEmail },
-  { id: "crm", label: "CRM", x: 341.03, y: 210.71, w: 86.29, ix: 15.55, Icon: glyph.IconCrm },
-  { id: "sheets", label: "Spreadsheets", x: 479.25, y: 210.71, w: 138.29, ix: 16.41, Icon: glyph.IconSpreadsheet },
+  { id: "pm", cx: 198.655, y: 86.32, Icon: glyph.IconProjectTools },
+  { id: "workforce", cx: 457.855, y: 86.32, Icon: glyph.IconWorkforce },
+  { id: "docs", cx: 154.925, y: 148.51, Icon: glyph.IconDocStorage },
+  { id: "erp", cx: 330.475, y: 148.51, Icon: glyph.IconErp },
+  { id: "warehouse", cx: 499.505, y: 148.51, Icon: glyph.IconWarehouse },
+  { id: "chat", cx: 91.115, y: 210.71, Icon: glyph.IconChat },
+  { id: "email", cx: 245.065, y: 210.71, Icon: glyph.IconEmail },
+  { id: "crm", cx: 384.175, y: 210.71, Icon: glyph.IconCrm },
+  { id: "sheets", cx: 548.395, y: 210.71, Icon: glyph.IconSpreadsheet },
 ];
 
-/* The eight entity nodes on the platform slab. Their glyphs are a smaller slot,
-   so their labels sit 36.3 in rather than 41.4. */
+/* The eight entity nodes on the platform slab. */
 const NODES: Chip[] = [
-  { id: "decision", label: "Decision", x: 110.55, y: 360.55, w: 102.1, ix: 15.12, Icon: glyph.IconDecision },
-  { id: "open-item", label: "Open Item", x: 320.46, y: 351.05, w: 114.1, ix: 15.12, Icon: glyph.IconOpenItem },
-  { id: "task", label: "Task", x: 460.41, y: 379.55, w: 78.1, ix: 16.41, Icon: glyph.IconTask },
-  { id: "risk", label: "Risk", x: 225.44, y: 387.33, w: 76.1, ix: 14.93, Icon: glyph.IconRisk },
-  { id: "person", label: "Person", x: 342.06, y: 436.57, w: 92.1, ix: 16.41, Icon: glyph.IconPerson },
-  { id: "lesson", label: "Lesson", x: 84.64, y: 444.34, w: 94.1, ix: 15.11, Icon: glyph.IconLesson },
-  { id: "project", label: "Project", x: 471.64, y: 453.84, w: 93.1, ix: 15.11, Icon: glyph.IconProject },
-  { id: "outcome", label: "Outcome", x: 205.57, y: 456.44, w: 106.1, ix: 16.42, Icon: glyph.IconOutcome },
+  { id: "decision", cx: 161.6, y: 360.55, Icon: glyph.IconDecision },
+  { id: "open-item", cx: 377.51, y: 351.05, Icon: glyph.IconOpenItem },
+  { id: "task", cx: 499.46, y: 379.55, Icon: glyph.IconTask },
+  { id: "risk", cx: 263.49, y: 387.33, Icon: glyph.IconRisk },
+  { id: "person", cx: 388.11, y: 436.57, Icon: glyph.IconPerson },
+  { id: "lesson", cx: 131.69, y: 444.34, Icon: glyph.IconLesson },
+  { id: "project", cx: 518.19, y: 453.84, Icon: glyph.IconProject },
+  { id: "outcome", cx: 258.62, y: 456.44, Icon: glyph.IconOutcome },
 ];
-
-/** Hairline width. The offsets above are measured from the pill's outer edge, but an
- *  absolutely-positioned child is placed from the padding box, so it is deducted. */
-const BORDER = 0.86;
 
 /**
  * A pill: 40% white over a top-lit gradient hairline, exactly as the export strokes
  * it. The two background layers are what produce the gradient border — the flat one
  * is clipped to the padding box, the gradient to the border box.
  */
-const Pill =({ label, x, y, w, ix, Icon, labelX }: Chip & { labelX: number }) => (
+const Pill = ({
+  label,
+  cx,
+  y,
+  slot,
+  Icon,
+  tight,
+}: Omit<Chip, "id"> & { label: string; slot: number; tight: boolean }) => (
   <div
-    style={{ left: `${x}px`, top: `${y}px`, width: `${w}px` }}
-    className="absolute h-[34.55px] rounded-full border-[0.86px] border-transparent shadow-[0_3.46px_8.64px_rgba(0,0,0,0.05)] backdrop-blur-[9.56px] [background-clip:padding-box,border-box] [background-image:linear-gradient(rgba(255,255,255,0.4),rgba(255,255,255,0.4)),linear-gradient(180deg,#fff,rgba(255,255,255,0))] [background-origin:border-box]"
+    style={{ left: `${cx}px`, top: `${y}px` }}
+    className="absolute flex h-[34.55px] -translate-x-1/2 items-center gap-[8.61px] rounded-full border-[0.86px] border-transparent px-[14.69px] shadow-[0_3.46px_8.64px_rgba(0,0,0,0.05)] backdrop-blur-[9.56px] [background-clip:padding-box,border-box] [background-image:linear-gradient(rgba(255,255,255,0.4),rgba(255,255,255,0.4)),linear-gradient(180deg,#fff,rgba(255,255,255,0))] [background-origin:border-box]"
   >
     <span
-      style={{ left: `${ix - BORDER}px` }}
-      className="absolute top-1/2 -translate-y-1/2"
+      style={{ width: `${slot}px` }}
+      className="flex shrink-0 items-center justify-center"
     >
       <Icon />
     </span>
-    {/* The export's label metrics are ~9% tighter than plain Inter at this size;
-        the group was drawn with negative tracking before being scaled down. */}
+    {/* `tight` is the export's own tracking, which only applies to its English
+        labels — they measure ~9% narrower than plain Inter at this size, because the
+        group was drawn tighter before being scaled to 0.863845. The Japanese set is
+        not in the export, so it is left at the font's natural metrics. */}
     <span
-      style={{ left: `${labelX - BORDER}px` }}
-      className="absolute top-1/2 -translate-y-1/2 whitespace-nowrap text-[13.82px] leading-none tracking-[-0.042em] text-hd-ink"
+      className={`whitespace-nowrap text-[13.82px] leading-none text-hd-ink ${
+        tight ? "tracking-[-0.042em]" : ""
+      }`}
     >
       {label}
     </span>
@@ -100,6 +110,7 @@ const OntologyDiagram = ({
 }) => {
   const { lang } = useLang();
   const t = ontologyLabels[lang];
+  const tight = lang === "en";
 
   return (
     <div
@@ -108,15 +119,18 @@ const OntologyDiagram = ({
     >
       <OntologyLines className="absolute inset-0 h-full w-full" />
 
-      <p className="absolute left-[277.99px] top-[35.5px] font-mono text-[14px] leading-none text-hd-banner">
+      {/* Centred on the caption's own centre in the export (325.12), which is not
+          quite the panel's centre — and centred rather than left-pinned so the
+          Japanese caption stays over the group it labels. */}
+      <p className="absolute left-[325.12px] top-[35.5px] -translate-x-1/2 font-mono text-[14px] leading-none text-hd-banner">
         {t.sources}
       </p>
 
       {SOURCES.map((c) => (
-        <Pill key={c.id} {...c} labelX={41.4} />
+        <Pill key={c.id} {...c} label={t.nodes[c.id]} slot={SOURCE_SLOT} tight={tight} />
       ))}
       {NODES.map((c) => (
-        <Pill key={c.id} {...c} labelX={36.3} />
+        <Pill key={c.id} {...c} label={t.nodes[c.id]} slot={NODE_SLOT} tight={tight} />
       ))}
 
       <p className="absolute left-[66.15px] top-[521.9px] font-mono text-[14px] leading-none text-hd-banner">

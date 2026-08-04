@@ -39,6 +39,16 @@ export const filters = {
   },
 } as const;
 
+/**
+ * The two categories the section now holds. Blogs were folded into news, so this is what
+ * the category dropdown offers alongside "all" — which is the default and shows both —
+ * and what each card's pill says.
+ */
+export const kinds = {
+  ja: { news: "ニュース", blog: "ブログ" },
+  en: { news: "News", blog: "Blog" },
+} as const;
+
 export const list = {
   ja: {
     loading: "読み込み中...",

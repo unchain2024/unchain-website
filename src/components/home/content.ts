@@ -11,41 +11,26 @@
 
 export type Lang = "ja" | "en";
 
-export const banner = {
-  ja: {
-    message: "UNCHAIN、JAPAN FUTURE GATEに出展（2026年7月8日〜10日・東京ビッグサイト）",
-    href: "/news",
-    dismiss: "閉じる",
-  },
-  en: {
-    message:
-      "UNCHAIN to exhibit at JAPAN FUTURE GATE (July 8–10, 2026 · Tokyo Big Sight)",
-    href: "/news",
-    dismiss: "Dismiss",
-  },
-} as const;
-
 export const nav = {
   ja: {
     items: [
       { label: "会社概要", href: "/about" },
       { label: "事業紹介", href: "/solutions" },
+      /* Blogs live in the news section now, so there is no separate entry for them. */
       { label: "ニュース", href: "/news" },
-      { label: "ブログ", href: "/blog" },
       { label: "お問い合わせ", href: "/contact" },
       { label: "採用情報", href: "/career" },
     ],
     neuron: "Neuron",
     neuronHref: "https://the-neuron.com/ja",
     demo: "デモを予約",
-    language: "言語を切り替える",
+    language: "言語を選択",
   },
   en: {
     items: [
       { label: "About", href: "/about" },
       { label: "Business", href: "/solutions" },
       { label: "News", href: "/news" },
-      { label: "Blog", href: "/blog" },
       { label: "Contact", href: "/contact" },
       { label: "Careers", href: "/career" },
     ],
@@ -219,8 +204,25 @@ export const footer = {
   },
 } as const;
 
+/**
+ * The language picker's options. Labels stay in their own language — an English
+ * speaker looking for English should see "EN", not a translated word for it.
+ */
+export const languages = [
+  { code: "en", label: "EN", name: "English" },
+  { code: "ja", label: "JP", name: "日本語" },
+] as const;
+
 export const social = [
-  { id: "x", label: "X", href: "https://x.com/" },
-  { id: "medium", label: "Medium", href: "https://medium.com/" },
-  { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/" },
+  { id: "x", label: "X", href: "https://x.com/theunchainai" },
+  {
+    id: "medium",
+    label: "Medium",
+    href: "https://medium.com/@unchain_the_world",
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/unchain-inc/",
+  },
 ] as const;

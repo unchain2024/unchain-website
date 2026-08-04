@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLang } from "@/lib/language";
 import { neuron } from "./content";
@@ -35,7 +34,7 @@ const CARD_ART_SIZE: Record<string, string> = {
 };
 
 const NeuronSection = () => {
-  const { lang, localePath } = useLang();
+  const { lang } = useLang();
   const t = neuron[lang];
 
   return (
@@ -155,13 +154,18 @@ const NeuronSection = () => {
                 {t.ontology.body}
               </p>
 
-              <Link
-                to={localePath(t.ontology.cta.href)}
+              {/* Goes to Neuron's own ontology page, per locale, so it leaves the
+                  site — an anchor rather than a router Link. */}
+              <a
+                href={t.ontology.cta.href}
+                target="_blank"
+                rel="noreferrer"
+                data-probe="ontology-cta"
                 className="mt-[40px] inline-flex h-[50px] items-center gap-[15px] rounded-full border border-hd-hairline pl-[16px] pr-[25px] text-[16px] leading-none text-black transition-colors hover:bg-white/60"
               >
                 {t.ontology.cta.label}
                 <ChevronRight className="text-hd-chevron" />
-              </Link>
+              </a>
             </ScrollReveal>
 
             {/* The figure is a scale drawing, so it shrinks as a whole rather than

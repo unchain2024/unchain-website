@@ -54,7 +54,7 @@ export const neuron = {
       eyebrow: "AI-DRIVEN ONTOLOGY",
       heading: ["言葉と言葉をつな", "ぎ、組織の文脈を理", "解する。"],
       body: "会話・ドキュメント・タスクから「誰が・何を・なぜ決定したのか」を読み解く、組織の意味の地図。情報を保存するだけでなく、関係性まで理解します。",
-      cta: { label: "仕組みを詳しく見る", href: "/contact" },
+      cta: { label: "仕組みを詳しく見る", href: "https://the-neuron.com/ja/ai-driven-ontology" },
     },
   },
   en: {
@@ -78,20 +78,67 @@ export const neuron = {
       eyebrow: "AI-DRIVEN ONTOLOGY",
       heading: ["Link meaning to", "meaning, and read", "the organisation."],
       body: "A map of what your organisation means, read out of conversations, documents and tasks — who decided what, and why. It does not just store information, it understands the relationships.",
-      cta: { label: "See how it works", href: "/contact" },
+      cta: { label: "See how it works", href: "https://the-neuron.com/en/ai-driven-ontology" },
     },
   },
 } as const;
 
 /**
- * The ontology figure. Positions are the design's own, in the 642x579 coordinate
- * space of `public/business/Section.svg`, translated so the panel's top-left is 0,0.
- * Node names are product/entity labels and stay in English in both locales, exactly
- * as the design has them, but they are still real text rather than baked artwork.
+ * Every word inside the ontology figure. The export outlines these to paths in
+ * English only; the Japanese set is the localised diagram Neuron publishes at
+ * the-neuron.com/ja/ai-driven-ontology.
+ *
+ * Because the two sets have very different measures, the figure's pills size to
+ * their content and are anchored on the centre the design drew them on rather than
+ * on a fixed width — see `OntologyDiagram`.
  */
 export const ontologyLabels = {
-  ja: { sources: "DATA SOURCE", platform: "AI-NATIVE ONTOLOGY" },
-  en: { sources: "DATA SOURCE", platform: "AI-NATIVE ONTOLOGY" },
+  ja: {
+    sources: "データソース",
+    platform: "AIネイティブ オントロジ",
+    nodes: {
+      pm: "プロジェクト管理ツール",
+      workforce: "人材管理",
+      docs: "ドキュメントストレージ",
+      erp: "ERP",
+      warehouse: "データウェアハウス",
+      chat: "チャットツール",
+      email: "メール",
+      crm: "CRM",
+      sheets: "スプレッドシート",
+      decision: "決定",
+      "open-item": "未解決項目",
+      task: "タスク",
+      risk: "リスク",
+      person: "人物",
+      lesson: "教訓",
+      project: "プロジェクト",
+      outcome: "成果",
+    },
+  },
+  en: {
+    sources: "DATA SOURCE",
+    platform: "AI-NATIVE ONTOLOGY",
+    nodes: {
+      pm: "Project management tools",
+      workforce: "Workforce management",
+      docs: "Document storage",
+      erp: "ERP",
+      warehouse: "Data warehouse",
+      chat: "Chat tools",
+      email: "Email",
+      crm: "CRM",
+      sheets: "Spreadsheets",
+      decision: "Decision",
+      "open-item": "Open Item",
+      task: "Task",
+      risk: "Risk",
+      person: "Person",
+      lesson: "Lesson",
+      project: "Project",
+      outcome: "Outcome",
+    },
+  },
 } as const;
 
 export const advisor = {

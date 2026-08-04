@@ -1,12 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Check } from "lucide-react";
 import { useLang } from "@/lib/language";
-import AnnouncementBar from "./AnnouncementBar";
-import { nav as navContent } from "@/components/home/content";
+import { nav as navContent, languages } from "@/components/home/content";
 import { UnchainLogo } from "@/components/home/Logo";
 import { Globe, ArrowUpRight } from "@/components/home/icons";
+import { FlagUS, FlagJP } from "@/components/home/flags";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
 
@@ -24,7 +30,7 @@ const Navigation = () => {
   const [hidden, setHidden] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const lastScrollY = useRef(0);
-  const { lang, toggleLang, localePath } = useLang();
+  const { lang, setLang, localePath } = useLang();
 
   useEffect(() => {
     const onScroll = () => {
@@ -83,8 +89,6 @@ const Navigation = () => {
       className="fixed left-0 right-0 top-0 z-50 bg-transparent transition-transform duration-300"
       style={{ transform: hidden ? "translateY(-100%)" : "translateY(0)" }}
     >
-      <AnnouncementBar />
-
       <div className="mx-auto flex h-[68px] w-full max-w-[1440px] items-center justify-between px-6 lg:px-10">
         {/* Logo + primary links */}
         <div className="flex items-center gap-10 xl:gap-[27px]">
@@ -136,18 +140,41 @@ const Navigation = () => {
             </>
           )}
 
-          <button
-            onClick={toggleLang}
-            aria-label={t.language}
-            title={lang === "ja" ? "English" : "日本語"}
-            className={`flex h-9 w-9 items-center justify-center rounded-full border border-hd-hairline transition-colors duration-500 ${
-              isLight
-                ? "text-black hover:bg-black/5"
-                : "text-white hover:bg-white/10"
-            }`}
-          >
-            <Globe />
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                aria-label={t.language}
+                className={`flex h-9 w-9 items-center justify-center rounded-full border border-hd-hairline outline-none transition-colors duration-500 ${
+                  isLight
+                    ? "text-black hover:bg-black/5"
+                    : "text-white hover:bg-white/10"
+                }`}
+              >
+                <Globe />
+              </button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align="end" className="min-w-[140px]">
+              {languages.map((option) => {
+                const Flag = option.code === "en" ? FlagUS : FlagJP;
+                return (
+                  <DropdownMenuItem
+                    key={option.code}
+                    onSelect={() => setLang(option.code)}
+                    className="cursor-pointer gap-2.5"
+                  >
+                    <Flag className="h-[14px] w-5 shrink-0 rounded-[2px]" />
+                    <span className="text-[14px] font-medium">
+                      {option.label}
+                    </span>
+                    {lang === option.code && (
+                      <Check className="ml-auto h-4 w-4 shrink-0" />
+                    )}
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <a
             href={t.neuronHref}
@@ -226,12 +253,28 @@ const Navigation = () => {
               )}
 
               <div className="mt-2 flex flex-wrap items-center gap-3">
-                <button
-                  onClick={toggleLang}
-                  className="rounded-full border border-foreground/30 px-4 py-1.5 text-sm font-medium text-foreground transition-all hover:bg-foreground hover:text-background"
-                >
-                  {lang === "ja" ? "Switch to English" : "日本語に切替"}
-                </button>
+                {languages.map((option) => {
+                  const Flag = option.code === "en" ? FlagUS : FlagJP;
+                  const active = lang === option.code;
+                  return (
+                    <button
+                      key={option.code}
+                      onClick={() => {
+                        setLang(option.code);
+                        setMobileOpen(false);
+                      }}
+                      aria-current={active ? "true" : undefined}
+                      className={`flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                        active
+                          ? "border-foreground bg-foreground text-background"
+                          : "border-foreground/30 text-foreground hover:bg-foreground/5"
+                      }`}
+                    >
+                      <Flag className="h-[14px] w-5 shrink-0 rounded-[2px]" />
+                      {option.label}
+                    </button>
+                  );
+                })}
                 <Link
                   to={localePath("/contact")}
                   onClick={() => setMobileOpen(false)}
