@@ -1,0 +1,8 @@
+[
+ { "name": "01-banner",  "design": "tools/design/.work/shots/pernews-design-full.png", "y": 0,    "h": 40,   "bg": "#000000", "dy": 0 },
+ { "name": "02-nav",     "design": "tools/design/.work/shots/pernews-design-full.png", "y": 40,   "h": 68,   "bg": "#ffffff", "dy": 40 },
+ { "name": "03-article", "design": "tools/design/.work/shots/pernews-design-full.png", "y": 108,  "h": 1897, "bg": "#ffffff", "dy": 108 },
+ { "name": "04-related", "design": "tools/design/.work/shots/pernews-design-full.png", "y": 1982, "h": 700,  "bg": "#ffffff", "dy": 2005 },
+ { "name": "05-cta",     "design": "tools/design/.work/shots/pernews-design-full.png", "y": 2681, "h": 597,  "bg": "#ffffff", "dy": 2707 },
+ { "name": "06-footer",  "design": "tools/design/.work/shots/pernews-design-full.png", "y": 3278, "h": 430,  "bg": "#ffffff", "dy": 3304 }
+]

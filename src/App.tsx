@@ -13,13 +13,14 @@ import ContactPage from "./pages/ContactPage";
 import SolutionsPage from "./pages/SolutionsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfUsePage from "./pages/TermsOfUsePage";
+import TrustSecurityPage from "./pages/TrustSecurityPage";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import Login from "./pages/Login";
 import PublishNewsPage from "./pages/PublishNewsPage";
 import EditNewsListPage from "./pages/EditNewsListPage";
 import EditNewsPage from "./pages/EditNewsPage";
-import BlogPage from "./pages/BlogPage";
+import BlogRedirect from "./pages/BlogRedirect";
 import PublishBlogPage from "./pages/PublishBlogPage";
 import EditBlogListPage from "./pages/EditBlogListPage";
 import EditBlogPage from "./pages/EditBlogPage";
@@ -40,11 +41,13 @@ const pageRoutes = (
     <Route path="about" element={<AboutPage />} />
     <Route path="news" element={<NewsPage />} />
     <Route path="news/:slug" element={<NewsPage />} />
-    <Route path="blog" element={<BlogPage />} />
-    <Route path="blog/:slug" element={<BlogPage />} />
+    {/* Blogs live in the news section now; these keep the old URLs working. */}
+    <Route path="blog" element={<BlogRedirect />} />
+    <Route path="blog/:slug" element={<BlogRedirect />} />
     <Route path="career" element={<CareerPage />} />
     <Route path="contact" element={<ContactPage />} />
     <Route path="solutions" element={<SolutionsPage />} />
+    <Route path="trust-security" element={<TrustSecurityPage />} />
     <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
     <Route path="terms-of-use" element={<TermsOfUsePage />} />
   </>

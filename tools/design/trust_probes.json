@@ -1,0 +1,29 @@
+[
+ { "name": "hero.h1",        "design": "public/trust-security/Frame 2147226132.svg", "x": 70,   "y": 120, "w": 430, "h": 246, "mode": "light", "section": "s-hero" },
+ { "name": "hero.body",      "design": "public/trust-security/Frame 2147226132.svg", "x": 70,   "y": 392, "w": 490, "h": 56,  "mode": "light", "section": "s-hero" },
+ { "name": "hero.shield",    "design": "public/trust-security/Frame 2147226132.svg", "x": 940,  "y": 82,  "w": 348, "h": 398, "mode": "light", "section": "s-hero" },
+
+ { "name": "appr.eyebrow",   "design": "public/trust-security/Section.svg",   "x": 112,  "y": 96,  "w": 130, "h": 26,  "mode": "light", "section": "s-approach" },
+ { "name": "appr.h2",        "design": "public/trust-security/Section.svg",   "x": 112,  "y": 132, "w": 510, "h": 128, "mode": "light", "section": "s-approach" },
+ { "name": "appr.c1.art",    "design": "public/trust-security/Section.svg",   "x": 195,  "y": 388, "w": 138, "h": 112, "mode": "light", "section": "s-approach" },
+ { "name": "appr.c1.title",  "design": "public/trust-security/Section.svg",   "x": 126,  "y": 553, "w": 180, "h": 36,  "mode": "light", "section": "s-approach" },
+ { "name": "appr.c1.body",   "design": "public/trust-security/Section.svg",   "x": 126,  "y": 592, "w": 275, "h": 50,  "mode": "light", "section": "s-approach" },
+ { "name": "appr.c4.art",    "design": "public/trust-security/Section.svg",   "x": 1114, "y": 380, "w": 124, "h": 128, "mode": "light", "section": "s-approach" },
+ { "name": "appr.c4.title",  "design": "public/trust-security/Section.svg",   "x": 1040, "y": 553, "w": 180, "h": 36,  "mode": "light", "section": "s-approach" },
+
+ { "name": "lay.eyebrow",    "design": "public/trust-security/Section-1.svg", "x": 648,  "y": 112, "w": 145, "h": 26,  "mode": "light", "section": "s-layers" },
+ { "name": "lay.h2",         "design": "public/trust-security/Section-1.svg", "x": 444,  "y": 148, "w": 520, "h": 128, "mode": "light", "section": "s-layers" },
+ { "name": "lay.stack",      "design": "public/trust-security/Section-1.svg", "x": 480,  "y": 320, "w": 480, "h": 533, "mode": "light", "section": "s-layers" },
+ { "name": "lay.num01",      "design": "public/trust-security/Section-1.svg", "x": 906,  "y": 398, "w": 46,  "h": 38,  "mode": "dark",  "section": "s-layers" },
+ { "name": "lay.l1.card",    "design": "public/trust-security/Section-1.svg", "x": 996,  "y": 362, "w": 328, "h": 104, "mode": "light", "section": "s-layers" },
+ { "name": "lay.l1.title",   "design": "public/trust-security/Section-1.svg", "x": 1086, "y": 386, "w": 200, "h": 32,  "mode": "light", "section": "s-layers" },
+ { "name": "lay.l1.body",    "design": "public/trust-security/Section-1.svg", "x": 1086, "y": 420, "w": 200, "h": 24,  "mode": "light", "section": "s-layers" },
+ { "name": "lay.l2.card",    "design": "public/trust-security/Section-1.svg", "x": 116,  "y": 476, "w": 328, "h": 104, "mode": "light", "section": "s-layers" },
+
+ { "name": "pol.eyebrow",    "design": "public/trust-security/Section-2.svg", "x": 112,  "y": 96,  "w": 90,  "h": 26,  "mode": "light", "section": "s-policies" },
+ { "name": "pol.h2",         "design": "public/trust-security/Section-2.svg", "x": 112,  "y": 132, "w": 470, "h": 128, "mode": "light", "section": "s-policies" },
+ { "name": "pol.r1.icon",    "design": "public/trust-security/Section-2.svg", "x": 114,  "y": 357, "w": 48,  "h": 48,  "mode": "light", "section": "s-policies" },
+ { "name": "pol.r1.label",   "design": "public/trust-security/Section-2.svg", "x": 164,  "y": 368, "w": 210, "h": 28,  "mode": "light", "section": "s-policies" },
+ { "name": "pol.r1.button",  "design": "public/trust-security/Section-2.svg", "x": 1264, "y": 350, "w": 62,  "h": 62,  "mode": "light", "section": "s-policies" },
+ { "name": "pol.r3.label",   "design": "public/trust-security/Section-2.svg", "x": 164,  "y": 564, "w": 210, "h": 28,  "mode": "light", "section": "s-policies" }
+]

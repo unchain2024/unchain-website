@@ -1,5 +1,6 @@
 /**
- * Per-article OGP injection for /blog/:slug and /news/:slug.
+ * Per-article OGP injection for /news/:slug, and for the /blog/:slug URLs that now
+ * redirect into it.
  *
  * The site is a client-rendered Vite SPA, so the <meta> tags react-helmet-async
  * writes only exist after JavaScript runs. Link-preview crawlers (Slack, X,
@@ -84,6 +85,35 @@ async function fetchArticles(table: string): Promise<ArticleRow[] | null> {
   }
 }
 
+/**
+ * Both tables as one list, newest first.
+ *
+ * Blogs were folded into the news section, so a `/news/:slug` can be either kind and both
+ * have to be searched. It matters that this is the same corpus `NewsPage` merges, because
+ * `buildSlugIndex` disambiguates against whatever set it is given — resolving against one
+ * table alone could hand back a different slug than the one the page links to.
+ *
+ * Two separately sorted lists concatenated are not sorted, hence the re-sort. If only one
+ * table answers, serve what there is rather than nothing.
+ *
+ * Ids are deduplicated, news winning, because `buildSlugIndex` treats a repeated row as a
+ * collision and would discriminate both copies — quietly changing a live URL. That cannot
+ * happen while the tables are disjoint, but a row copied from one to the other during a
+ * content migration is exactly the kind of thing that would otherwise break silently.
+ */
+async function fetchCorpus(): Promise<ArticleRow[] | null> {
+  const [news, blogs] = await Promise.all([fetchArticles("articles"), fetchArticles("blogs")]);
+  if (!news && !blogs) return null;
+  return dedupeById([...(news ?? []), ...(blogs ?? [])]).sort(
+    (a, b) => new Date(b.created_at ?? 0).getTime() - new Date(a.created_at ?? 0).getTime()
+  );
+}
+
+const dedupeById = <T extends { id: string }>(rows: T[]): T[] => {
+  const seen = new Set<string>();
+  return rows.filter((row) => !seen.has(row.id) && seen.add(row.id));
+};
+
 function buildMetaTags(opts: {
   title: string;
   description: string;
@@ -139,7 +169,8 @@ function stripDefaultMeta(html: string) {
 
 export default async function handler(request: Request): Promise<Response> {
   const requestUrl = new URL(request.url);
-  const section = requestUrl.searchParams.get("section") === "news" ? "news" : "blog";
+  // `section` is still passed by the rewrites but no longer changes anything: both
+  // sections read one merged corpus and both canonicalise to /news/:slug.
   const slugParam = requestUrl.searchParams.get("slug") || "";
   const lang = requestUrl.searchParams.get("lang") === "en" ? "en" : "ja";
 
@@ -158,7 +189,7 @@ export default async function handler(request: Request): Promise<Response> {
       },
     });
 
-  const rows = await fetchArticles(section === "news" ? "articles" : "blogs");
+  const rows = await fetchCorpus();
   // Supabase unreachable or unconfigured: still serve the app, just without
   // enriched tags. Never let a metadata problem take the page down.
   if (!rows) return serveShell(200);
@@ -183,10 +214,13 @@ export default async function handler(request: Request): Promise<Response> {
         : `${SITE_URL}${rawImage.startsWith("/") ? "" : "/"}${rawImage}`
       : DEFAULT_IMAGE;
 
-  // Canonicalise: reaching the article by its id still advertises the readable slug.
+  // Canonicalise: reaching the article by its id still advertises the readable slug — and
+  // now also its section, since /blog/:slug is a redirect into /news/:slug. A crawler that
+  // arrives on an old blog URL is told the news one is canonical, which is the point of
+  // keeping those URLs alive rather than dropping them.
   const canonicalSlug = buildSlugIndex(rows).get(article.id) ?? slugParam;
-  const jaUrl = `${SITE_URL}/${section}/${encodeURIComponent(canonicalSlug)}`;
-  const enUrl = `${SITE_URL}/en/${section}/${encodeURIComponent(canonicalSlug)}`;
+  const jaUrl = `${SITE_URL}/news/${encodeURIComponent(canonicalSlug)}`;
+  const enUrl = `${SITE_URL}/en/news/${encodeURIComponent(canonicalSlug)}`;
 
   const author = [article.author_first_name, article.author_last_name]
     .filter(Boolean)

@@ -1,0 +1,102 @@
+[
+ {
+  "name": "hero.h1",
+  "design": "public/termofuse/Frame 2147226133.svg",
+  "x": 70,
+  "y": 74,
+  "w": 440,
+  "h": 168,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "hero.date",
+  "design": "public/termofuse/Frame 2147226133.svg",
+  "x": 70,
+  "y": 270,
+  "w": 300,
+  "h": 40,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "body.intro",
+  "design": "public/termofuse/Section.svg",
+  "x": 388,
+  "y": 110,
+  "w": 664,
+  "h": 146,
+  "mode": "light",
+  "section": "s-body"
+ },
+ {
+  "name": "body.h2",
+  "design": "public/termofuse/Section.svg",
+  "x": 388,
+  "y": 288,
+  "w": 250,
+  "h": 70,
+  "mode": "light",
+  "section": "s-body"
+ },
+ {
+  "name": "body.item1",
+  "design": "public/termofuse/Section.svg",
+  "x": 388,
+  "y": 392,
+  "w": 664,
+  "h": 76,
+  "mode": "light",
+  "section": "s-body"
+ },
+ {
+  "name": "body.item6",
+  "design": "public/termofuse/Section.svg",
+  "x": 388,
+  "y": 1010,
+  "w": 664,
+  "h": 54,
+  "mode": "light",
+  "section": "s-body"
+ },
+ {
+  "name": "body.signature",
+  "design": "public/termofuse/Section.svg",
+  "x": 388,
+  "y": 1094,
+  "w": 300,
+  "h": 32,
+  "mode": "light",
+  "section": "s-body"
+ },
+ {
+  "name": "body.contact",
+  "design": "public/termofuse/Section.svg",
+  "x": 388,
+  "y": 1196,
+  "w": 430,
+  "h": 30,
+  "mode": "light",
+  "section": "s-body"
+ },
+ {
+  "name": "body.email",
+  "design": "public/termofuse/Section.svg",
+  "x": 388,
+  "y": 1226,
+  "w": 250,
+  "h": 26,
+  "mode": "light",
+  "section": "s-body"
+ },
+ {
+  "name": "hero.art",
+  "design": "public/termofuse/Frame 2147226133.svg",
+  "x": 1040,
+  "y": 60,
+  "w": 400,
+  "h": 600,
+  "mode": "light",
+  "dy": 68
+ }
+]

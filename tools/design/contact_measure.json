@@ -1,0 +1,18 @@
+[
+ ["s-contact", "[data-probe='s-contact']"],
+ ["card", "[data-probe='card']"],
+ ["hero-heading", "[data-probe='hero-heading']"],
+ ["hero-body", "[data-probe='hero-body']"],
+ ["label-topic", "[data-probe='label-topic']"],
+ ["pills", "[data-probe='pills']"],
+ ["label-company", "[data-probe='label-company']"],
+ ["input-company", "[data-probe='input-company']"],
+ ["label-name", "[data-probe='label-name']"],
+ ["input-name", "[data-probe='input-name']"],
+ ["label-email", "[data-probe='label-email']"],
+ ["input-email", "[data-probe='input-email']"],
+ ["label-message", "[data-probe='label-message']"],
+ ["input-message", "[data-probe='input-message']"],
+ ["consent", "[data-probe='consent']"],
+ ["submit", "[data-probe='submit']"]
+]

@@ -1,16 +1,20 @@
 import { createContext, useContext, ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-type Lang = "ja" | "en";
+export type Lang = "ja" | "en";
 
 interface LanguageContextType {
   lang: Lang;
+  /** Go to the current page in a specific language. */
+  setLang: (next: Lang) => void;
+  /** Swap to the other language. */
   toggleLang: () => void;
   localePath: (path: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType>({
   lang: "ja",
+  setLang: () => {},
   toggleLang: () => {},
   localePath: (p) => p,
 });
@@ -28,21 +32,24 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     return path;
   };
 
-  const toggleLang = () => {
-    const currentPath = location.pathname;
-    if (lang === "en") {
-      // Strip /en prefix to go to Japanese
-      const jaPath = currentPath.replace(/^\/en/, "") || "/";
-      navigate(jaPath);
-    } else {
-      // Add /en prefix to go to English
-      const enPath = currentPath === "/" ? "/en" : `/en${currentPath}`;
-      navigate(enPath);
-    }
+  /**
+   * Language lives in the URL, so switching means navigating to the same page
+   * under (or out of) the `/en` prefix. Selecting the language already showing
+   * is a no-op rather than a redundant navigation.
+   */
+  const setLang = (next: Lang) => {
+    if (next === lang) return;
+
+    const bare = location.pathname.replace(/^\/en(?=\/|$)/, "") || "/";
+    const target = next === "en" ? (bare === "/" ? "/en" : `/en${bare}`) : bare;
+
+    navigate(`${target}${location.search}${location.hash}`);
   };
 
+  const toggleLang = () => setLang(lang === "en" ? "ja" : "en");
+
   return (
-    <LanguageContext.Provider value={{ lang, toggleLang, localePath }}>
+    <LanguageContext.Provider value={{ lang, setLang, toggleLang, localePath }}>
       {children}
     </LanguageContext.Provider>
   );

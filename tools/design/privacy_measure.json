@@ -1,0 +1,20 @@
+[
+ ["s-hero", "[data-probe='s-hero']"],
+ ["s-policy", "[data-probe='s-policy']"],
+ ["hero-h1", "[data-probe='s-hero'] h1"],
+ ["hero-date", "[data-probe='s-hero'] p"],
+ ["policy-frame", "[data-probe='policy-frame']"],
+ ["policy-card", "[data-probe='policy-card']"],
+ ["policy-measure", "[data-probe='policy-measure']"],
+ ["policy-intro", "[data-probe='policy-intro']"],
+ ["policy-s1", "[data-probe='policy-s1']"],
+ ["policy-h1", "[data-probe='policy-h1']"],
+ ["policy-l1", "[data-probe='policy-l1']"],
+ ["policy-l1i1", "[data-probe='policy-l1i1']"],
+ ["policy-s2", "[data-probe='policy-s2']"],
+ ["policy-h2", "[data-probe='policy-h2']"],
+ ["policy-b2", "[data-probe='policy-b2']"],
+ ["policy-s11", "[data-probe='policy-s11']"],
+ ["policy-h11", "[data-probe='policy-h11']"],
+ ["policy-b11", "[data-probe='policy-b11']"]
+]

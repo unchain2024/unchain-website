@@ -13,8 +13,31 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+        mono: ['Roboto Mono', 'monospace'],
       },
       colors: {
+        /* Lifted verbatim from the home-page design SVGs — do not re-derive. */
+        hd: {
+          "hero-top": "#1F2B42",
+          eyebrow: "#A4A7AE",
+          "eyebrow-ink": "#535862",
+          "eyebrow-light": "#D5D7DA",
+          hairline: "#D5D7DA",
+          chevron: "#414651",
+          panel: "#F5F5F5",
+          join: "#314768",
+          banner: "#717680",
+          navy: "#0E3067",
+          /* Added by the business page — same provenance, from public/business. */
+          "card-line": "#E9EAEB",
+          ink: "#0A0D12",
+          /* Added by the article page, from public/news/pernews. The same ink as
+             `chevron`, named for the job it does there: article body copy. */
+          "body-ink": "#414651",
+          /* Added by the contact page, from public/contact. The red the form's required
+             marks are drawn in, and the only place the design uses it. */
+          required: "#D92D20",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

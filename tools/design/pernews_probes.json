@@ -1,0 +1,32 @@
+[
+ {
+  "name": "art.pill",
+  "design": "public/news/pernews/Frame 2147226133.svg",
+  "x": 372, "y": 92, "w": 106, "h": 46, "mode": "light", "dy": 108
+ },
+ {
+  "name": "art.leadRule",
+  "design": "public/news/pernews/Frame 2147226133.svg",
+  "x": 372, "y": 824, "w": 18, "h": 56, "mode": "light", "dy": 108
+ },
+ {
+  "name": "art.leadCopy",
+  "design": "public/news/pernews/Frame 2147226133.svg",
+  "x": 392, "y": 826, "w": 660, "h": 52, "mode": "light", "dy": 108
+ },
+ {
+  "name": "art.cover",
+  "design": "public/news/pernews/Frame 2147226133.svg",
+  "x": 374, "y": 428, "w": 692, "h": 368, "mode": "light", "dy": 108
+ },
+ {
+  "name": "rel.heading",
+  "design": "public/news/pernews/Section.svg",
+  "x": 112, "y": 96, "w": 340, "h": 72, "mode": "light", "section": "s-related"
+ },
+ {
+  "name": "rel.button",
+  "design": "public/news/pernews/Section.svg",
+  "x": 1152, "y": 100, "w": 180, "h": 68, "mode": "light", "section": "s-related"
+ }
+]

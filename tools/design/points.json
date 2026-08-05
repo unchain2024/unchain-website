@@ -1,0 +1,18 @@
+[
+ {"name":"hero.bg.top","design":"public/home/Hero.svg","section":"hero","x":300,"y":90},
+ {"name":"hero.bg.mid","design":"public/home/Hero.svg","section":"hero","x":300,"y":450},
+ {"name":"hero.bg.bottom","design":"public/home/Hero.svg","section":"hero","x":300,"y":880},
+ {"name":"about.bg.top","design":"public/home/Section (Original).svg","section":"about","x":720,"y":20},
+ {"name":"about.bg.mid","design":"public/home/Section (Original).svg","section":"about","x":720,"y":500},
+ {"name":"about.bg.bot","design":"public/home/Section (Original).svg","section":"about","x":720,"y":690},
+ {"name":"about.blade.tl","design":"public/home/Section (Original).svg","section":"about","x":80,"y":120},
+ {"name":"biz.panel","design":"public/home/Section.svg","section":"business","x":700,"y":100},
+ {"name":"biz.card","design":"public/home/Section.svg","section":"business","x":700,"y":300},
+ {"name":"join.bg.tl","design":"public/home/Section-2.svg","section":"join","x":60,"y":60},
+ {"name":"join.bg.mid","design":"public/home/Section-2.svg","section":"join","x":720,"y":350},
+ {"name":"join.bg.tr","design":"public/home/Section-2.svg","section":"join","x":1380,"y":60},
+ {"name":"cta.blade.l","design":"public/home/CTA Banner - Desktop.svg","section":"cta","x":60,"y":180},
+ {"name":"cta.blade.r","design":"public/home/CTA Banner - Desktop.svg","section":"cta","x":1350,"y":420},
+ {"name":"foot.panel.tl","design":"public/home/Footer - Desktop.svg","section":"footer","x":300,"y":60},
+ {"name":"foot.panel.br","design":"public/home/Footer - Desktop.svg","section":"footer","x":1300,"y":380}
+]

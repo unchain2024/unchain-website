@@ -1,0 +1,26 @@
+[
+ {
+  "name": "01-nav",
+  "design": "tools/design/.work/shots/contact-design-full.png",
+  "y": 0,
+  "dy": 0,
+  "h": 68,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "02-form",
+  "design": "tools/design/.work/shots/contact-design-full.png",
+  "y": 68,
+  "dy": 68,
+  "h": 1052,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "03-footer",
+  "design": "tools/design/.work/shots/contact-design-full.png",
+  "y": 1120,
+  "dy": 1120,
+  "h": 430,
+  "bg": "#ffffff"
+ }
+]

@@ -1,0 +1,87 @@
+import { Link } from "react-router-dom";
+import ScrollReveal from "@/components/ScrollReveal";
+import { useLang } from "@/lib/language";
+import { join } from "./content";
+import { ChevronRight } from "./icons";
+import JoinArt from "./art/JoinArt";
+import join1 from "@/assets/home/join-1.webp";
+import join2 from "@/assets/home/join-2.webp";
+import join3 from "@/assets/home/join-3.webp";
+import join4 from "@/assets/home/join-4.webp";
+import join5 from "@/assets/home/join-5.webp";
+
+/**
+ * Join us — `public/home/Section-2.svg` (1440x797).
+ *
+ * Solid #314768 with the export's blurred #CAD4E6 glow and two white 6% blades.
+ * The photo strip is 5 x 292x354 cards on a 16px gutter; the row is wider than the
+ * canvas so it bleeds off both edges exactly as drawn.
+ */
+const SHOTS = [join1, join2, join3, join4, join5];
+
+const JoinSection = () => {
+  const { lang, localePath } = useLang();
+  const t = join[lang];
+
+  return (
+    <section
+      id="s-join"
+      data-nav-theme="dark"
+      className="relative w-full overflow-hidden bg-hd-join"
+    >
+      <JoinArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
+
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 pt-20 lg:px-[120px] lg:pt-[122px]">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+          <ScrollReveal>
+            <p className="font-mono text-[14px] leading-none text-hd-eyebrow-light">
+              {t.eyebrow}
+            </p>
+
+            <h2 className="mt-[18px] text-[34px] font-bold leading-[1.13] text-white sm:text-[42px] lg:text-[54px] lg:leading-[59px]">
+              {t.headline.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+            </h2>
+
+            <p className="mt-[17px] text-[16px] leading-none text-hd-eyebrow-light">
+              {t.body}
+            </p>
+          </ScrollReveal>
+
+          <ScrollReveal
+            delay={0.1}
+            className="shrink-0 self-start lg:mb-[-2px] lg:self-auto"
+          >
+            <Link
+              to={localePath(t.cta.href)}
+              className="inline-flex h-[50px] items-center gap-[15px] rounded-full bg-white pl-[14px] pr-[25px] text-[16px] leading-none text-black transition-opacity hover:opacity-90"
+            >
+              {t.cta.label}
+              <ChevronRight className="text-hd-chevron" />
+            </Link>
+          </ScrollReveal>
+        </div>
+      </div>
+
+      {/* Full-bleed photo strip */}
+      <ScrollReveal className="relative z-10 mt-16 flex justify-center gap-4 pb-4 lg:mt-[123px]">
+        {SHOTS.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            loading="lazy"
+            className={`h-[220px] w-[181px] shrink-0 rounded-2xl bg-[#D9D9D9] object-cover lg:h-[354px] lg:w-[292px] ${
+              i > 2 ? "hidden sm:block" : ""
+            }`}
+          />
+        ))}
+      </ScrollReveal>
+    </section>
+  );
+};
+
+export default JoinSection;

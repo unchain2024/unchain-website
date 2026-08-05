@@ -41,7 +41,12 @@ function mockNetwork(opts: { supabaseDown?: boolean } = {}) {
 
     if (url.includes("/rest/v1/")) {
       if (supabaseDown) throw new Error("ECONNREFUSED");
-      return new Response(JSON.stringify(ROWS), {
+      // The handler reads both tables and merges them, so the mock has to answer per
+      // table — handing the same rows back twice would look like a slug collision and
+      // change the very URLs these tests assert. ROWS are the blog rows; the news table
+      // is empty here, which is the case the /blog fixtures exercise.
+      const rows = url.includes("/rest/v1/blogs") ? ROWS : [];
+      return new Response(JSON.stringify(rows), {
         status: 200,
         headers: { "content-type": "application/json" },
       });
@@ -95,7 +100,7 @@ describe("og edge function", () => {
     expect(html).toContain('<meta property="og:image" content="https://cdn.example.com/recap.png" />');
     expect(html).toContain('<meta property="og:type" content="article" />');
     expect(html).toContain(
-      '<meta property="og:url" content="https://unchain.co.jp/en/blog/recap-ai-world-2026-summer-tokyo" />'
+      '<meta property="og:url" content="https://unchain.co.jp/en/news/recap-ai-world-2026-summer-tokyo" />'
     );
     expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />');
     expect(html).toContain('<html lang="en"');
@@ -112,7 +117,7 @@ describe("og edge function", () => {
       '<meta property="og:title" content="【レポート】AI World 2026 Summer Tokyo | UNCHAIN" />'
     );
     expect(html).toContain(
-      '<meta property="og:url" content="https://unchain.co.jp/blog/recap-ai-world-2026-summer-tokyo" />'
+      '<meta property="og:url" content="https://unchain.co.jp/news/recap-ai-world-2026-summer-tokyo" />'
     );
     expect(html).toContain('<html lang="ja"');
   });
@@ -138,24 +143,28 @@ describe("og edge function", () => {
     ).text();
 
     expect(html).toContain(
-      '<link rel="canonical" href="https://unchain.co.jp/en/blog/recap-ai-world-2026-summer-tokyo" />'
+      '<link rel="canonical" href="https://unchain.co.jp/en/news/recap-ai-world-2026-summer-tokyo" />'
     );
     expect(html).toContain(
-      '<link rel="alternate" hreflang="ja" href="https://unchain.co.jp/blog/recap-ai-world-2026-summer-tokyo" />'
+      '<link rel="alternate" hreflang="ja" href="https://unchain.co.jp/news/recap-ai-world-2026-summer-tokyo" />'
     );
     expect(html).toContain(
-      '<link rel="alternate" hreflang="en" href="https://unchain.co.jp/en/blog/recap-ai-world-2026-summer-tokyo" />'
+      '<link rel="alternate" hreflang="en" href="https://unchain.co.jp/en/news/recap-ai-world-2026-summer-tokyo" />'
     );
   });
 
-  it("hits Supabase exactly once and never asks for a slug column", async () => {
+  it("reads each table once and never asks for a slug column", async () => {
     const fetchMock = mockNetwork();
     const handler = await loadHandler();
     await call(handler, "section=blog&slug=recap-ai-world-2026-summer-tokyo&lang=en");
 
-    const restCalls = fetchMock.mock.calls.filter((c) => String(c[0]).includes("/rest/v1/"));
-    expect(restCalls).toHaveLength(1);
-    expect(String(restCalls[0][0])).not.toContain("slug");
+    const restCalls = fetchMock.mock.calls.map((c) => String(c[0])).filter((u) => u.includes("/rest/v1/"));
+    // News and blogs are one corpus now, so two reads — but no more than that, and the
+    // slug is still derived in code rather than selected.
+    expect(restCalls).toHaveLength(2);
+    expect(restCalls.filter((u) => u.includes("/rest/v1/articles?"))).toHaveLength(1);
+    expect(restCalls.filter((u) => u.includes("/rest/v1/blogs?"))).toHaveLength(1);
+    for (const url of restCalls) expect(url).not.toContain("slug");
   });
 
   it("only ever reads from Supabase", async () => {
@@ -178,17 +187,24 @@ describe("og edge function", () => {
 
     // The canonical url uses the readable slug even when reached via the id.
     expect(html).toContain(
-      '<link rel="canonical" href="https://unchain.co.jp/en/blog/recap-ai-world-2026-summer-tokyo" />'
+      '<link rel="canonical" href="https://unchain.co.jp/en/news/recap-ai-world-2026-summer-tokyo" />'
     );
   });
 
-  it("queries the news table for section=news", async () => {
+  it("resolves a blog row under /news, because the two share one slug space", async () => {
     const fetchMock = mockNetwork();
     const handler = await loadHandler();
-    await call(handler, "section=news&slug=recap-ai-world-2026-summer-tokyo&lang=ja");
+    const res = await call(handler, "section=news&slug=recap-ai-world-2026-summer-tokyo&lang=ja");
+    const html = await res.text();
 
-    const restCall = fetchMock.mock.calls.find((c) => String(c[0]).includes("/rest/v1/"));
-    expect(String(restCall?.[0])).toContain("/rest/v1/articles?");
+    // The row only exists in `blogs`, and section=news still finds it.
+    expect(res.status).toBe(200);
+    expect(html).toContain(
+      '<meta property="og:title" content="【レポート】AI World 2026 Summer Tokyo | UNCHAIN" />'
+    );
+    const restCalls = fetchMock.mock.calls.map((c) => String(c[0])).filter((u) => u.includes("/rest/v1/"));
+    expect(restCalls.some((u) => u.includes("/rest/v1/articles?"))).toBe(true);
+    expect(restCalls.some((u) => u.includes("/rest/v1/blogs?"))).toBe(true);
   });
 
   it("404s an unknown slug but still serves the app shell", async () => {

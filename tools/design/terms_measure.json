@@ -1,0 +1,13 @@
+[
+ ["s-hero", "[data-probe='s-hero']"],
+ ["s-body", "[data-probe='s-body']"],
+ ["hero-heading", "[data-probe='hero-heading']"],
+ ["hero-date", "[data-probe='hero-date']"],
+ ["body-intro", "[data-probe='body-intro']"],
+ ["body-heading", "[data-probe='body-heading']"],
+ ["body-list", "[data-probe='body-list']"],
+ ["body-signature", "[data-probe='body-signature']"],
+ ["body-rule", "[data-probe='body-rule']"],
+ ["body-contact", "[data-probe='body-contact']"],
+ ["body-email", "[data-probe='body-email']"]
+]

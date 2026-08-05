@@ -1,0 +1,15 @@
+[
+ ["s-article", "[data-probe='s-article']"],
+ ["s-related", "[data-probe='s-related']"],
+ ["art-pill", "[data-probe='art-pill']"],
+ ["art-title", "[data-probe='art-title']"],
+ ["art-meta", "[data-probe='art-meta']"],
+ ["art-cover", "[data-probe='art-cover']"],
+ ["art-lead", "[data-probe='art-lead']"],
+ ["art-body", "[data-probe='art-body']"],
+ ["rel-button", "[data-probe='rel-button']"],
+ ["rel-grid", "[data-probe='rel-grid']"],
+ ["card-pill", "[data-probe='card-pill']"],
+ ["card-title", "[data-probe='card-title']"],
+ ["card-date", "[data-probe='card-date']"]
+]

@@ -1,0 +1,90 @@
+[
+ {
+  "name": "01-banner",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 0,
+  "h": 40,
+  "bg": "#000000",
+  "dy": 0
+ },
+ {
+  "name": "02-nav",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 40,
+  "h": 68,
+  "bg": "#ffffff",
+  "dy": 40
+ },
+ {
+  "name": "03-japan",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 108,
+  "h": 482,
+  "bg": "#ffffff",
+  "dy": 108
+ },
+ {
+  "name": "04-mission",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 590,
+  "h": 992,
+  "bg": "#ffffff",
+  "dy": 590
+ },
+ {
+  "name": "05-vision",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 1582,
+  "h": 352,
+  "bg": "#ffffff",
+  "dy": 1582
+ },
+ {
+  "name": "06-principles",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 1934,
+  "h": 728,
+  "bg": "#ffffff",
+  "dy": 1934
+ },
+ {
+  "name": "07-leadership",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 2662,
+  "h": 892,
+  "bg": "#ffffff",
+  "dy": 2662
+ },
+ {
+  "name": "08-dei",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 3554,
+  "h": 725,
+  "bg": "#ffffff",
+  "dy": 3554
+ },
+ {
+  "name": "09-company",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 4279,
+  "h": 987,
+  "bg": "#ffffff",
+  "dy": 4279
+ },
+ {
+  "name": "10-cta",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 5266,
+  "h": 597,
+  "bg": "#ffffff",
+  "dy": 5266
+ },
+ {
+  "name": "11-footer",
+  "design": "tools/design/.work/shots/about-design-full.png",
+  "y": 5863,
+  "h": 430,
+  "bg": "#ffffff",
+  "dy": 5863
+ }
+]

@@ -1,0 +1,42 @@
+[
+ {
+  "name": "01-hero",
+  "design": "tools/design/.work/shots/business-design-full.png",
+  "y": 0,
+  "dy": 40,
+  "h": 515,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "02-neuron",
+  "design": "tools/design/.work/shots/business-design-full.png",
+  "y": 515,
+  "dy": 555,
+  "h": 1943,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "03-advisor",
+  "design": "tools/design/.work/shots/business-design-full.png",
+  "y": 2457,
+  "dy": 2498,
+  "h": 1226,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "04-cta",
+  "design": "tools/design/.work/shots/business-design-full.png",
+  "y": 3683,
+  "dy": 3724,
+  "h": 597,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "05-footer",
+  "design": "tools/design/.work/shots/business-design-full.png",
+  "y": 4280,
+  "dy": 4321,
+  "h": 430,
+  "bg": "#ffffff"
+ }
+]

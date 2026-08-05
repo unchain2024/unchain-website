@@ -1,0 +1,292 @@
+[
+ {
+  "name": "mission.eyebrow",
+  "design": "public/about/Section.svg",
+  "x": 110,
+  "y": 96,
+  "w": 120,
+  "h": 26,
+  "mode": "light",
+  "section": "s-mission"
+ },
+ {
+  "name": "mission.h1",
+  "design": "public/about/Section.svg",
+  "x": 110,
+  "y": 130,
+  "w": 420,
+  "h": 125,
+  "mode": "light",
+  "section": "s-mission"
+ },
+ {
+  "name": "mission.lead",
+  "design": "public/about/Section.svg",
+  "x": 790,
+  "y": 132,
+  "w": 540,
+  "h": 60,
+  "mode": "light",
+  "section": "s-mission"
+ },
+ {
+  "name": "mission.body",
+  "design": "public/about/Section.svg",
+  "x": 790,
+  "y": 204,
+  "w": 540,
+  "h": 95,
+  "mode": "light",
+  "section": "s-mission"
+ },
+ {
+  "name": "vision.eyebrow",
+  "design": "public/about/Section-1.svg",
+  "section": "s-vision",
+  "x": 110,
+  "y": 96,
+  "w": 120,
+  "h": 26,
+  "mode": "light"
+ },
+ {
+  "name": "vision.h2",
+  "design": "public/about/Section-1.svg",
+  "section": "s-vision",
+  "x": 110,
+  "y": 132,
+  "w": 510,
+  "h": 125,
+  "mode": "light"
+ },
+ {
+  "name": "vision.body",
+  "design": "public/about/Section-1.svg",
+  "section": "s-vision",
+  "x": 850,
+  "y": 138,
+  "w": 480,
+  "h": 50,
+  "mode": "light"
+ },
+ {
+  "name": "prin.eyebrow",
+  "design": "public/about/Section-2.svg",
+  "section": "s-principles",
+  "x": 148,
+  "y": 152,
+  "w": 140,
+  "h": 26,
+  "mode": "light"
+ },
+ {
+  "name": "prin.heading",
+  "design": "public/about/Section-2.svg",
+  "section": "s-principles",
+  "x": 148,
+  "y": 188,
+  "w": 340,
+  "h": 185,
+  "mode": "light"
+ },
+ {
+  "name": "prin.item1",
+  "design": "public/about/Section-2.svg",
+  "section": "s-principles",
+  "x": 690,
+  "y": 148,
+  "w": 280,
+  "h": 30,
+  "mode": "light"
+ },
+ {
+  "name": "prin.item1body",
+  "design": "public/about/Section-2.svg",
+  "section": "s-principles",
+  "x": 690,
+  "y": 186,
+  "w": 520,
+  "h": 26,
+  "mode": "light"
+ },
+ {
+  "name": "prin.item4",
+  "design": "public/about/Section-2.svg",
+  "section": "s-principles",
+  "x": 690,
+  "y": 520,
+  "w": 280,
+  "h": 30,
+  "mode": "light"
+ },
+ {
+  "name": "lead.eyebrow",
+  "design": "public/about/Section-3.svg",
+  "section": "s-leadership",
+  "x": 112,
+  "y": 96,
+  "w": 120,
+  "h": 26,
+  "mode": "light"
+ },
+ {
+  "name": "lead.h2",
+  "design": "public/about/Section-3.svg",
+  "section": "s-leadership",
+  "x": 112,
+  "y": 132,
+  "w": 420,
+  "h": 125,
+  "mode": "light"
+ },
+ {
+  "name": "lead.name1",
+  "design": "public/about/Section-3.svg",
+  "section": "s-leadership",
+  "x": 138,
+  "y": 355,
+  "w": 120,
+  "h": 32,
+  "mode": "light"
+ },
+ {
+  "name": "lead.role1",
+  "design": "public/about/Section-3.svg",
+  "section": "s-leadership",
+  "x": 138,
+  "y": 394,
+  "w": 140,
+  "h": 26,
+  "mode": "light"
+ },
+ {
+  "name": "co.eyebrow",
+  "design": "public/about/Section-5.svg",
+  "section": "s-company",
+  "x": 112,
+  "y": 96,
+  "w": 120,
+  "h": 26,
+  "mode": "light"
+ },
+ {
+  "name": "co.h2",
+  "design": "public/about/Section-5.svg",
+  "section": "s-company",
+  "x": 112,
+  "y": 132,
+  "w": 240,
+  "h": 66,
+  "mode": "light"
+ },
+ {
+  "name": "co.label1",
+  "design": "public/about/Section-5.svg",
+  "section": "s-company",
+  "x": 112,
+  "y": 254,
+  "w": 120,
+  "h": 26,
+  "mode": "light"
+ },
+ {
+  "name": "co.value1",
+  "design": "public/about/Section-5.svg",
+  "section": "s-company",
+  "x": 412,
+  "y": 254,
+  "w": 200,
+  "h": 26,
+  "mode": "light"
+ },
+ {
+  "name": "co.label9",
+  "design": "public/about/Section-5.svg",
+  "section": "s-company",
+  "x": 112,
+  "y": 840,
+  "w": 120,
+  "h": 26,
+  "mode": "light"
+ },
+ {
+  "name": "japan.h2",
+  "design": "public/about/Frame 2147226133.svg",
+  "x": 74,
+  "y": 126,
+  "w": 330,
+  "h": 158,
+  "mode": "light",
+  "dy": 108
+ },
+ {
+  "name": "japan.body",
+  "design": "public/about/Frame 2147226133.svg",
+  "x": 74,
+  "y": 315,
+  "w": 480,
+  "h": 50,
+  "mode": "light",
+  "dy": 108
+ },
+ {
+  "name": "prin.eyebrow",
+  "design": "public/about/Section-2.svg",
+  "section": "s-principles",
+  "x": 148,
+  "y": 152,
+  "w": 140,
+  "h": 26,
+  "mode": "dark"
+ },
+ {
+  "name": "prin.heading",
+  "design": "public/about/Section-2.svg",
+  "section": "s-principles",
+  "x": 148,
+  "y": 188,
+  "w": 340,
+  "h": 60,
+  "mode": "dark"
+ },
+ {
+  "name": "dei.eyebrow",
+  "design": "public/about/Section-4.svg",
+  "section": "s-dei",
+  "x": 560,
+  "y": 112,
+  "w": 330,
+  "h": 28,
+  "mode": "dark"
+ },
+ {
+  "name": "dei.heading",
+  "design": "public/about/Section-4.svg",
+  "section": "s-dei",
+  "x": 280,
+  "y": 150,
+  "w": 850,
+  "h": 66,
+  "mode": "dark"
+ },
+ {
+  "name": "dei.title1",
+  "design": "public/about/Section-4.svg",
+  "section": "s-dei",
+  "x": 200,
+  "y": 528,
+  "w": 170,
+  "h": 32,
+  "mode": "dark"
+ },
+ {
+  "name": "dei.body1",
+  "design": "public/about/Section-4.svg",
+  "section": "s-dei",
+  "x": 110,
+  "y": 566,
+  "w": 350,
+  "h": 26,
+  "mode": "dark"
+ }
+]

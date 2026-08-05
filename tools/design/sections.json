@@ -1,0 +1,58 @@
+[
+ {
+  "name": "01-banner",
+  "design": "tools/design/.work/design/01-banner.png",
+  "y": 0,
+  "h": 40,
+  "bg": "#000000"
+ },
+ {
+  "name": "02-hero",
+  "design": "tools/design/.work/design/02-hero.png",
+  "y": 40,
+  "h": 900,
+  "bg": "#000000"
+ },
+ {
+  "name": "03-about",
+  "design": "tools/design/.work/design/03-about.png",
+  "y": 940,
+  "h": 700,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "04-business",
+  "design": "tools/design/.work/design/04-business.png",
+  "y": 1640,
+  "h": 743,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "05-news",
+  "design": "tools/design/.work/design/05-news.png",
+  "y": 2383,
+  "h": 736,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "06-join",
+  "design": "tools/design/.work/design/06-join.png",
+  "y": 3122,
+  "h": 797,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "07-cta",
+  "design": "tools/design/.work/design/07-cta.png",
+  "y": 3920,
+  "h": 597,
+  "bg": "#ffffff"
+ },
+ {
+  "name": "08-footer",
+  "design": "tools/design/.work/design/08-footer.png",
+  "y": 4517,
+  "h": 430,
+  "bg": "#ffffff"
+ }
+]

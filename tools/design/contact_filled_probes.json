@@ -1,0 +1,9 @@
+[
+ { "name": "filled.pill1",     "design": "public/contact/Frame 2147226132.svg", "x": 734, "y": 188, "w": 178, "h": 62, "mode": "light", "dy": 0 },
+ { "name": "filled.company",   "design": "public/contact/Frame 2147226132.svg", "x": 734, "y": 379, "w": 250, "h": 31, "mode": "light", "dy": 0 },
+ { "name": "filled.name",      "design": "public/contact/Frame 2147226132.svg", "x": 734, "y": 486, "w": 100, "h": 31, "mode": "light", "dy": 0 },
+ { "name": "filled.email",     "design": "public/contact/Frame 2147226132.svg", "x": 1020,"y": 487, "w": 240, "h": 33, "mode": "light", "dy": 0 },
+ { "name": "filled.message",   "design": "public/contact/Frame 2147226132.svg", "x": 734, "y": 593, "w": 550, "h": 143,"mode": "light", "dy": 0 },
+ { "name": "filled.checkbox",  "design": "public/contact/Frame 2147226132.svg", "x": 734, "y": 783, "w": 32,  "h": 32, "mode": "light", "dy": 0 },
+ { "name": "filled.submit",    "design": "public/contact/Frame 2147226132.svg", "x": 734, "y": 836, "w": 552, "h": 62, "mode": "light", "dy": 0 }
+]
