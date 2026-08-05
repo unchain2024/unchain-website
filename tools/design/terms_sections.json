@@ -1,0 +1,18 @@
+[
+ {
+  "name": "01-hero",
+  "design": "tools/design/.work/shots/terms-design-full.png",
+  "y": 68,
+  "h": 660,
+  "bg": "#ffffff",
+  "dy": 0
+ },
+ {
+  "name": "02-body",
+  "design": "tools/design/.work/shots/terms-design-full.png",
+  "y": 728,
+  "h": 1363,
+  "bg": "#ffffff",
+  "dy": 660
+ }
+]

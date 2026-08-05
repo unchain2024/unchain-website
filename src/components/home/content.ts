@@ -174,7 +174,7 @@ export const footer = {
     links: [
       { label: "会社概要", href: "/about" },
       { label: "ソリューション", href: "/solutions" },
-      { label: "信頼・セキュリティ", href: "/terms-of-use" },
+      { label: "信頼・セキュリティ", href: "/trust-security" },
       { label: "ニュース", href: "/news" },
       { label: "採用情報", href: "/career" },
       { label: "お問い合わせ", href: "/contact" },
@@ -190,7 +190,7 @@ export const footer = {
     links: [
       { label: "About", href: "/about" },
       { label: "Solutions", href: "/solutions" },
-      { label: "Trust & security", href: "/terms-of-use" },
+      { label: "Trust & security", href: "/trust-security" },
       { label: "News", href: "/news" },
       { label: "Careers", href: "/career" },
       { label: "Contact", href: "/contact" },

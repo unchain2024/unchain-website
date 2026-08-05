@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Check } from "lucide-react";
@@ -17,27 +17,26 @@ import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
 
 /**
- * Site header — matches the navigation drawn at the top of `public/home/Hero.svg`.
+ * Site header — matches the navigation drawn at the top of `public/home/Hero.svg`
+ * (page top) and `public/Navigation PC - Scrolling.svg` (scrolled).
  *
- * Design geometry at 1440w: 40px side gutters, 68px tall, 16px links spaced 35px
- * apart, then a 36px globe button, a 98x36 "Neuron" pill and a 94x36 white
- * "Book a demo" button, each separated by 8px. Outlines are #D5D7DA.
+ * Design geometry at 1440w: 40px side gutters, 68px tall, a 141x31.4 logo, then
+ * 37px to the 16px links which sit 36px apart, then a 36px globe button, a 98x36
+ * "Neuron" pill and a 94x36 white "Book a demo" button, each separated by 8px.
+ * Outlines are #D5D7DA. The bar never hides; once the page scrolls it gains the
+ * 68px-tall `black @ 50%` scrim the scrolling SVG draws behind the row.
  */
 const Navigation = () => {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("dark");
-  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const lastScrollY = useRef(0);
   const { lang, setLang, localePath } = useLang();
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setHidden(y > 80 && y > lastScrollY.current);
-      lastScrollY.current = y;
-    };
+    const onScroll = () => setScrolled(window.scrollY > 0);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -85,13 +84,20 @@ const Navigation = () => {
   };
 
   return (
-    <nav
-      className="fixed left-0 right-0 top-0 z-50 bg-transparent transition-transform duration-300"
-      style={{ transform: hidden ? "translateY(-100%)" : "translateY(0)" }}
-    >
-      <div className="mx-auto flex h-[68px] w-full max-w-[1440px] items-center justify-between px-6 lg:px-10">
+    <nav className="fixed left-0 right-0 top-0 z-50">
+      {/* Scrolled scrim — the full-bleed 68px `black @ 50%` rect from
+          `public/Navigation PC - Scrolling.svg`, mirrored to white over the
+          light sections so the dark ink stays legible. */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-x-0 top-0 h-[68px] transition-colors duration-300 ${
+          scrolled ? (isLight ? "bg-white/50" : "bg-black/50") : "bg-transparent"
+        }`}
+      />
+
+      <div className="relative mx-auto flex h-[68px] w-full max-w-[1440px] items-center justify-between px-6 lg:px-10">
         {/* Logo + primary links */}
-        <div className="flex items-center gap-10 xl:gap-[27px]">
+        <div className="flex items-center gap-10 xl:gap-[37px]">
           <Link to={localePath("/")} aria-label="UNCHAIN">
             <UnchainLogo
               className={`h-[31.4px] w-[141px] transition-colors duration-500 ${
@@ -192,7 +198,7 @@ const Navigation = () => {
 
           <Link
             to={localePath("/contact")}
-            className="flex h-9 items-center rounded-full bg-white px-[13px] text-[14px] leading-none text-black transition-opacity hover:opacity-90"
+            className="flex h-9 items-center rounded-full bg-white px-[12px] text-[14px] leading-none text-black transition-opacity hover:opacity-90"
           >
             {t.demo}
           </Link>

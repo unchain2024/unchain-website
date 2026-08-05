@@ -12,6 +12,12 @@ const outPrefix = process.argv[3] || 'tools/design/.work/shots/page';
 const measureFile = process.argv[4];
 const port = Number(process.env.CDP_PORT || 9333);
 const VW = Number(process.env.VIEW_W || 1440);
+// Extra settle before the capture. Resizing the viewport to the full page height brings
+// every section into view at once, so any scroll-reveal that had not fired yet starts
+// then — and a 1s reveal with a stagger delay is still moving 600ms later. Ink probes
+// read the screenshot, so they need it stopped; `SETTLE_MS=2500` is enough for the
+// longest stagger on the site. Default stays 0 so existing captures are unchanged.
+const SETTLE = Number(process.env.SETTLE_MS || 0);
 
 async function wsUrl() {
   for (let i = 0; i < 60; i++) {
@@ -69,6 +75,10 @@ const S = (m, p) => send(m, p, sessionId);
 
 await S('Page.enable');
 await S('Runtime.enable');
+// A long-lived Chrome will happily re-serve the dev server's modules from its own cache,
+// which silently captures the previous edit instead of the current one.
+await S('Network.enable');
+await S('Network.setCacheDisabled', { cacheDisabled: true });
 // Without this the classic scrollbar steals 15px and every capture is 1425 wide.
 await S('Emulation.setScrollbarsHidden', { hidden: true });
 await S('Emulation.setDeviceMetricsOverride', {
@@ -112,7 +122,7 @@ await S('Emulation.setDeviceMetricsOverride', {
   deviceScaleFactor: 1,
   mobile: false,
 });
-await new Promise((r) => setTimeout(r, 600));
+await new Promise((r) => setTimeout(r, 600 + SETTLE));
 const shot = await S('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true });
 fs.writeFileSync(`${outPrefix}-full.png`, Buffer.from(shot.data, 'base64'));
 console.log('wrote', `${outPrefix}-full.png`);

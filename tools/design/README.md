@@ -1,10 +1,15 @@
 # Design pipelines
 
-Four pages are built one-to-one from Figma exports: the **home** page in
+Nine pages are built one-to-one from Figma exports: the **home** page in
 `src/components/home/` from `public/home/`, the **business** page in
 `src/components/business/` from `public/business/`, the **about** page in
-`src/components/about/` from `public/about/`, and the **news** page in
-`src/components/news/` from `public/news/`. Those exports outline all text to
+`src/components/about/` from `public/about/`, the **news** page in
+`src/components/news/` from `public/news/`, the **career** page in
+`src/components/career/` from `public/carrers/`, the **terms of use** page in
+`src/components/terms/` from `public/termofuse/`, the **privacy policy** page in
+`src/components/privacy/` from `public/privacy-policy/`, the **contact** page in
+`src/components/contact/` from `public/contact/`, and the **trust & security** page in
+`src/components/trust/` from `public/trust-security/`. Those exports outline all text to
 paths and inline every photo as base64, so nothing in them is directly usable — these
 scripts turn them into real assets and then verify the built page against them.
 
@@ -16,8 +21,10 @@ The inspection scripts (`svg_probe`, `svg_layout`, `svg_lines`, `perpath`, `svg_
 reads the build capture from `$PAGE_SHOT`; `ink.mjs` takes `$PAGE_SHOT` and
 `$PAGE_MEASURE` and defaults to the home page's.
 
-The business, about and news pages' CTA banner and footer exports are pixel-identical to
-the home page's, so `CtaSection` and `SiteFooter` are reused rather than rebuilt. The
+The business, about, news, career and trust & security pages' CTA banner and footer exports
+are pixel-identical to the home page's, so `CtaSection` and `SiteFooter` are reused rather
+than rebuilt. (The career set's `CTA Banner - Desktop.svg` is byte-identical to the about and
+news sets' once Figma's generated ids are normalised, and its footer to the news set's.) The
 about and news pages' information banner matches too, so they reuse `Navigation` — but
 note their navigation is a separate 68px export sitting *above* the first section rather
 than over it, so the page's first section reserves that height itself. On the about page
@@ -42,6 +49,66 @@ than the 120px gutter) and `Section.svg` (1440x702 — the related-news row, whi
 on the 120px gutter and reuses `NewsCard` unchanged). Nothing in either needs extracting:
 the only art is the lead rule's gradient and the pill's, both of which the list page
 already carries, and the two embedded rasters are CMS rows.
+
+`public/termofuse/` is the smallest set: two exports, no photos, no CTA banner and no
+footer of its own. `Frame 2147226133.svg` (1440x660) is the hero — an 80px gutter, a 72px
+heading hand-broken across two lines, the date under it, and a two-blade gradient corner
+whose right-hand blade runs *past* the frame to x=1661.37, which is why `TermsHero` puts
+the `overflow-hidden` on the 1440 frame rather than the section and crops it exactly where
+the export does. `Section.svg` (1440x1363) is the whole policy in one #F5F5F5 panel inset
+16px and rounded 16px, on a 648px column centred in the frame. Nothing needs extracting —
+the only art is those two blades, transcribed verbatim into
+`src/components/terms/art/HeroArt.tsx`. Since the set draws no footer, the page closes with
+the shared `SiteFooter`, and draws no CTA banner because the export has none.
+
+`public/privacy-policy/` is the terms set's twin — same two exports, same frame sizes, no
+photos, no CTA banner, no footer. Its `Frame 2147226133.svg` (1440x660) draws the *same*
+gradient corner, byte-identical once Figma's generated gradient ids are normalised, so
+`PrivacyHero` imports `GradientCorner` from the terms page rather than transcribing it
+again. Where the two diverge is the panel: `public/termofuse/Section.svg` is one heading
+over a numbered list, while `public/privacy-policy/Section.svg` (1440x3422) is eleven
+numbered sections of prose and bulleted lists, so `PolicyBody` is built out of four layout
+primitives instead of a single pass.
+
+Its geometry, read off the export's ink boxes and then confirmed against the built page —
+all eleven headings land on the export's own y, and the section, panel and column boxes are
+exact (728 = 68 + 660, 3422, 1408x3390, x=396 w=648):
+
+- 16px/22px body copy in `#414651`; 20px bold black headings on a 28px leading; the contact
+  desk name in 16px black.
+- 40px above every numbered heading, 12px below it, and 12px between the blocks inside a
+  section. The panel's padding is 102 top / 98 bottom, not a symmetric 100.
+- 12px between list items over a **26px minimum item height**. That floor is what makes the
+  export's two spacings agree — single-line items sit 38px apart, wrapped ones n*22 + 12 —
+  and a plain gap alone cannot produce both. Paragraphs must *not* get the same floor:
+  giving it to them puts everything below section 3 four pixels low.
+- Bullets are 6px `#A4A7AE` dots centred 12.4px into the item's first line, 12px in from the
+  column and 12px clear of the text, which starts at x=426.
+- The 72px hero heading needs the same -0.039em the terms and news heroes do.
+
+Both this page and the terms page need `line-break: strict` and `text-spacing-trim:
+space-all` on every paragraph to break where Figma drew them; without the pair the intro
+alone fits an extra character on two of its six lines.
+
+Two residuals are the export's own. It sets the contact address ~11% narrower than Inter
+does at 16px (174px against 194), and `11. アクセス履歴の取得` 5px narrower than Noto Sans JP
+does — the same katakana-tracking effect noted for the news heading below.
+
+Unlike every other page here, `PolicyBody` writes its copy out literally in both languages
+in the JSX rather than mapping it out of a `content.ts`. That is deliberate and requested:
+the drawing is identical on `/privacy-policy` and `/en/privacy-policy` and only the copy
+changes, and keeping it inline keeps it selectable and translatable where it is read.
+
+`public/trust-security/` is the trust & security page under `/trust-security`, built in
+`src/components/trust/`. Six exports, all pure vector, running the page top to bottom:
+`Frame 2147226132.svg` (1440x561) is the hero — an 80px gutter, a 72px heading hand-broken
+across three lines, a 16px paragraph, and the gradient shield anchored 160.9px from the right
+edge. Like the business hero and unlike the about and news ones, it has no navigation band of
+its own, so the navigation is drawn *over* the section and the copy's own top padding clears
+it. `Section.svg` (1440x752) is four 288x320 cards on the 120px gutter, `Section-1.svg`
+(1440x961) the isometric layer stack in a #F5F5F5 panel with four label cards leadered off
+it, and `Section-2.svg` (1440x726) three 98px policy rows. The last two,
+`CTA Banner - Desktop.svg` and `Footer - Desktop.svg`, are the home page's.
 
 ## Regenerating assets after a design update
 
@@ -83,6 +150,48 @@ generated art afterwards.
 ```bash
 node tools/design/gen_news.mjs        # vector art -> src/components/news/art/*.tsx
 ```
+
+The career set is all vector too — no photos, no embedded rasters at all — so its generator
+only emits art, off the same shared walker:
+
+```bash
+node tools/design/gen_career.mjs      # vector art -> src/components/career/art/*.tsx
+```
+
+It takes the briefcase out of the hero, the three card glyphs out of `Section.svg` and the
+three numerals out of `Section-2.svg`. What it deliberately leaves behind is
+`Section-1.svg`'s four pill strokes (`paint0..3_linear_135_2383`): those are a gradient
+*border* on a live filter chip, so they stay CSS — see `RolesSection.tsx`.
+
+The contact set is the smallest of all — its only art is the two gradient blades that run
+off the top-right and bottom-left corners, so its generator emits those and nothing else:
+
+```bash
+node tools/design/gen_contact.mjs     # vector art -> src/components/contact/art/*.tsx
+```
+
+The trust & security set is all vector as well, and its generator emits two kinds of thing:
+
+```bash
+node tools/design/gen_trust.mjs       # vector art + stroked glyphs
+                                      #   -> src/components/trust/art/*.tsx
+```
+
+The gradient drawings (the hero shield, the four card glyphs, the isometric layer stack and
+its leader line) come out the usual way. So do five *stroked* glyphs — the four 24x24 icons
+in the layer labels' black discs and the policy rows' 20x20 document mark. Those would
+normally be hand-copied into an `icons.tsx`, which is what the rest of the site's icons are,
+but each is a single 1.5-2.5KB path drawn at its place on the 1440 canvas, so the generator
+translates them to a 0,0 origin and switches the colour to `currentColor` instead. The
+translation only shifts coordinates — `H`/`V` and `A`'s radii and flags are handled per
+command, nothing is scaled — and the generator proves it: every glyph it writes is rendered
+against the same region of the export at 8x and the run fails if any subpixel is off by more
+than a shade. All five come out at 1/255, which is the 3dp coordinates landing a hair
+differently on an antialiased edge; a real shift would move whole pixels.
+
+Two things in that set are deliberately *not* art. The numerals 01..04 on the layer stack
+are live text (see below), and every hairline in these exports is a border on a real box —
+the card outlines, the policy rules, the arrow buttons — so they are CSS.
 
 Generated files carry a "do not hand-edit" header — change the generator, not the output.
 
@@ -201,6 +310,112 @@ PAGE_SHOT=tools/design/.work/shots/news-build-full.png \
   node tools/design/ink.mjs tools/design/news_probes.json
 ```
 
+The career page works the same way again, with `career_page.html`, `career_sections.json`,
+`career_measure.json` and `career_probes.json`. Its sections carry both a `y` (build) and a
+`dy` (design) because the build's hero reserves the 68px header the design capture has no
+band for:
+
+```bash
+node tools/design/shoot.mjs http://localhost:5199/career \
+  tools/design/.work/shots/career-build tools/design/career_measure.json
+
+cp tools/design/career_page.html public/career_page.html
+node tools/design/shoot.mjs http://localhost:5199/career_page.html \
+  tools/design/.work/shots/career-design
+rm public/career_page.html
+
+PAGE_SHOT=tools/design/.work/shots/career-build-full.png \
+  node tools/design/compare.mjs tools/design/career_sections.json
+PAGE_SHOT=tools/design/.work/shots/career-build-full.png \
+  PAGE_MEASURE=tools/design/.work/shots/career-build-measure.json \
+  node tools/design/ink.mjs tools/design/career_probes.json
+```
+
+`career_probes.json` also probes the art — the briefcase, the three card glyphs and the
+three numerals — because that page places every one of them by an explicit offset rather
+than by centring it, so a wrong number would otherwise only show up as a percentage.
+
+The terms-of-use page has the same files under `terms_*`, plus a `terms_fit.json` for the
+size solving. Its sections carry a separate `y` (build) and `dy` (design) for the same
+reason the career page's do — the design set has no navigation export, so the build's 68px
+header has no band in the design capture:
+
+```bash
+node tools/design/shoot.mjs http://localhost:5199/terms-of-use \
+  tools/design/.work/shots/terms-build tools/design/terms_measure.json
+
+cp tools/design/terms_page.html public/terms_page.html
+node tools/design/shoot.mjs http://localhost:5199/terms_page.html \
+  tools/design/.work/shots/terms-design
+rm public/terms_page.html
+
+PAGE_SHOT=tools/design/.work/shots/terms-build-full.png \
+  node tools/design/compare.mjs tools/design/terms_sections.json
+PAGE_SHOT=tools/design/.work/shots/terms-build-full.png \
+  PAGE_MEASURE=tools/design/.work/shots/terms-build-measure.json \
+  node tools/design/ink.mjs tools/design/terms_probes.json
+```
+
+The privacy-policy page has `privacy_measure.json` and `privacy_probes.json`. It has no
+`compare.mjs` pair: with only two exports and no photos there is nothing a pixel diff would
+catch that the ink boxes do not, and the probes cover both frames directly.
+
+```bash
+node tools/design/shoot.mjs http://localhost:5199/privacy-policy   tools/design/.work/shots/privacy-build tools/design/privacy_measure.json
+
+PAGE_SHOT=tools/design/.work/shots/privacy-build-full.png   PAGE_MEASURE=tools/design/.work/shots/privacy-build-measure.json   node tools/design/ink.mjs tools/design/privacy_probes.json
+```
+
+`terms_probes.json` has no probe for the panel's `#D5D7DA` rule: against the panel's
+`#F5F5F5` its contrast is under `ink.mjs`'s 40-level threshold, so neither side resolves.
+The rule is checked through `terms_measure.json`'s DOM box instead, which puts it at
+1158.2 against the export's stroke centre of 1159.
+
+The contact page has `contact_page.html`, `contact_sections.json`, `contact_measure.json`,
+`contact_probes.json` and `contact_fit.json`. Its design set has no navigation export, so
+`contact_page.html` borrows the news set's to put the frame at the height the build renders
+it, and every section then shares one offset:
+
+```bash
+node tools/design/shoot.mjs http://localhost:5199/contact \
+  tools/design/.work/shots/contact-build tools/design/contact_measure.json
+
+cp tools/design/contact_page.html public/contact_page.html
+node tools/design/shoot.mjs http://localhost:5199/contact_page.html \
+  tools/design/.work/shots/contact-design
+rm public/contact_page.html
+
+PAGE_SHOT=tools/design/.work/shots/contact-build-full.png \
+  node tools/design/compare.mjs tools/design/contact_sections.json
+PAGE_SHOT=tools/design/.work/shots/contact-build-full.png PAGE_MEASURE=none \
+  node tools/design/ink.mjs tools/design/contact_probes.json
+```
+
+It is the only set whose two exports are the same drawing in two *states* rather than two
+parts of the page, so it has a second pass for the filled one. `contact_filled.mjs` types
+the filled export's own values into the live form — through the native value setter and an
+`input` event, since React owns the fields — and captures the frame, which
+`contact_filled_sections.json` and `contact_filled_probes.json` then read:
+
+```bash
+node tools/design/contact_filled.mjs
+PAGE_SHOT=tools/design/.work/shots/contact-filled.png \
+  node tools/design/compare.mjs tools/design/contact_filled_sections.json
+PAGE_SHOT=tools/design/.work/shots/contact-filled.png PAGE_MEASURE=none \
+  node tools/design/ink.mjs tools/design/contact_filled_probes.json
+```
+
+Both contact probe runs pass `PAGE_MEASURE=none`: every probe carries the section's fixed
+`dy: 68` rather than resolving through a measured offset, because the page has exactly one
+section and its height is nailed by the export.
+
+`contact_probes.json` drops two things it cannot read. The fields' `#D5D7DA` bottom rules
+and the unchecked consent box's `#D5D7DA` border are both under `ink.mjs`'s 40-level
+threshold against white, so neither side resolves; they are checked through
+`contact_measure.json`'s DOM boxes instead, which put every rule on the export's own
+coordinate exactly. The checked box *is* probed, in `contact_filled_probes.json`, where it
+is solid black.
+
 The article view has the same four files under `pernews_*`. It needs a real article id in
 the URL, since everything below the header is a CMS row:
 
@@ -252,7 +467,33 @@ reason.
 `ink.mjs` and `sample.mjs` resolve a probe's `section` name to the live y offset
 recorded by `shoot.mjs`, so probes stay valid as section heights change.
 
+The trust & security page has the same four files under `trust_*`:
+
+```bash
+SETTLE_MS=2500 node tools/design/shoot.mjs http://localhost:5199/trust-security \
+  tools/design/.work/trust/build tools/design/trust_measure.json
+
+cp tools/design/trust_page.html public/trust_page.html
+node tools/design/shoot.mjs http://localhost:5199/trust_page.html \
+  tools/design/.work/trust/design
+rm public/trust_page.html
+
+PAGE_SHOT=tools/design/.work/trust/build-full.png \
+  node tools/design/compare.mjs tools/design/trust_sections.json
+PAGE_SHOT=tools/design/.work/trust/build-full.png \
+  PAGE_MEASURE=tools/design/.work/trust/build-measure.json \
+  node tools/design/ink.mjs tools/design/trust_probes.json
+```
+
 `VIEW_W=390 node tools/design/shoot.mjs ...` captures a mobile viewport.
+
+`SETTLE_MS=<ms>` waits that much longer before the screenshot, on top of the usual 600ms.
+Resizing the viewport to the full page height brings every section into view at once, so any
+scroll-reveal that had not fired during the scroll pass starts *then* — and a 1s reveal on a
+stagger delay is still moving 600ms later, which lands in the capture as a few pixels of
+downward drift on the last cards in a row. The DOM boxes `shoot.mjs` reads afterwards are
+unaffected, so this only matters for `ink.mjs` and `compare.mjs`; 2500 is enough for the
+longest stagger on the site. The default is 0, so existing captures are unchanged.
 
 ## What "matching" means
 
@@ -360,3 +601,150 @@ reads "ニュース" as fitW 68.5 / fitH 69.5, which looks like a 68px heading; 
 the width is short because the export's Japanese font sets katakana tighter than Noto Sans
 JP does. `fitH` is the one to trust, as elsewhere — and the built heading's ink box then
 matches the export exactly.
+
+The career page lands the same way. Every section boundary is exactly the export's — hero
+550 (the 68px header plus 482), why 852, roles 982, process 673 — and every `ink.mjs` probe
+is within 1px vertically; the widest horizontal residue is 4px on a Japanese paragraph and
+1px on everything else. `compare.mjs` reports 0.8–1.3% per section, all of it glyph edges.
+The footer's 7.2% is the restyled `SiteFooter` noted above, not drift.
+
+Four career figures are worth recording:
+
+- The roles export draws its first row white on Figma's `dy 10 / blur 10 / black 4%` shadow
+  with a solid black arrow, and the other three transparent with a hairline arrow. That is
+  one row in two states, so the white plate is the row's hover/focus style. Hovered, the
+  section comes out at 2.4% against the export — and all of that is the site navigation
+  sitting over the top of the scrolled capture, which the export has no band for.
+- Both 72px hero lines need the export's own tracking (-0.039em, the same correction the
+  news hero makes) to land on its 298.2 / 437.4px ink measures. It is applied on the
+  Japanese setting only: the English hero is Latin and needs none.
+- Every 20px Japanese title on the page sits 2px lower in its line box in the export than
+  Noto Sans JP puts it, so the why cards' top padding, the process columns' and the role
+  rows' title margin all carry that 2px. Measured, not guessed — all three read `dy=-2`
+  before it and `dy=0` after.
+- The body paragraphs are set `line-break: strict`. Chrome's default rules let a small kana
+  or a long-vowel mark start a line and the design's do not, and with strict on, every
+  paragraph in the set breaks where Figma drew it — including the why cards' second
+  paragraph, which is 24px out without it. It is also what makes one measure (342px) satisfy
+  all three process columns at once; the hero's 468px is the width that keeps its break
+  after "テクノロジー".
+
+The terms-of-use page lands the same way. The hero section is the 68px header plus the
+export's 660, the policy panel is 1362.8 against the export's 1363, and every `ink.mjs`
+probe is `dy=0` — the 72px heading and the 48px `基本方針` at `dx=dy=dw=dh=0`, the intro,
+item 6 and the contact label the same, item 1 within 1px. `compare.mjs` reports 0.7% for
+the hero and 1.8% for the panel, all of it glyph edges. Its 72px heading takes the news
+hero's -0.039em tracking, which reproduces the export's 402.2 / 405.1px lines exactly.
+
+Three residuals there are deliberate:
+
+- The heading's two lines are hardcoded. Figma broke it mid-word ("情報セキュリ" /
+  "ティ基本方針") and letting the browser wrap it at any width would not reproduce that.
+- The signature runs 3px wide and the email 2px, both the export's font being narrower than
+  Inter on a Latin run. Neither is worth tracking in: at 16px bold and 14px the correction
+  would be under 0.01em, inside the noise the fit method itself carries.
+- Item 3's first two lines each hold one more character than the export's, because the
+  export has a stray leading space there and the content drops it (see `content.ts`).
+
+The contact page lands the same way, and its numbers are worth recording in full because
+almost every one of them is exact. The section is 1120 — the 68px header plus the export's
+1052 — and the card is 620x812 at x=700, y=188, which is the export's rect to the pixel.
+Read off `contact_measure.json` in the export's own coordinates, so is everything in it:
+the four labels' boxes at 160 / 342 / 449 / 556, the pill rows at 194 and 260, the three
+field boxes at 372 / 479 / 586, the two-column split at 740+254 / 1026+254, the consent row
+at 789 and the button at 842..892. That stack sums to the export's 812 rather than being
+told it. `compare.mjs` reports 1.1% for the empty form and 2.3% for the filled one, all of
+it glyph edges; the navigation's 8.1% and the footer's 7.2% are the shared components,
+which the other pages report the same way.
+
+`ink.mjs` puts the pills, the message placeholder, the consent line, the button, the
+checked consent box and the top-right blade at `dx=dy=dw=dh=0`, and the heading, the
+standfirst, the labels and the button label within 1px on every number.
+
+Four figures on that page were measured rather than carried over from the other heroes, and
+two of them differ from what those pages use:
+
+- The display heading is 72px like the business and news heroes, but **600**, not 700. At
+  72px the export's median ink run is 8.13px with a 15.33px upper quartile, and Noto Sans JP
+  at 600 gives 8.13 / 15.46 where 700 gives 9.25 / 19.13. Its tracking is -0.044em, which
+  is the business hero's -0.045em again, and `fitfont.mjs` reads it as 69.9 for the same
+  reason it reads the news hero's 72 as 69.5.
+- The pills and the button label are **500**, not 400: the export draws `デ` with a 1.7px
+  bar against body copy's 1.3px, and `送信内容を確認` with a 1.54px median run, which is
+  exactly what 500 gives. Everything else on the page — copy, labels, consent line, field
+  values and placeholders — is 400, at 16px except the 20px field values.
+- The card's padding is 39px, not 40. Figma measures its 40px inset from the frame edge and
+  draws the 1px stroke inside it; CSS `border-box` adds the border on top of the padding, so
+  `p-10` would put the 540px column at 741.
+- The pills are 24px of side padding on a 50px pill, which reproduces the export's
+  166 / 161 / 146 / 146 widths from the label advances alone.
+
+Four residuals are the export's own or the browser's, and none is fixable from the design:
+
+- The three placeholders that contain Latin run wide — `UNCHAIN株式会社` by 6px, `山田 太郎`
+  and `you@company.com` by 2 — and the filled email by 3. That is the export's Latin face
+  being narrower than Inter, the same thing the terms page's signature and email show.
+- The filled state's three inputs read `dy=+3`. Chrome renders a typed value about 2px
+  below the placeholder in the same box — verified against a bare input, and no combination
+  of padding, line-height or content height removes it — and the export draws the value 1px
+  *above* its placeholder. The empty export is what the card is aligned to and its
+  placeholders are exact, so that is where the padding is set.
+- `art.bladeBL` reads `dy=2 dw=-4`. That is `ink.mjs` rasterising the design through
+  librsvg while the build comes from Chrome: the blade's pale end (`#D9EEFA`) sits near
+  enough to white that the two renderers disagree about where its antialiased diagonal
+  crosses the threshold. Diffed Chrome-to-Chrome the same region is within 17/255 on 0.01%
+  of its pixels. The high-contrast `art.bladeTR` is `dx=dy=dw=dh=0`.
+- The message textarea has to be `display: block`. Left inline it sits on its parent's
+  baseline, which adds a descender under the box and walks the consent row and the button
+  7.6px down the card.
+
+Two probes are absent for the reason the terms page's rule probe is: the fields' `#D5D7DA`
+bottom rules and the unchecked consent box's border are both under `ink.mjs`'s threshold
+against white. `contact_measure.json` covers them exactly instead.
+
+The page has no CTA banner — the form is the call to action — and its footer export is
+pixel-identical to the home page's, so `SiteFooter` is reused. Its two exports stop at the
+submit button, so the sent state is not drawn anywhere: it is built from the scale the card
+already uses, the 20px value size over the 16px standfirst.
+
+The trust & security page lands the same way. Every section boundary is the export's:
+hero 561, approach 751.9 against 752, layers 961, policies 726, cta 597. `ink.mjs` puts
+every probe at `dy=0` bar one, `dx` within 1 and `dw` within 2, and the shield is
+`dx=dy=dw=dh=0`. `compare.mjs` reports 2 / 2.3 / 1.1 / 0.9 / 1.3% for the five, all of it
+glyph edges — the layer plates, the card outlines and the policy rules do not show in the
+difference sheets at all.
+
+Four things there are worth recording:
+
+- The 54px headings in this export are set about 0.6% tighter than the business page's own
+  54px heading, which fits at the font's natural tracking. `trust_fit.json` reads its six
+  heading lines at `fitW` 53.3-53.9 against the calibration row's 54.05, so they carry
+  `-0.006em`. That is the mean: it leaves the approach heading 2px wide and the layers and
+  policies headings 2px narrow, because the export's per-glyph widths differ from Noto Sans
+  JP's in both directions. Nothing more is recoverable from one tracking value.
+- The plate numerals 01..04 are live text in an SVG overlay sharing the stack's viewBox,
+  which is what keeps them on their plate at every width while staying selectable and
+  translatable. The export sets them in a much narrower face than Inter — `fitW` 24.1-24.5
+  against `fitH` 28.6-29.4 on the same glyphs — so at 28px, which lands the cap height, the
+  ink still runs 2px wide on a 27px numeral. `fitH` is the one to trust, as elsewhere.
+- The policy rows' 16px label is nudged 2px down. It is centred on the row the way the
+  export centres it, but Noto Sans JP sets 16px ink that much higher in the line box than
+  the export's face does.
+- The policy rows' arrow needs `overflow-visible` on the shared `ChevronRight`. That glyph's
+  viewBox is the path's own 6x12, so the outer half of its 2px stroke falls outside the
+  canvas and Chrome clips it; the export draws the full 8x14 ink. Letting it overflow takes
+  the button from `dw=-2 dh=-2` to exact. The same clip is on every other page that uses the
+  glyph, and is left alone there rather than changed site-wide from this page.
+
+Two divergences are not this page's. The build has no 40px information banner, since that
+component was removed from the site — this set draws no banner either, so unlike the
+business page's the offsets need no `dy` split. And `SiteFooter` is 313px against this
+export's 430 (panel 281 against 398): the shared footer was deliberately restyled to two
+link columns, which is why `06-footer` reports 7.2% here exactly as it does elsewhere. The
+page renders whatever the shared footer is.
+
+One copy note. The hero paragraph reads `人による コントロール` in the export, with a stray
+space left over from a hard wrap in whatever the copy was pasted from — the same artifact
+several about-page paragraphs carry. `src/components/trust/content.ts` drops it, so the
+built line breaks a character later than the export's. The English card bodies are written
+to two lines: the cards are the export's fixed 320px, so a third line would be clipped.

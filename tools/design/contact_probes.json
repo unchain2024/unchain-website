@@ -1,0 +1,152 @@
+[
+ {
+  "name": "hero.h1",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 118,
+  "y": 122,
+  "w": 425,
+  "h": 163,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "hero.body",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 114,
+  "y": 315,
+  "w": 466,
+  "h": 52,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.labelTopic",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 735,
+  "y": 158,
+  "w": 150,
+  "h": 28,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.pill1",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 734,
+  "y": 188,
+  "w": 178,
+  "h": 62,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.pill3",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 1093,
+  "y": 188,
+  "w": 158,
+  "h": 62,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.pill4",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 734,
+  "y": 254,
+  "w": 158,
+  "h": 62,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.companyPh",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 736,
+  "y": 380,
+  "w": 178,
+  "h": 31,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.namePh",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 736,
+  "y": 487,
+  "w": 95,
+  "h": 31,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.emailPh",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 1020,
+  "y": 489,
+  "w": 195,
+  "h": 32,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.msgPh",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 734,
+  "y": 594,
+  "w": 379,
+  "h": 31,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.consent",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 766,
+  "y": 785,
+  "w": 250,
+  "h": 30,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.submit",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 734,
+  "y": 836,
+  "w": 552,
+  "h": 62,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "form.submitLabel",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 934,
+  "y": 854,
+  "w": 145,
+  "h": 27,
+  "mode": "dark",
+  "dy": 68
+ },
+ {
+  "name": "art.bladeTR",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 1300,
+  "y": 0,
+  "w": 140,
+  "h": 220,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "art.bladeBL",
+  "design": "public/contact/Frame 21472261322.svg",
+  "x": 0,
+  "y": 700,
+  "w": 280,
+  "h": 236,
+  "mode": "light",
+  "dy": 68
+ }
+]

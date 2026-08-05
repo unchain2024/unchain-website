@@ -1,0 +1,8 @@
+[
+ { "name": "01-hero",    "design": "tools/design/.work/shots/career-design-full.png", "y": 68,   "h": 482, "bg": "#ffffff", "dy": 0 },
+ { "name": "02-why",     "design": "tools/design/.work/shots/career-design-full.png", "y": 550,  "h": 852, "bg": "#ffffff", "dy": 482 },
+ { "name": "03-roles",   "design": "tools/design/.work/shots/career-design-full.png", "y": 1402, "h": 982, "bg": "#ffffff", "dy": 1334 },
+ { "name": "04-process", "design": "tools/design/.work/shots/career-design-full.png", "y": 2384, "h": 673, "bg": "#ffffff", "dy": 2316 },
+ { "name": "05-cta",     "design": "tools/design/.work/shots/career-design-full.png", "y": 3057, "h": 597, "bg": "#ffffff", "dy": 2989 },
+ { "name": "06-footer",  "design": "tools/design/.work/shots/career-design-full.png", "y": 3654, "h": 430, "bg": "#ffffff", "dy": 3586 }
+]

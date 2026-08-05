@@ -1,0 +1,11 @@
+[
+ { "name": "hero.h1",       "design": "public/privacy-policy/Frame 2147226133.svg", "x": 70, "y": 70,  "w": 440, "h": 172, "mode": "light", "dy": 68 },
+ { "name": "hero.date",     "design": "public/privacy-policy/Frame 2147226133.svg", "x": 70, "y": 268, "w": 200, "h": 40,  "mode": "light", "dy": 68 },
+ { "name": "policy.intro",  "design": "public/privacy-policy/Section.svg", "x": 386, "y": 110,  "w": 668, "h": 146, "mode": "light", "section": "s-policy" },
+ { "name": "policy.h1",     "design": "public/privacy-policy/Section.svg", "x": 392, "y": 284,  "w": 360, "h": 40,  "mode": "light", "section": "s-policy" },
+ { "name": "policy.l1i1",   "design": "public/privacy-policy/Section.svg", "x": 402, "y": 324,  "w": 650, "h": 52,  "mode": "light", "section": "s-policy" },
+ { "name": "policy.l1i3",   "design": "public/privacy-policy/Section.svg", "x": 402, "y": 436,  "w": 650, "h": 32,  "mode": "light", "section": "s-policy" },
+ { "name": "policy.s3foot", "design": "public/privacy-policy/Section.svg", "x": 386, "y": 1398, "w": 668, "h": 32,  "mode": "light", "section": "s-policy" },
+ { "name": "policy.contact","design": "public/privacy-policy/Section.svg", "x": 386, "y": 2984, "w": 420, "h": 60,  "mode": "light", "section": "s-policy" },
+ { "name": "policy.b11",    "design": "public/privacy-policy/Section.svg", "x": 386, "y": 3258, "w": 668, "h": 56,  "mode": "light", "section": "s-policy" }
+]

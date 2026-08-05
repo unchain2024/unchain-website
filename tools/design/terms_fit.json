@@ -1,0 +1,21 @@
+[
+  { "name": "CAL news h1(72)", "text": "ニュース", "weight": 700, "w": 263.3, "h": 55.4, "gaps": 3, "size": 72 },
+  { "name": "CAL biz lead(16)", "text": "組織の文脈を理解し、意思決定を資産へ変えるAI。", "weight": 400, "w": 355.1, "h": 14.8, "gaps": 22, "size": 16 },
+
+  { "name": "hero h1 L1", "text": "情報セキュリ", "weight": 700, "w": 402.2, "h": 67.8, "gaps": 5, "size": 72 },
+  { "name": "hero h1 L2", "text": "ティ基本方針", "weight": 700, "w": 405.1, "h": 68.5, "gaps": 5, "size": 72 },
+  { "name": "hero date", "text": "2026年3月1日制定", "weight": 400, "w": 135.1, "h": 14.9, "gaps": 10, "size": 16 },
+
+  { "name": "body h2 基本方針", "text": "基本方針", "weight": 700, "w": 189.2, "h": 45.3, "gaps": 3, "size": 48 },
+  { "name": "body h2 @44", "text": "基本方針", "weight": 700, "w": 189.2, "h": 45.3, "gaps": 3, "size": 44 },
+
+  { "name": "intro L1", "text": "UNCHAIN株式会社（以下、当社）は、「AIセキュリティで、自律型AIエージェントを守", "weight": 400, "w": 623.4, "h": 15.2, "gaps": 43, "size": 16 },
+  { "name": "item1 L1", "text": "情報資産を保護するために、情報セキュリティ方針ならびに、それにまつわる規程類", "weight": 400, "w": 605.3, "h": 14.8, "gaps": 37, "size": 16 },
+  { "name": "marker 1.", "text": "1.", "weight": 400, "w": 10.7, "h": 11.9, "gaps": 1, "size": 16 },
+
+  { "name": "signature @700", "text": "UNCHAIN株式会社　代表取締役", "weight": 700, "w": 231.4, "h": 15.0, "gaps": 15, "size": 16 },
+  { "name": "signature @600", "text": "UNCHAIN株式会社　代表取締役", "weight": 600, "w": 231.4, "h": 15.0, "gaps": 15, "size": 16 },
+  { "name": "contact label @400", "text": "脆弱性報告などセキュリティにまつわるお問い合わせ先", "weight": 400, "w": 397.9, "h": 15.0, "gaps": 24, "size": 16 },
+  { "name": "contact label @500", "text": "脆弱性報告などセキュリティにまつわるお問い合わせ先", "weight": 500, "w": 397.9, "h": 15.0, "gaps": 24, "size": 16 },
+  { "name": "email @400", "text": "contact@the-unchain.com", "weight": 400, "w": 171.5, "h": 13.6, "gaps": 22, "size": 16 }
+]

@@ -9,16 +9,10 @@ import ArticleView from "@/components/news/ArticleView";
 import RelatedNews from "@/components/news/RelatedNews";
 import CtaSection from "@/components/home/CtaSection";
 import SiteFooter from "@/components/home/SiteFooter";
-import {
-  byNewest,
-  dedupeById,
-  getLocalized,
-  type Article,
-  type ArticleKind,
-} from "@/components/news/types";
+import { getLocalized, type Article } from "@/components/news/types";
+import { fetchPublishedArticles } from "@/components/news/fetchArticles";
 import { article as articleCopy } from "@/components/news/content";
 import { useLang } from "@/lib/language";
-import { supabase } from "@/lib/supabase";
 import {
   SITE_URL,
   articleUrl,
@@ -118,31 +112,13 @@ const NewsPage = () => {
   const fetchArticles = async () => {
     try {
       setLoading(true);
-      // Blogs were folded into the news section, so the page reads both tables and shows
-      // one list. They share a shape; the only thing added is which one a row came from,
-      // which is what the category filter and the card pill go on.
-      const published = (table: string) =>
-        supabase
-          .from(table)
-          .select("*")
-          .eq("is_draft", false)
-          .eq("is_hidden", false)
-          .order("created_at", { ascending: false });
-
-      const [news, blogs] = await Promise.all([published("articles"), published("blogs")]);
-      if (news.error) throw news.error;
-      if (blogs.error) throw blogs.error;
-
-      const tag = (rows: unknown[] | null, kind: ArticleKind) =>
-        ((rows ?? []) as Article[]).map((row) => ({ ...row, kind }));
-
-      // Two sorted lists concatenated are not sorted, so re-sort the merge.
-      setArticles(
-        dedupeById([...tag(news.data, "news"), ...tag(blogs.data, "blog")]).sort(byNewest)
-      );
-    } catch (err: any) {
+      // Blogs were folded into the news section, so "the news list" is the union of both
+      // tables. fetchArticles.ts owns that merge so the home page's three cards and this
+      // list cannot disagree about which table a row came from.
+      setArticles(await fetchPublishedArticles());
+    } catch (err) {
       console.error("Error fetching articles:", err);
-      setError(err.message);
+      setError(err instanceof Error ? err.message : String(err));
     } finally {
       setLoading(false);
     }

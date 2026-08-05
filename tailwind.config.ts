@@ -34,6 +34,9 @@ export default {
           /* Added by the article page, from public/news/pernews. The same ink as
              `chevron`, named for the job it does there: article body copy. */
           "body-ink": "#414651",
+          /* Added by the contact page, from public/contact. The red the form's required
+             marks are drawn in, and the only place the design uses it. */
+          required: "#D92D20",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

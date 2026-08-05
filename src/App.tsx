@@ -13,6 +13,7 @@ import ContactPage from "./pages/ContactPage";
 import SolutionsPage from "./pages/SolutionsPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfUsePage from "./pages/TermsOfUsePage";
+import TrustSecurityPage from "./pages/TrustSecurityPage";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import Login from "./pages/Login";
@@ -46,6 +47,7 @@ const pageRoutes = (
     <Route path="career" element={<CareerPage />} />
     <Route path="contact" element={<ContactPage />} />
     <Route path="solutions" element={<SolutionsPage />} />
+    <Route path="trust-security" element={<TrustSecurityPage />} />
     <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
     <Route path="terms-of-use" element={<TermsOfUsePage />} />
   </>

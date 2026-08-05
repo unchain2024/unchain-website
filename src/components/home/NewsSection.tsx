@@ -2,9 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLang } from "@/lib/language";
-import { supabase } from "@/lib/supabase";
 import { buildSlugIndex, type SluggableArticle } from "@/lib/articleLinks";
 import NewsCard from "@/components/news/NewsCard";
+import {
+  fetchLatestArticles,
+  fetchSluggableArticles,
+} from "@/components/news/fetchArticles";
 import type { Article } from "@/components/news/types";
 import { news } from "./content";
 
@@ -33,29 +36,14 @@ const NewsSection = () => {
 
     (async () => {
       try {
-        // Two small reads rather than one large one: the slug index only needs
-        // titles, so the full rows stay limited to the three cards on screen.
         const [latest, all] = await Promise.all([
-          supabase
-            .from("articles")
-            .select("*")
-            .eq("is_draft", false)
-            .eq("is_hidden", false)
-            .order("created_at", { ascending: false })
-            .limit(3),
-          supabase
-            .from("articles")
-            .select("id, title, title_en")
-            .eq("is_draft", false)
-            .eq("is_hidden", false),
+          fetchLatestArticles(3),
+          fetchSluggableArticles(),
         ]);
 
-        if (latest.error) throw latest.error;
-        if (all.error) throw all.error;
-
         if (mounted) {
-          setItems(latest.data || []);
-          setSluggable(all.data || []);
+          setItems(latest);
+          setSluggable(all);
         }
       } catch (err) {
         console.error("Error fetching articles:", err);

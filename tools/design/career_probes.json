@@ -1,0 +1,262 @@
+[
+ {
+  "name": "hero.h1",
+  "design": "public/carrers/Frame 2147226133.svg",
+  "x": 70,
+  "y": 115,
+  "w": 470,
+  "h": 165,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "hero.body",
+  "design": "public/carrers/Frame 2147226133.svg",
+  "x": 70,
+  "y": 312,
+  "w": 480,
+  "h": 56,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "why.eyebrow",
+  "design": "public/carrers/Section.svg",
+  "x": 112,
+  "y": 96,
+  "w": 120,
+  "h": 26,
+  "mode": "light",
+  "section": "s-why"
+ },
+ {
+  "name": "why.h2",
+  "design": "public/carrers/Section.svg",
+  "x": 112,
+  "y": 132,
+  "w": 420,
+  "h": 128,
+  "mode": "light",
+  "section": "s-why"
+ },
+ {
+  "name": "why.card1title",
+  "design": "public/carrers/Section.svg",
+  "x": 138,
+  "y": 352,
+  "w": 200,
+  "h": 38,
+  "mode": "light",
+  "section": "s-why"
+ },
+ {
+  "name": "why.card1body",
+  "design": "public/carrers/Section.svg",
+  "x": 138,
+  "y": 392,
+  "w": 356,
+  "h": 50,
+  "mode": "light",
+  "section": "s-why"
+ },
+ {
+  "name": "why.card2body",
+  "design": "public/carrers/Section.svg",
+  "x": 543,
+  "y": 392,
+  "w": 356,
+  "h": 50,
+  "mode": "light",
+  "section": "s-why"
+ },
+ {
+  "name": "roles.eyebrow",
+  "design": "public/carrers/Section-1.svg",
+  "x": 108,
+  "y": 112,
+  "w": 140,
+  "h": 26,
+  "mode": "light",
+  "section": "s-roles"
+ },
+ {
+  "name": "roles.h2",
+  "design": "public/carrers/Section-1.svg",
+  "x": 108,
+  "y": 148,
+  "w": 350,
+  "h": 126,
+  "mode": "light",
+  "section": "s-roles"
+ },
+ {
+  "name": "roles.chipAll",
+  "design": "public/carrers/Section-1.svg",
+  "x": 112,
+  "y": 288,
+  "w": 90,
+  "h": 58,
+  "mode": "light",
+  "section": "s-roles"
+ },
+ {
+  "name": "roles.row1title",
+  "design": "public/carrers/Section-1.svg",
+  "x": 366,
+  "y": 438,
+  "w": 200,
+  "h": 30,
+  "mode": "light",
+  "section": "s-roles"
+ },
+ {
+  "name": "roles.row1loc",
+  "design": "public/carrers/Section-1.svg",
+  "x": 930,
+  "y": 440,
+  "w": 140,
+  "h": 24,
+  "mode": "light",
+  "section": "s-roles"
+ },
+ {
+  "name": "proc.eyebrow",
+  "design": "public/carrers/Section-2.svg",
+  "x": 112,
+  "y": 96,
+  "w": 100,
+  "h": 26,
+  "mode": "light",
+  "section": "s-process"
+ },
+ {
+  "name": "proc.h2",
+  "design": "public/carrers/Section-2.svg",
+  "x": 112,
+  "y": 132,
+  "w": 350,
+  "h": 68,
+  "mode": "light",
+  "section": "s-process"
+ },
+ {
+  "name": "proc.step1title",
+  "design": "public/carrers/Section-2.svg",
+  "x": 138,
+  "y": 466,
+  "w": 200,
+  "h": 38,
+  "mode": "light",
+  "section": "s-process"
+ },
+ {
+  "name": "proc.step1body",
+  "design": "public/carrers/Section-2.svg",
+  "x": 138,
+  "y": 504,
+  "w": 350,
+  "h": 50,
+  "mode": "light",
+  "section": "s-process"
+ },
+ {
+  "name": "proc.step3body",
+  "design": "public/carrers/Section-2.svg",
+  "x": 954,
+  "y": 504,
+  "w": 350,
+  "h": 50,
+  "mode": "light",
+  "section": "s-process"
+ },
+ {
+  "name": "hero.art",
+  "design": "public/carrers/Frame 2147226133.svg",
+  "x": 868,
+  "y": 60,
+  "w": 378,
+  "h": 362,
+  "mode": "light",
+  "dy": 68
+ },
+ {
+  "name": "why.icon1",
+  "design": "public/carrers/Section.svg",
+  "x": 150,
+  "y": 534,
+  "w": 190,
+  "h": 190,
+  "mode": "light",
+  "section": "s-why"
+ },
+ {
+  "name": "why.icon2",
+  "design": "public/carrers/Section.svg",
+  "x": 562,
+  "y": 530,
+  "w": 178,
+  "h": 196,
+  "mode": "light",
+  "section": "s-why"
+ },
+ {
+  "name": "why.icon3",
+  "design": "public/carrers/Section.svg",
+  "x": 968,
+  "y": 541,
+  "w": 176,
+  "h": 176,
+  "mode": "light",
+  "section": "s-why"
+ },
+ {
+  "name": "proc.num1",
+  "design": "public/carrers/Section-2.svg",
+  "x": 168,
+  "y": 292,
+  "w": 60,
+  "h": 118,
+  "mode": "light",
+  "section": "s-process"
+ },
+ {
+  "name": "proc.num2",
+  "design": "public/carrers/Section-2.svg",
+  "x": 564,
+  "y": 292,
+  "w": 84,
+  "h": 118,
+  "mode": "light",
+  "section": "s-process"
+ },
+ {
+  "name": "proc.num3",
+  "design": "public/carrers/Section-2.svg",
+  "x": 970,
+  "y": 290,
+  "w": 88,
+  "h": 122,
+  "mode": "light",
+  "section": "s-process"
+ },
+ {
+  "name": "roles.arrow4",
+  "design": "public/carrers/Section-1.svg",
+  "x": 1236,
+  "y": 786,
+  "w": 62,
+  "h": 62,
+  "mode": "light",
+  "section": "s-roles"
+ },
+ {
+  "name": "roles.badge4",
+  "design": "public/carrers/Section-1.svg",
+  "x": 144,
+  "y": 798,
+  "w": 90,
+  "h": 40,
+  "mode": "light",
+  "section": "s-roles"
+ }
+]
