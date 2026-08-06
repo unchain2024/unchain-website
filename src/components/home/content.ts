@@ -173,7 +173,7 @@ export const footer = {
   ja: {
     links: [
       { label: "会社概要", href: "/about" },
-      { label: "ソリューション", href: "/solutions" },
+      { label: "事業紹介", href: "/solutions" },
       { label: "信頼・セキュリティ", href: "/trust-security" },
       { label: "ニュース", href: "/news" },
       { label: "採用情報", href: "/career" },

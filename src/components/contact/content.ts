@@ -55,7 +55,7 @@ export const form = {
     consentBefore: "",
     consentLink: "プライバシーポリシー",
     consentAfter: "に同意する",
-    submit: "送信内容を確認",
+    submit: "内容を送信する",
     sending: "送信中",
     successHeading: "送信しました。",
     successBody: "お問い合わせありがとうございます。2営業日以内にご連絡いたします。",
