@@ -31,14 +31,14 @@ const JoinSection = () => {
     >
       <JoinArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 pt-20 lg:px-[120px] lg:pt-[122px]">
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 pt-20 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[122px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
           <ScrollReveal>
             <p className="font-mono text-[14px] leading-none text-hd-eyebrow-light">
               {t.eyebrow}
             </p>
 
-            <h2 className="mt-[18px] text-[34px] font-bold leading-[1.13] text-white sm:text-[42px] lg:text-[54px] lg:leading-[59px]">
+            <h2 className="mt-[18px] text-[34px] font-bold leading-[1.13] text-white sm:text-[42px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]">
               {t.headline.map((line) => (
                 <span key={line} className="block">
                   {line}

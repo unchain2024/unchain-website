@@ -64,9 +64,9 @@ const RelatedNews = ({
 
   return (
     <section data-nav-theme="light" data-probe="s-related" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 pb-24 pt-16 sm:px-10 lg:px-[120px] lg:pb-[100.8px] lg:pt-[104.2px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 pb-24 pt-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[100.8px] lg:pt-[104.2px]">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-[32px] font-bold leading-[1.1] tracking-[-0.012em] text-black sm:text-[40px] lg:text-[54px] lg:leading-[59.2px]">
+          <h2 className="text-[32px] font-bold leading-[1.1] tracking-[-0.012em] text-black sm:text-[40px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0962963]">
             {t.heading}
           </h2>
 

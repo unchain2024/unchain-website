@@ -38,13 +38,13 @@ const BusinessSection = () => {
   return (
     <section id="s-business" data-nav-theme="light" className="w-full bg-white">
       <div className="mx-auto w-full max-w-[1440px] px-4 pb-4 pt-6 lg:pt-10">
-        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-[100px] lg:pb-[100px] lg:pt-[102px]">
+        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-[clamp(32px,6.9444vw,100px)] lg:pb-[100px] lg:pt-[102px]">
           <ScrollReveal>
             <p className="font-mono text-[14px] leading-none text-hd-eyebrow-ink">
               {t.eyebrow}
             </p>
 
-            <h2 className="mt-[25px] text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[54px]">
+            <h2 className="mt-[25px] text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
               {t.heading}
             </h2>
           </ScrollReveal>

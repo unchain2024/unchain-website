@@ -63,7 +63,7 @@ const NewsList = ({
 
   return (
     <section data-nav-theme="light" data-probe="s-list" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 pb-24 pt-16 sm:px-10 lg:px-[120px] lg:pb-[100.22px] lg:pt-[103px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 pb-24 pt-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[100.22px] lg:pt-[103px]">
         <KindTabs kind={kind} onKind={setKind} />
 
         <div data-probe="grid" className="mt-10 lg:mt-[60px]">

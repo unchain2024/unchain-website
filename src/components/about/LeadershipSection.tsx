@@ -23,7 +23,7 @@ const LeadershipSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-leadership" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[120px] lg:pb-[101px] lg:pt-[101px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[101px] lg:pt-[101px]">
         <ScrollReveal>
           <p
             data-probe="leadership-eyebrow"
@@ -34,7 +34,7 @@ const LeadershipSection = () => {
 
           <h2
             data-probe="leadership-heading"
-            className="mt-[23px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]"
+            className="mt-[23px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">

@@ -81,7 +81,7 @@ const ArticleView = ({ article }: { article: Article }) => {
 
           <h1
             data-probe="art-title"
-            className="mt-6 text-[32px] font-bold leading-[1.1] tracking-[-0.047em] text-black sm:text-[40px] lg:mt-[20.7px] lg:text-[54px] lg:leading-[59.2px]"
+            className="mt-6 text-[32px] font-bold leading-[1.1] tracking-[-0.047em] text-black sm:text-[40px] lg:mt-[20.7px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0962963]"
           >
             {title}
           </h1>

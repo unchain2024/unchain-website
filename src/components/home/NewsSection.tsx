@@ -61,14 +61,14 @@ const NewsSection = () => {
 
   return (
     <section id="s-news" data-nav-theme="light" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-20 lg:px-[120px] lg:pb-[106px] lg:pt-[102px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-20 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[106px] lg:pt-[102px]">
         <ScrollReveal>
           <p className="font-mono text-[14px] leading-none text-hd-eyebrow-ink">
             {t.eyebrow}
           </p>
 
           <div className="mt-[28px] flex flex-wrap items-center justify-between gap-6">
-            <h2 className="text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[54px]">
+            <h2 className="text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
               {t.heading}
             </h2>
 

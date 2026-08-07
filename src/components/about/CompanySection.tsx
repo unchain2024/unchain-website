@@ -16,7 +16,7 @@ const CompanySection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-company" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[120px] lg:pb-[102px] lg:pt-[101px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[102px] lg:pt-[101px]">
         <ScrollReveal>
           <p
             data-probe="company-eyebrow"
@@ -27,7 +27,7 @@ const CompanySection = () => {
 
           <h2
             data-probe="company-heading"
-            className="mt-[26px] text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[54px]"
+            className="mt-[26px] text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]"
           >
             {t.heading}
           </h2>

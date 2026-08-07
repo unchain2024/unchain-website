@@ -19,12 +19,15 @@ const PrinciplesSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-principles" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-4 py-16 sm:px-6 lg:p-[100px]">
+      <div className="mx-auto w-full max-w-[1440px] px-4 py-16 sm:px-6 lg:p-[clamp(32px,6.9444vw,100px)]">
         <div className="rounded-2xl bg-hd-panel p-4">
-          <div className="lg:flex lg:items-stretch lg:gap-12">
+          {/* 533 : 627 either side of the 48px gutter is the export's split of the panel's
+              1208px measure — as `fr` it holds that ratio below 1440, where the two fixed
+              widths together are wider than the panel itself. */}
+          <div className="lg:grid lg:grid-cols-[533fr_627fr] lg:items-stretch lg:gap-12">
             {/* ── Heading card ──────────────────────────────────────────────── */}
-            <ScrollReveal className="lg:w-[533px] lg:shrink-0">
-              <div className="relative h-full overflow-hidden rounded-xl bg-hd-join px-6 py-10 sm:px-10 lg:h-[496px] lg:px-10 lg:pb-10 lg:pt-[41.3px]">
+            <ScrollReveal>
+              <div className="relative h-full overflow-hidden rounded-xl bg-hd-join px-6 py-10 sm:px-10 lg:min-h-[496px] lg:px-10 lg:pb-10 lg:pt-[41.3px]">
                 <PrinciplesCardArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 
                 <div className="relative">
@@ -37,7 +40,7 @@ const PrinciplesSection = () => {
 
                   <h2
                     data-probe="principles-heading"
-                    className="mt-[24px] text-[36px] font-bold leading-[1.11] text-white sm:text-[44px] lg:text-[54px] lg:leading-[60px]"
+                    className="mt-[24px] text-[36px] font-bold leading-[1.11] text-white sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.1111111]"
                   >
                     {t.heading.map((line) => (
                       <span key={line} className="block">
@@ -50,7 +53,7 @@ const PrinciplesSection = () => {
             </ScrollReveal>
 
             {/* ── The four principles ───────────────────────────────────────── */}
-            <ul className="mt-8 lg:mt-0 lg:w-[627px] lg:shrink-0 lg:pt-[35.6px]">
+            <ul className="mt-8 lg:mt-0 lg:pt-[35.6px]">
               {t.items.map((item, i) => (
                 <li
                   key={item.n}

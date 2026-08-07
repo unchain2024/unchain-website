@@ -22,7 +22,7 @@ const AboutSection = () => {
     >
       <AboutArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 
-      <div className="relative z-10 mx-auto flex min-h-[520px] max-w-[1440px] flex-col items-center justify-center px-6 py-24 text-center lg:h-[700px] lg:py-0">
+      <div className="relative z-10 mx-auto flex min-h-[520px] max-w-[1440px] flex-col items-center justify-center px-6 py-24 text-center lg:min-h-[700px] lg:py-0">
         <ScrollReveal className="flex flex-col items-center">
           <p className="font-mono text-[14px] leading-none text-hd-eyebrow">
             {t.eyebrow}

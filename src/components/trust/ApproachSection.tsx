@@ -46,7 +46,7 @@ const ApproachSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-approach" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[120px] lg:pb-[99.5px] lg:pt-[102px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[99.5px] lg:pt-[102px]">
         <ScrollReveal>
           <p
             data-probe="approach-eyebrow"
@@ -60,7 +60,7 @@ const ApproachSection = () => {
               trust rows in `tools/design/trust_fit.json`. */}
           <h2
             data-probe="approach-heading"
-            className="mt-[22.4px] text-[36px] font-bold leading-[1.11] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]"
+            className="mt-[22.4px] text-[36px] font-bold leading-[1.11] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">
@@ -76,7 +76,7 @@ const ApproachSection = () => {
             return (
               <li key={card.id}>
                 <ScrollReveal delay={i * 0.08}>
-                  <div className="relative overflow-hidden rounded-2xl border border-hd-card-line bg-white px-4 pb-6 pt-6 lg:h-[320px] lg:pb-0 lg:pt-[229px]">
+                  <div className="relative overflow-hidden rounded-2xl border border-hd-card-line bg-white px-4 pb-6 pt-6 lg:min-h-[320px] lg:pb-0 lg:pt-[229px]">
                     {/* Top of the card in the export; on the stacked mobile card it leads
                         the copy instead of being pinned. */}
                     <Art className={`mb-6 select-none lg:absolute lg:mb-0 ${box}`} />

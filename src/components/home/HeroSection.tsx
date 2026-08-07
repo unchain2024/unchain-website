@@ -42,7 +42,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="relative z-10 px-6 pb-20 pt-[140px] sm:px-10 sm:pt-[160px] md:max-w-[56%] md:pt-[230px] lg:absolute lg:left-20 lg:top-[36.5556%] lg:max-w-none lg:p-0"
+          className="relative z-10 px-6 pb-20 pt-[140px] sm:px-10 sm:pt-[160px] md:max-w-[56%] md:pt-[230px] lg:absolute lg:left-[clamp(40px,5.5556vw,80px)] lg:top-[36.5556%] lg:max-w-none lg:p-0"
         >
           <p className="font-mono text-[16px] leading-none tracking-normal text-hd-eyebrow lg:text-[20px]">
             {t.eyebrow}
@@ -51,8 +51,8 @@ const HeroSection = () => {
           <h1
             className={`mt-6 max-w-[640px] font-bold text-white lg:mt-[25px] ${
               lang === "ja"
-                ? "text-[44px] leading-[1.13] sm:text-[56px] lg:text-[70px] lg:leading-[79px]"
-                : "text-[40px] leading-[1.13] sm:text-[48px] lg:text-[56px] lg:leading-[63px]"
+                ? "text-[44px] leading-[1.13] sm:text-[56px] lg:text-[clamp(48px,4.8611vw,70px)] lg:leading-[1.1285714]"
+                : "text-[40px] leading-[1.13] sm:text-[48px] lg:text-[clamp(40px,3.8889vw,56px)] lg:leading-[1.125]"
             }`}
           >
             {t.headline.map((line) => (

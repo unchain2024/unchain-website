@@ -22,7 +22,7 @@ const MissionHero = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-mission" className="w-full overflow-hidden bg-white">
-      <div className="relative mx-auto w-full max-w-[1440px] lg:h-[992px]">
+      <div className="relative mx-auto w-full max-w-[1440px] lg:min-h-[992px]">
         {/* Blades. Clipped to the design canvas, which is what the export's own clip does. */}
         <div className="pointer-events-none absolute inset-0 select-none overflow-hidden">
           <BladeTopLeft className="absolute left-[-176.38px] top-[163px] hidden h-[356.7px] w-[469.16px] lg:block" />
@@ -34,7 +34,7 @@ const MissionHero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="relative px-6 pt-16 sm:px-10 lg:px-[120px] lg:pt-[101px]"
+          className="relative px-6 pt-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[101px]"
         >
           <div className="lg:flex lg:items-start lg:justify-between">
             <div className="lg:shrink-0">
@@ -47,7 +47,7 @@ const MissionHero = () => {
 
               <h1
                 data-probe="mission-heading"
-                className="mt-[18px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[53px] lg:leading-[59px]"
+                className="mt-[18px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.6806vw,53px)] lg:leading-[1.1132075]"
               >
                 {t.heading.map((line) => (
                   <span key={line} className="block">
@@ -57,7 +57,9 @@ const MissionHero = () => {
               </h1>
             </div>
 
-            <div className="mt-10 lg:mt-[34px] lg:w-[520px] lg:shrink-0">
+            {/* 520 of the 1200px measure, as a share so the heading keeps its room when
+                the measure narrows below 1440. */}
+            <div className="mt-10 lg:mt-[34px] lg:w-[43.3333%] lg:shrink-0">
               <p
                 data-probe="mission-lead"
                 className="text-[18px] font-bold leading-[26px] text-black lg:text-[20px] lg:leading-[28px]"
@@ -74,20 +76,22 @@ const MissionHero = () => {
             </div>
           </div>
 
-          {/* 403 + 16 + 781 across the 1200px measure. */}
-          <div className="mt-12 flex flex-col gap-4 lg:mt-[79px] lg:flex-row">
+          {/* 403 + 16 + 781 across the 1200px measure. As `fr` rather than a share each:
+              percentages of the row do not account for the gap between them, which puts the
+              pair 16px over the measure once it is narrower than 1200. */}
+          <div className="mt-12 grid gap-4 lg:mt-[79px] lg:grid-cols-[403fr_781fr]">
             <img
               src={briefingShot}
               alt={t.photos[0].alt}
               loading="eager"
               data-probe="mission-photo-1"
-              className="aspect-[403/518] w-full rounded-2xl bg-[#D9D9D9] object-cover object-center lg:w-[33.5833%]"
+              className="aspect-[403/518] w-full rounded-2xl bg-[#D9D9D9] object-cover object-center"
             />
             <img
               src={advisorShot}
               alt={t.photos[1].alt}
               loading="eager"
-              className="aspect-[781/518] w-full rounded-2xl bg-[#D9D9D9] object-cover object-center lg:w-[65.0833%]"
+              className="aspect-[781/518] w-full rounded-2xl bg-[#D9D9D9] object-cover object-center"
             />
           </div>
         </motion.div>
