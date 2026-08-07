@@ -19,7 +19,11 @@ import {
   buildSlugIndex,
   resolveArticleBySlug,
   type SluggableArticle,
-} from "../src/lib/articleLinks";
+  // The `.js` extension is what Node's ESM resolution wants, and it is what Vercel's
+  // type-check of this function assumes: it compiles with `moduleResolution: node16`,
+  // where an extensionless relative import does not resolve at all. TypeScript, Vite and
+  // esbuild all map it back to the `.ts` file, so the SPA side is unaffected.
+} from "../src/lib/articleLinks.js";
 
 export const config = { runtime: "edge" };
 

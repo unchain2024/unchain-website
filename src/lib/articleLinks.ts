@@ -11,7 +11,10 @@
  * derived, or a link that renders in the browser would 404 for a crawler.
  */
 
-import { ARTICLE_SLUG_OVERRIDES } from "./articleSlugOverrides";
+// `.js`, not extensionless: this module is pulled into the `api/og.ts` edge function,
+// which Vercel type-checks under `moduleResolution: node16` where the bare path is an
+// error. The bundlers resolve it to the `.ts` file either way.
+import { ARTICLE_SLUG_OVERRIDES } from "./articleSlugOverrides.js";
 
 export const SITE_URL = "https://unchain.co.jp";
 
