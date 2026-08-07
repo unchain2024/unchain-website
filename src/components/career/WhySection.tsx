@@ -28,7 +28,7 @@ const WhySection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-why" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[120px] lg:pb-[100px] lg:pt-[101px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[100px] lg:pt-[101px]">
         <ScrollReveal>
           <p
             data-probe="why-eyebrow"
@@ -39,7 +39,7 @@ const WhySection = () => {
 
           <h2
             data-probe="why-heading"
-            className="mt-[23.4px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]"
+            className="mt-[23.4px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">
@@ -55,7 +55,7 @@ const WhySection = () => {
             return (
               <li key={card.id}>
                 <ScrollReveal delay={i * 0.08}>
-                  <div className="relative overflow-hidden rounded-2xl border border-hd-card-line bg-white px-6 pb-6 pt-[29.2px] lg:h-[420px]">
+                  <div className="relative overflow-hidden rounded-2xl border border-hd-card-line bg-white px-6 pb-6 pt-[29.2px] lg:min-h-[420px]">
                     <h3
                       data-probe={`why-title-${card.id}`}
                       className="text-[20px] font-bold leading-none text-black"

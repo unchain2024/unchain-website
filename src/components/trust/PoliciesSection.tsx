@@ -21,7 +21,7 @@ const PoliciesSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-policies" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[120px] lg:pb-[100px] lg:pt-[102px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[100px] lg:pt-[102px]">
         <ScrollReveal>
           <p
             data-probe="policies-eyebrow"
@@ -32,7 +32,7 @@ const PoliciesSection = () => {
 
           <h2
             data-probe="policies-heading"
-            className="mt-[22.4px] text-[36px] font-bold leading-[1.11] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]"
+            className="mt-[22.4px] text-[36px] font-bold leading-[1.11] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">
@@ -49,7 +49,7 @@ const PoliciesSection = () => {
                 <Link
                   to={localePath(row.href)}
                   data-probe={`policies-row-${row.id}`}
-                  className="group flex items-center gap-3 border-b border-hd-card-line py-6 lg:h-[98px] lg:py-0"
+                  className="group flex items-center gap-3 border-b border-hd-card-line py-6 lg:min-h-[98px] lg:py-0"
                 >
                   <span
                     aria-hidden="true"

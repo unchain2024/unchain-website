@@ -56,7 +56,7 @@ const RolesSection = () => {
   return (
     <section data-nav-theme="light" data-probe="s-roles" className="w-full bg-white">
       <div className="mx-auto w-full max-w-[1440px] p-4">
-        <div className="rounded-2xl bg-hd-panel px-6 py-12 sm:px-10 lg:px-[100px] lg:pb-[100px] lg:pt-[101px]">
+        <div className="rounded-2xl bg-hd-panel px-6 py-12 sm:px-10 lg:px-[clamp(32px,6.9444vw,100px)] lg:pb-[100px] lg:pt-[101px]">
           <ScrollReveal>
             <p
               data-probe="roles-eyebrow"
@@ -67,7 +67,7 @@ const RolesSection = () => {
 
             <h2
               data-probe="roles-heading"
-              className="mt-[22.7px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]"
+              className="mt-[22.7px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
             >
               {t.heading.map((line) => (
                 <span key={line} className="block">
@@ -110,13 +110,14 @@ const RolesSection = () => {
                     onClick={() => openApply(role.id)}
                     aria-label={`${role.title} — ${t.open}`}
                     data-probe={`roles-row-${role.id}`}
-                    className="group flex w-full items-center gap-4 rounded-2xl px-6 py-6 text-left outline-none transition-[background-color,box-shadow] hover:bg-white hover:shadow-[0px_10px_20px_0px_rgba(0,0,0,0.04)] focus-visible:bg-white focus-visible:shadow-[0px_10px_20px_0px_rgba(0,0,0,0.04)] lg:h-[98px] lg:gap-0 lg:py-0 lg:pl-[32.5px] lg:pr-8"
+                    className="group flex w-full items-center gap-4 rounded-2xl px-6 py-6 text-left outline-none transition-[background-color,box-shadow] hover:bg-white hover:shadow-[0px_10px_20px_0px_rgba(0,0,0,0.04)] focus-visible:bg-white focus-visible:shadow-[0px_10px_20px_0px_rgba(0,0,0,0.04)] lg:min-h-[98px] lg:gap-0 lg:py-0 lg:pl-[32.5px] lg:pr-8"
                   >
                     {/* 223.5 + 561 + 309 across the row's 1093.5px measure — the pill's
-                        column, the title's, and the location filling what is left. Stacked
-                        below lg, where the export draws nothing. */}
+                        column, the title's, and the location filling what is left. Held as
+                        shares of that measure, since the row is narrower than 1093.5 below
+                        1440. Stacked below lg, where the export draws nothing. */}
                     <span className="flex min-w-0 flex-1 flex-col gap-2 lg:flex-row lg:items-center lg:gap-0">
-                      <span className="lg:w-[223.5px] lg:shrink-0">
+                      <span className="lg:w-[20.4389%] lg:shrink-0">
                         <span
                           data-probe={`roles-badge-${role.id}`}
                           className={`inline-flex h-7 items-center rounded-full px-4 text-[14px] leading-none text-black ${PILL_BORDER}`}
@@ -131,7 +132,7 @@ const RolesSection = () => {
                           export's own 443.8. */}
                       <span
                         data-probe={`roles-title-${role.id}`}
-                        className="text-[18px] font-bold leading-none text-black lg:mt-[4px] lg:w-[561px] lg:shrink-0 lg:text-[20px]"
+                        className="text-[18px] font-bold leading-none text-black lg:mt-[4px] lg:w-[51.3037%] lg:shrink-0 lg:text-[20px]"
                       >
                         {role.title}
                       </span>

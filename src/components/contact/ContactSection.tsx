@@ -128,23 +128,30 @@ const ContactSection = () => {
       data-probe="s-contact"
       className="w-full overflow-hidden bg-white pt-[68px]"
     >
-      <div className="relative mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:h-[1052px] lg:px-[120px] lg:py-0">
-        {/* Both blades run off the canvas at their corner; the section clips them. */}
-        <BladeTopRight className="pointer-events-none absolute left-[1170.12px] top-[-45px] hidden h-[356.7px] w-[469.16px] select-none lg:block" />
-        <BladeBottomLeft className="pointer-events-none absolute left-[-198.887px] top-[579px] hidden h-[356.7px] w-[469.16px] select-none lg:block" />
+      {/* `min-h`, not `h`: below 1440 the two columns narrow and the form grows taller than
+          the export's 1052px canvas. The frame clips its own blades rather than leaving that
+          to the section, so past 1440 they still crop at the 1440 edge the export draws. */}
+      <div className="relative mx-auto w-full max-w-[1440px] overflow-hidden px-6 py-16 sm:px-10 lg:min-h-[1052px] lg:px-[clamp(48px,8.3333vw,120px)] lg:py-0">
+        {/* Both blades run off the canvas at their corner; the frame clips them. Their
+            offsets are a share of the 1440 frame so they hold the corner as it narrows. */}
+        <BladeTopRight className="pointer-events-none absolute left-[81.2583%] top-[-45px] hidden h-[356.7px] w-[469.16px] select-none lg:block" />
+        <BladeBottomLeft className="pointer-events-none absolute left-[-13.8116%] top-[579px] hidden h-[356.7px] w-[469.16px] select-none lg:block" />
 
-        <div className="relative lg:flex lg:gap-[120px] lg:pt-[120px]">
+        {/* 460 : 620 with a 120px gutter is the export's split of the 1200px measure. As
+            `fr` it stays that ratio at any width — a fixed 460+120+620 is 1200 flat, which
+            is wider than the measure itself below 1440. */}
+        <div className="relative lg:grid lg:grid-cols-[460fr_620fr] lg:gap-[clamp(40px,8.3333vw,120px)] lg:pt-[120px]">
           {/* ── left column: heading + standfirst ─────────────────────────── */}
           {/* Above the fold, so these reveal on mount rather than on scroll. */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-            className="lg:w-[460px] lg:shrink-0 lg:pt-[5px]"
+            className="lg:pt-[5px]"
           >
             <h1
               data-probe="hero-heading"
-              className="text-[40px] font-semibold leading-[1.1] tracking-[-0.044em] text-black sm:text-[56px] lg:text-[72px] lg:leading-[79px]"
+              className="text-[40px] font-semibold leading-[1.1] tracking-[-0.044em] text-black sm:text-[56px] lg:text-[clamp(48px,5vw,72px)] lg:leading-[1.0972222]"
             >
               {copy.heading}
             </h1>
@@ -164,7 +171,7 @@ const ContactSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
             data-probe="card"
-            className="mt-12 rounded-2xl border border-hd-card-line bg-white p-6 sm:p-10 lg:mt-0 lg:w-[620px] lg:shrink-0 lg:p-[39px]"
+            className="mt-12 rounded-2xl border border-hd-card-line bg-white p-6 sm:p-10 lg:mt-0 lg:p-[39px]"
           >
             {sent ? (
               /* The exports stop at the submit button, so the sent state is built from

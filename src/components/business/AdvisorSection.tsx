@@ -24,13 +24,13 @@ const AdvisorSection = () => {
   return (
     <section id="advisor" data-nav-theme="light" className="w-full scroll-mt-24 bg-white">
       <div className="mx-auto w-full max-w-[1440px] px-4 pb-4 pt-4">
-        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-[100px] lg:pb-[112px] lg:pt-[100px]">
+        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-[clamp(32px,6.9444vw,100px)] lg:pb-[112px] lg:pt-[100px]">
           {/* ── Intro ─────────────────────────────────────────────────────── */}
           <div className="lg:flex lg:items-start lg:justify-between">
             <ScrollReveal data-probe="advisor-intro" className="lg:w-[48.0132%] lg:shrink-0">
               <NumberTwo className="ml-[4px] mt-[13.5px] h-[48px] w-[67.41px]" />
 
-              <h2 data-probe="advisor-heading" className="mt-[32px] text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[54px]">
+              <h2 data-probe="advisor-heading" className="mt-[32px] text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
                 {t.heading}
               </h2>
 
@@ -81,7 +81,7 @@ const AdvisorSection = () => {
                 {t.audience.eyebrow}
               </p>
 
-              <h2 className="mt-[25px] text-[36px] font-bold leading-[1.09] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]">
+              <h2 className="mt-[25px] text-[36px] font-bold leading-[1.09] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]">
                 {t.audience.heading.map((line) => (
                   <span key={line} className="block">
                     {line}

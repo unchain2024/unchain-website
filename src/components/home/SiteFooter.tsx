@@ -56,8 +56,12 @@ const SiteFooter = () => {
           </svg>
 
           <div className="relative px-6 pb-10 pt-10 sm:px-10 lg:px-10 lg:pb-[42px] lg:pt-10">
-            {/* Design columns at 1440w: logo x=56, links x=565, social x=1074. */}
-            <ScrollReveal className="grid gap-10 lg:grid-cols-[509px_509px_1fr] lg:gap-0">
+            {/* Design columns at 1440w: logo x=56, links x=565, social x=1074 — so 509 and
+                509 of the 1328px measure, which is where the two 38.33% tracks come from.
+                They are a share rather than a pixel width because the panel is as wide as
+                the window below 1440: at 1024 a fixed 509+509 is wider than the measure
+                itself and pushes the social icons out of the panel. */}
+            <ScrollReveal className="grid gap-10 lg:grid-cols-[38.33%_38.33%_1fr] lg:gap-0">
               <Link
                 to={localePath("/")}
                 aria-label="UNCHAIN"

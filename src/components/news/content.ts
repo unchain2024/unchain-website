@@ -22,27 +22,10 @@ export const hero = {
   },
 } as const;
 
-export const filters = {
-  ja: {
-    language: "言語",
-    category: "カテゴリ",
-    all: "すべて",
-    japanese: "日本語",
-    english: "English",
-  },
-  en: {
-    language: "Language",
-    category: "Category",
-    all: "All",
-    japanese: "Japanese",
-    english: "English",
-  },
-} as const;
-
 /**
  * The two categories the section now holds. Blogs were folded into news, so this is what
- * the category dropdown offers alongside "all" — which is the default and shows both —
- * and what each card's pill says.
+ * the tab row above the grid switches between — news first — and what each card's pill
+ * says.
  */
 export const kinds = {
   ja: { news: "ニュース", blog: "ブログ" },
@@ -53,8 +36,7 @@ export const list = {
   ja: {
     loading: "読み込み中...",
     empty: "記事がまだありません。",
-    noResults: "条件に一致する記事が見つかりませんでした。",
-    clear: "条件をリセット",
+    noResults: "この分類の記事はまだありません。",
     failed: "記事を読み込めませんでした。",
     /** Announced to screen readers on each card; the visible chrome has no such label. */
     externalHint: "外部サイトへ移動します",
@@ -62,8 +44,7 @@ export const list = {
   en: {
     loading: "Loading...",
     empty: "No articles yet.",
-    noResults: "No articles match your filters.",
-    clear: "Reset filters",
+    noResults: "Nothing here yet.",
     failed: "Failed to load articles.",
     externalHint: "Opens an external site",
   },

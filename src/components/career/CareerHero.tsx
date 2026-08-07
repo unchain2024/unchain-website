@@ -24,15 +24,15 @@ const CareerHero = () => {
       data-probe="s-hero"
       className="w-full overflow-hidden bg-white pt-[68px]"
     >
-      <div className="relative mx-auto w-full max-w-[1440px] lg:h-[482px]">
-        <Briefcase className="pointer-events-none absolute right-[204px] top-[69px] hidden h-[344px] w-[360px] select-none lg:block" />
+      <div className="relative mx-auto w-full max-w-[1440px] lg:min-h-[482px]">
+        <Briefcase className="pointer-events-none absolute right-[14.1667%] top-[69px] hidden h-[344px] w-[360px] select-none lg:block" />
 
         {/* Above the fold, so this reveals on mount rather than on scroll. */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="relative px-6 py-16 sm:px-10 lg:px-20 lg:py-0 lg:pt-[119.5px]"
+          className="relative px-6 py-16 sm:px-10 lg:px-[clamp(40px,5.5556vw,80px)] lg:py-0 lg:pt-[119.5px]"
         >
           {/* The display heading is tracked in -3.9% on the Japanese setting: the export's
               Japanese font sets kana tighter than Noto Sans JP does, and at 72px that is
@@ -41,7 +41,7 @@ const CareerHero = () => {
               discrepancy by the same amount. The English heading is Latin and needs none. */}
           <h1
             data-probe="hero-heading"
-            className={`text-[44px] font-bold leading-[1.11] text-black sm:text-[56px] lg:text-[72px] lg:leading-[80px] ${
+            className={`text-[44px] font-bold leading-[1.11] text-black sm:text-[56px] lg:text-[clamp(48px,5vw,72px)] lg:leading-[1.1111111] ${
               lang === "ja" ? "tracking-[-0.039em]" : ""
             }`}
           >

@@ -39,10 +39,10 @@ const GLYPHS = {
  * line is mirrored for the left pair — the dot always sits on the stack's side.
  */
 const LABELS = {
-  tools: { box: "lg:left-[880px] lg:top-[38.89px]", side: "right" },
-  access: { box: "lg:left-0 lg:top-[152px]", side: "left" },
-  neuron: { box: "lg:left-[880px] lg:top-[272px]", side: "right" },
-  team: { box: "lg:left-0 lg:top-[385.11px]", side: "left" },
+  tools: { box: "lg:left-[73.3333%] lg:top-[7.5225%]", side: "right" },
+  access: { box: "lg:left-0 lg:top-[29.4017%]", side: "left" },
+  neuron: { box: "lg:left-[73.3333%] lg:top-[52.6136%]", side: "right" },
+  team: { box: "lg:left-0 lg:top-[74.4926%]", side: "left" },
 } as const;
 
 /* Baselines of the four numerals in the stack's own coordinates — the ink bottom Figma
@@ -56,7 +56,7 @@ const LayersSection = () => {
   return (
     <section data-nav-theme="light" data-probe="s-layers" className="w-full bg-white">
       <div className="mx-auto w-full max-w-[1440px] p-4">
-        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-[104px] lg:pb-[100px] lg:pt-[101.8px]">
+        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-[clamp(32px,7.2222vw,104px)] lg:pb-[100px] lg:pt-[101.8px]">
           <ScrollReveal className="lg:text-center">
             <p
               data-probe="layers-eyebrow"
@@ -67,7 +67,7 @@ const LayersSection = () => {
 
             <h2
               data-probe="layers-heading"
-              className="mt-[22.5px] text-[36px] font-bold leading-[1.11] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]"
+              className="mt-[22.5px] text-[36px] font-bold leading-[1.11] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
             >
               {t.heading.map((line) => (
                 <span key={line} className="block">
@@ -77,9 +77,13 @@ const LayersSection = () => {
             </h2>
           </ScrollReveal>
 
-          <div className="mt-10 lg:relative lg:mt-[55.75px] lg:h-[516.977px]">
+          {/* The diagram is the export's 1200x516.977 box, kept as an aspect ratio rather
+              than a fixed height: every position inside it is a share of that box, so the
+              whole composition — stack, labels, leader lines — scales together when the
+              measure is narrower than 1200 instead of drifting apart. */}
+          <div className="mt-10 lg:relative lg:mt-[55.75px] lg:aspect-[1200/516.977]">
             {/* The stack, with its numerals in an overlay on the same viewBox. */}
-            <div className="relative mx-auto w-full max-w-[464.484px] lg:absolute lg:left-[367.758px] lg:top-0 lg:mx-0 lg:h-[516.977px] lg:w-[464.484px] lg:max-w-none">
+            <div className="relative mx-auto w-full max-w-[464.484px] lg:absolute lg:left-[30.6465%] lg:top-0 lg:mx-0 lg:w-[38.707%] lg:max-w-none">
               <LayerStack className="h-auto w-full select-none" />
 
               <svg
@@ -112,10 +116,10 @@ const LayersSection = () => {
                   <li
                     key={item.id}
                     data-probe={`layers-label-${item.id}`}
-                    className={`relative lg:absolute lg:h-[94px] lg:w-[320px] ${box}`}
+                    className={`relative lg:absolute lg:min-h-[94px] lg:w-[26.6667%] ${box}`}
                   >
                     <ScrollReveal delay={i * 0.08}>
-                      <div className="flex items-start gap-[18px] rounded-2xl bg-white p-6 lg:h-[94px] lg:p-0 lg:pl-6 lg:pt-[22px]">
+                      <div className="flex items-start gap-[18px] rounded-2xl bg-white p-6 lg:min-h-[94px] lg:p-0 lg:pl-6 lg:pt-[22px]">
                         <span
                           aria-hidden="true"
                           className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full bg-black text-white"

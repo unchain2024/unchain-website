@@ -28,7 +28,7 @@ const DeiSection = () => {
   return (
     <section data-nav-theme="dark" data-probe="s-dei" className="w-full bg-white">
       <div className="mx-auto w-full max-w-[1440px] p-4">
-        <div className="rounded-2xl bg-[linear-gradient(154.75deg,#0A0A0A_36.18%,#273953_99.94%)] px-6 py-16 text-center sm:px-10 lg:px-[50px] lg:pb-[99.8px] lg:pt-[101.3px]">
+        <div className="rounded-2xl bg-[linear-gradient(154.75deg,#0A0A0A_36.18%,#273953_99.94%)] px-6 py-16 text-center sm:px-10 lg:px-[clamp(24px,3.4722vw,50px)] lg:pb-[99.8px] lg:pt-[101.3px]">
           <ScrollReveal>
             <p
               data-probe="dei-eyebrow"
@@ -39,7 +39,7 @@ const DeiSection = () => {
 
             <h2
               data-probe="dei-heading"
-              className="mx-auto mt-[23px] max-w-[1100px] text-[32px] font-bold leading-[1.11] text-white sm:text-[42px] lg:text-[54px] lg:leading-[59px]"
+              className="mx-auto mt-[23px] max-w-[1100px] text-[32px] font-bold leading-[1.11] text-white sm:text-[42px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
             >
               {t.heading}
             </h2>

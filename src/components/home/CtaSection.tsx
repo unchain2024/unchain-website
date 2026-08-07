@@ -24,11 +24,11 @@ const CtaSection = () => {
     >
       <CtaArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-center px-6 py-24 text-center lg:h-[597px] lg:py-0 lg:pt-[118px]">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-center px-6 py-24 text-center lg:min-h-[597px] lg:py-0 lg:pt-[118px]">
         <ScrollReveal className="flex flex-col items-center">
           <UnchainMark className="h-[75px] w-[64px] text-[#0A0A0A]" />
 
-          <h2 className="mt-[41px] text-[34px] font-bold leading-[1.13] text-black sm:text-[44px] lg:text-[54px] lg:leading-[60px]">
+          <h2 className="mt-[41px] text-[34px] font-bold leading-[1.13] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.1111111]">
             {t.headline.map((line) => (
               <span key={line} className="block">
                 {line}

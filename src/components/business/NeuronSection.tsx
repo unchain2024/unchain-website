@@ -40,7 +40,7 @@ const NeuronSection = () => {
   return (
     <section id="neuron" data-nav-theme="light" className="w-full scroll-mt-24 bg-white">
       <div className="mx-auto w-full max-w-[1440px] px-4 pb-4 pt-4">
-        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:p-[100px]">
+        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:p-[clamp(32px,6.9444vw,100px)]">
           {/* ── Product intro ─────────────────────────────────────────────── */}
           <div className="lg:flex lg:items-start lg:justify-between">
             <ScrollReveal data-probe="neuron-intro" className="lg:w-[48.0132%] lg:shrink-0">
@@ -95,7 +95,7 @@ const NeuronSection = () => {
                 {t.features.eyebrow}
               </p>
 
-              <h2 className="mt-[22px] text-[36px] font-bold leading-[1.09] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]">
+              <h2 className="mt-[22px] text-[36px] font-bold leading-[1.09] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]">
                 {t.features.heading.map((line) => (
                   <span key={line} className="block">
                     {line}
@@ -117,7 +117,7 @@ const NeuronSection = () => {
               return (
                 <li key={card.id}>
                   <ScrollReveal delay={i * 0.08} data-probe={`card-${card.id}`}>
-                    <div className="flex h-full flex-col rounded-2xl border border-hd-card-line bg-white p-4 lg:h-[320px]">
+                    <div className="flex h-full flex-col rounded-2xl border border-hd-card-line bg-white p-4 lg:min-h-[320px]">
                       <div className="flex h-[190px] items-center justify-center">
                         <Art className={CARD_ART_SIZE[card.id]} />
                       </div>
@@ -142,7 +142,7 @@ const NeuronSection = () => {
                 {t.ontology.eyebrow}
               </p>
 
-              <h2 className="mt-[22px] max-w-[500px] text-[36px] font-bold leading-[1.09] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]">
+              <h2 className="mt-[22px] max-w-[500px] text-[36px] font-bold leading-[1.09] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]">
                 {t.ontology.heading.map((line) => (
                   <span key={line} className="block">
                     {line}

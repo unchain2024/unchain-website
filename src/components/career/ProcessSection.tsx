@@ -25,7 +25,7 @@ const ProcessSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-process" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[120px] lg:pb-[100px] lg:pt-[101px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[100px] lg:pt-[101px]">
         <ScrollReveal>
           <p
             data-probe="process-eyebrow"
@@ -36,7 +36,7 @@ const ProcessSection = () => {
 
           <h2
             data-probe="process-heading"
-            className="mt-[23.5px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[54px] lg:leading-[59px]"
+            className="mt-[23.5px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">
@@ -52,7 +52,7 @@ const ProcessSection = () => {
             return (
               <li
                 key={step.id}
-                className="relative border-l border-hd-card-line pb-6 pl-6 pt-6 lg:h-[300px] lg:pb-0 lg:pl-[23px] lg:pt-[202.5px]"
+                className="relative border-l border-hd-card-line pb-6 pl-6 pt-6 lg:min-h-[300px] lg:pb-0 lg:pl-[23px] lg:pt-[202.5px]"
               >
                 {/* Top of the column in the export; on the stacked mobile column it runs
                     above the copy instead of being pinned. Outside the reveal on purpose —

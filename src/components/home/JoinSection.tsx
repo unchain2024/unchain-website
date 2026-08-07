@@ -31,14 +31,14 @@ const JoinSection = () => {
     >
       <JoinArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 pt-20 lg:px-[120px] lg:pt-[122px]">
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 pt-20 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[122px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
           <ScrollReveal>
             <p className="font-mono text-[14px] leading-none text-hd-eyebrow-light">
               {t.eyebrow}
             </p>
 
-            <h2 className="mt-[18px] text-[34px] font-bold leading-[1.13] text-white sm:text-[42px] lg:text-[54px] lg:leading-[59px]">
+            <h2 className="mt-[18px] text-[34px] font-bold leading-[1.13] text-white sm:text-[42px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]">
               {t.headline.map((line) => (
                 <span key={line} className="block">
                   {line}
@@ -66,19 +66,29 @@ const JoinSection = () => {
         </div>
       </div>
 
-      {/* Full-bleed photo strip */}
-      <ScrollReveal className="relative z-10 mt-16 flex justify-center gap-4 pb-4 lg:mt-[123px]">
-        {SHOTS.map((src, i) => (
-          <img
-            key={src}
-            src={src}
-            alt=""
-            loading="lazy"
-            className={`h-[220px] w-[181px] shrink-0 rounded-2xl bg-[#D9D9D9] object-cover lg:h-[354px] lg:w-[292px] ${
-              i > 2 ? "hidden sm:block" : ""
-            }`}
-          />
-        ))}
+      {/* Full-bleed photo strip, drifting left to right.
+
+          The export draws one still row wider than the canvas; this keeps that row and
+          puts it in motion, so the bleed at both edges is now where the strip comes from
+          and goes to rather than a fixed crop.
+
+          Two identical copies of SHOTS ride one track and the animation walks it from
+          -50% to 0: at -50% the second copy sits exactly where the first one starts, so
+          the wrap is invisible. The 16px gutter is a margin on every card rather than a
+          flex `gap`, which is what makes half the track's width a whole number of cards —
+          with `gap` it would be half a gutter short and the loop would jump. */}
+      <ScrollReveal className="relative z-10 mt-16 overflow-hidden pb-4 lg:mt-[123px]">
+        <div className="flex w-max animate-marquee-right hover:[animation-play-state:paused] motion-reduce:animate-none">
+          {[...SHOTS, ...SHOTS].map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt=""
+              loading="lazy"
+              className="mr-4 h-[220px] w-[181px] shrink-0 rounded-2xl bg-[#D9D9D9] object-cover lg:h-[354px] lg:w-[292px]"
+            />
+          ))}
+        </div>
       </ScrollReveal>
     </section>
   );

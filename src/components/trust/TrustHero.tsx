@@ -25,22 +25,22 @@ const TrustHero = () => {
       data-probe="s-hero"
       className="w-full overflow-hidden bg-white"
     >
-      <div className="relative mx-auto w-full max-w-[1440px] lg:h-[561px]">
-        <Shield className="pointer-events-none absolute right-4 top-24 hidden h-[220px] w-[190px] select-none md:block lg:right-[160.9px] lg:top-[90px] lg:h-[381.902px] lg:w-[330.176px]" />
+      <div className="relative mx-auto w-full max-w-[1440px] lg:min-h-[561px]">
+        <Shield className="pointer-events-none absolute right-4 top-24 hidden h-[220px] w-[190px] select-none md:block lg:right-[11.1736%] lg:top-[90px] lg:h-[381.902px] lg:w-[330.176px]" />
 
         {/* Above the fold, so this reveals on mount rather than on scroll. */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="relative z-10 px-6 pb-16 pt-[120px] sm:px-10 md:max-w-[58%] lg:max-w-none lg:px-20 lg:pb-0 lg:pt-[126.3px]"
+          className="relative z-10 px-6 pb-16 pt-[120px] sm:px-10 md:max-w-[58%] lg:max-w-none lg:px-[clamp(40px,5.5556vw,80px)] lg:pb-0 lg:pt-[126.3px]"
         >
           {/* The display heading is tracked in -4.5% in the export, the same as the
               business hero's: at 72px that is what holds "機能ではなく" to the design's
               397.5px ink measure instead of a plain 412px. */}
           <h1
             data-probe="hero-heading"
-            className="text-[44px] font-bold leading-[1.11] tracking-[-0.045em] text-black sm:text-[56px] lg:text-[72px] lg:leading-[78.9px]"
+            className="text-[44px] font-bold leading-[1.11] tracking-[-0.045em] text-black sm:text-[56px] lg:text-[clamp(48px,5vw,72px)] lg:leading-[1.0958333]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">
