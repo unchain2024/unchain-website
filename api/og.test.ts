@@ -69,7 +69,7 @@ async function loadHandler() {
 const call = async (
   handler: (r: Request) => Promise<Response>,
   query: string
-) => handler(new Request(`https://unchain.co.jp/api/og?${query}`));
+) => handler(new Request(`https://the-unchain.com/api/og?${query}`));
 
 beforeEach(() => {
   vi.resetModules();
@@ -100,7 +100,7 @@ describe("og edge function", () => {
     expect(html).toContain('<meta property="og:image" content="https://cdn.example.com/recap.png" />');
     expect(html).toContain('<meta property="og:type" content="article" />');
     expect(html).toContain(
-      '<meta property="og:url" content="https://unchain.co.jp/en/news/recap-ai-world-2026-summer-tokyo" />'
+      '<meta property="og:url" content="https://the-unchain.com/en/news/recap-ai-world-2026-summer-tokyo" />'
     );
     expect(html).toContain('<meta name="twitter:card" content="summary_large_image" />');
     expect(html).toContain('<html lang="en"');
@@ -117,7 +117,7 @@ describe("og edge function", () => {
       '<meta property="og:title" content="【レポート】AI World 2026 Summer Tokyo | UNCHAIN" />'
     );
     expect(html).toContain(
-      '<meta property="og:url" content="https://unchain.co.jp/news/recap-ai-world-2026-summer-tokyo" />'
+      '<meta property="og:url" content="https://the-unchain.com/news/recap-ai-world-2026-summer-tokyo" />'
     );
     expect(html).toContain('<html lang="ja"');
   });
@@ -143,13 +143,13 @@ describe("og edge function", () => {
     ).text();
 
     expect(html).toContain(
-      '<link rel="canonical" href="https://unchain.co.jp/en/news/recap-ai-world-2026-summer-tokyo" />'
+      '<link rel="canonical" href="https://the-unchain.com/en/news/recap-ai-world-2026-summer-tokyo" />'
     );
     expect(html).toContain(
-      '<link rel="alternate" hreflang="ja" href="https://unchain.co.jp/news/recap-ai-world-2026-summer-tokyo" />'
+      '<link rel="alternate" hreflang="ja" href="https://the-unchain.com/news/recap-ai-world-2026-summer-tokyo" />'
     );
     expect(html).toContain(
-      '<link rel="alternate" hreflang="en" href="https://unchain.co.jp/en/news/recap-ai-world-2026-summer-tokyo" />'
+      '<link rel="alternate" hreflang="en" href="https://the-unchain.com/en/news/recap-ai-world-2026-summer-tokyo" />'
     );
   });
 
@@ -187,7 +187,7 @@ describe("og edge function", () => {
 
     // The canonical url uses the readable slug even when reached via the id.
     expect(html).toContain(
-      '<link rel="canonical" href="https://unchain.co.jp/en/news/recap-ai-world-2026-summer-tokyo" />'
+      '<link rel="canonical" href="https://the-unchain.com/en/news/recap-ai-world-2026-summer-tokyo" />'
     );
   });
 

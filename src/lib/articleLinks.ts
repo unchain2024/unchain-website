@@ -16,7 +16,7 @@
 // error. The bundlers resolve it to the `.ts` file either way.
 import { ARTICLE_SLUG_OVERRIDES } from "./articleSlugOverrides.js";
 
-export const SITE_URL = "https://unchain.co.jp";
+export const SITE_URL = "https://the-unchain.com";
 
 export type ArticleSection = "blog" | "news";
 

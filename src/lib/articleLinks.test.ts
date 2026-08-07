@@ -211,7 +211,7 @@ describe("articlePath / articleUrl", () => {
 
   it("builds absolute urls", () => {
     expect(articleUrl("blog", "latest-news", "en")).toBe(
-      "https://unchain.co.jp/en/blog/latest-news"
+      "https://the-unchain.com/en/blog/latest-news"
     );
   });
 });

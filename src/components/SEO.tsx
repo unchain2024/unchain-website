@@ -1,4 +1,7 @@
 import { Helmet } from "react-helmet-async";
+import { SITE_URL } from "@/lib/articleLinks";
+
+const DEFAULT_LOGO = `${SITE_URL}/logo-black.webp`;
 
 export type SEOProps = {
   title?: string;
@@ -24,8 +27,8 @@ export default function SEO({
   title = "UNCHAIN | Unchain The World",
   description = "UNCHAIN株式会社 — 組織型AI（A.O.I）の力で世界をUNCHAINする",
   type = "website",
-  image = "https://unchain.co.jp/logo-black.webp",
-  url = typeof window !== "undefined" ? window.location.href : "https://unchain.co.jp",
+  image = DEFAULT_LOGO,
+  url = typeof window !== "undefined" ? window.location.href : SITE_URL,
   canonical,
   alternates,
   author,
@@ -43,8 +46,8 @@ export default function SEO({
       "@context": "https://schema.org",
       "@type": "Organization",
       name: "UNCHAIN Co., Ltd.",
-      url: "https://unchain.co.jp",
-      logo: "https://unchain.co.jp/logo-black.webp",
+      url: SITE_URL,
+      logo: DEFAULT_LOGO,
       description: "組織型AI（A.O.I）の力で世界をUNCHAINする",
     });
   }
@@ -54,7 +57,7 @@ export default function SEO({
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: "UNCHAIN",
-      url: "https://unchain.co.jp",
+      url: SITE_URL,
     });
   } else if (type === "article") {
     schemas.push({
@@ -71,7 +74,7 @@ export default function SEO({
         name: "UNCHAIN",
         logo: {
           "@type": "ImageObject",
-          url: "https://unchain.co.jp/logo-black.webp",
+          url: DEFAULT_LOGO,
         },
       },
       datePublished: datePublished,
