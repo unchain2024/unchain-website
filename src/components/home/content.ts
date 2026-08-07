@@ -183,7 +183,7 @@ export const footer = {
     legal: [
       { label: "プライバシーポリシー", href: "/privacy-policy" },
       { label: "利用規約", href: "/terms-of-use" },
-      { label: "情報セキュリティ基本方針", href: "/terms-of-use" },
+      { label: "信頼・セキュリティ", href: "/trust-security" },
     ],
   },
   en: {
@@ -199,7 +199,7 @@ export const footer = {
     legal: [
       { label: "Privacy policy", href: "/privacy-policy" },
       { label: "Terms of use", href: "/terms-of-use" },
-      { label: "Information security policy", href: "/terms-of-use" },
+      { label: "Trust & security", href: "/trust-security" },
     ],
   },
 } as const;

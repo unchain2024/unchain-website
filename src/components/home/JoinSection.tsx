@@ -66,19 +66,29 @@ const JoinSection = () => {
         </div>
       </div>
 
-      {/* Full-bleed photo strip */}
-      <ScrollReveal className="relative z-10 mt-16 flex justify-center gap-4 pb-4 lg:mt-[123px]">
-        {SHOTS.map((src, i) => (
-          <img
-            key={src}
-            src={src}
-            alt=""
-            loading="lazy"
-            className={`h-[220px] w-[181px] shrink-0 rounded-2xl bg-[#D9D9D9] object-cover lg:h-[354px] lg:w-[292px] ${
-              i > 2 ? "hidden sm:block" : ""
-            }`}
-          />
-        ))}
+      {/* Full-bleed photo strip, drifting left to right.
+
+          The export draws one still row wider than the canvas; this keeps that row and
+          puts it in motion, so the bleed at both edges is now where the strip comes from
+          and goes to rather than a fixed crop.
+
+          Two identical copies of SHOTS ride one track and the animation walks it from
+          -50% to 0: at -50% the second copy sits exactly where the first one starts, so
+          the wrap is invisible. The 16px gutter is a margin on every card rather than a
+          flex `gap`, which is what makes half the track's width a whole number of cards —
+          with `gap` it would be half a gutter short and the loop would jump. */}
+      <ScrollReveal className="relative z-10 mt-16 overflow-hidden pb-4 lg:mt-[123px]">
+        <div className="flex w-max animate-marquee-right hover:[animation-play-state:paused] motion-reduce:animate-none">
+          {[...SHOTS, ...SHOTS].map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt=""
+              loading="lazy"
+              className="mr-4 h-[220px] w-[181px] shrink-0 rounded-2xl bg-[#D9D9D9] object-cover lg:h-[354px] lg:w-[292px]"
+            />
+          ))}
+        </div>
       </ScrollReveal>
     </section>
   );

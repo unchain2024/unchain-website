@@ -3,10 +3,10 @@ import { Loader2 } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLang } from "@/lib/language";
 import NewsCard from "./NewsCard";
-import NewsFilters from "./NewsFilters";
+import KindTabs from "./KindTabs";
 import Pagination from "./Pagination";
 import { PER_PAGE, list } from "./content";
-import type { Article } from "./types";
+import type { Article, ArticleKind } from "./types";
 
 /**
  * The filters, the card grid and the pager — `public/news/Section.svg` (1440x2159).
@@ -15,8 +15,8 @@ import type { Article } from "./types";
  * columns with a 24px gutter, and rows on a 442.07px pitch. The export lays out four rows
  * of three, which is where the twelve-per-page in `content.ts` comes from.
  *
- * `articles` holds news and blog rows together. The category dropdown filters on which of
- * the two a row is, and its default — "all" — shows both interleaved by date.
+ * `articles` holds news and blog rows together; the tab row above the grid picks which of
+ * the two is shown, starting on news.
  */
 const NewsList = ({
   articles,
@@ -32,8 +32,7 @@ const NewsList = ({
   const { lang } = useLang();
   const t = list[lang];
 
-  const [language, setLanguage] = useState("all");
-  const [category, setCategory] = useState("all");
+  const [kind, setKind] = useState<ArticleKind>("news");
   const [page, setPage] = useState(1);
 
   const filtered = useMemo(
@@ -43,21 +42,17 @@ const NewsList = ({
         const hasJa = Boolean(article.title?.trim());
         const hasEn = Boolean(article.title_en?.trim());
         if (lang === "ja" ? !hasJa : !hasEn) return false;
-        if (language === "ja" && !hasJa) return false;
-        if (language === "en" && !hasEn) return false;
 
-        // "all" keeps both kinds; otherwise the dropdown names the one to keep.
-        if (category !== "all" && article.kind !== category) return false;
-        return true;
+        return article.kind === kind;
       }),
-    [articles, category, lang, language]
+    [articles, kind, lang]
   );
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
-  // A filter change can leave the reader past the end of the new result set.
+  // Switching tabs can leave the reader past the end of the new result set.
   useEffect(() => {
     setPage(1);
-  }, [category, language, lang]);
+  }, [kind, lang]);
   const current = Math.min(page, totalPages);
   const shown = filtered.slice((current - 1) * PER_PAGE, current * PER_PAGE);
 
@@ -69,12 +64,7 @@ const NewsList = ({
   return (
     <section data-nav-theme="light" data-probe="s-list" className="w-full bg-white">
       <div className="mx-auto w-full max-w-[1440px] px-6 pb-24 pt-16 sm:px-10 lg:px-[120px] lg:pb-[100.22px] lg:pt-[103px]">
-        <NewsFilters
-          language={language}
-          category={category}
-          onLanguage={setLanguage}
-          onCategory={setCategory}
-        />
+        <KindTabs kind={kind} onKind={setKind} />
 
         <div data-probe="grid" className="mt-10 lg:mt-[60px]">
           {loading ? (
@@ -86,19 +76,9 @@ const NewsList = ({
           ) : !articles.length ? (
             <p className="py-32 text-center text-[16px] text-hd-eyebrow-ink">{t.empty}</p>
           ) : !filtered.length ? (
-            <div className="py-32 text-center">
-              <p className="text-[16px] text-hd-eyebrow-ink">{t.noResults}</p>
-              <button
-                type="button"
-                onClick={() => {
-                  setLanguage("all");
-                  setCategory("all");
-                }}
-                className="mt-4 text-[16px] text-hd-navy underline underline-offset-4"
-              >
-                {t.clear}
-              </button>
-            </div>
+            // Nothing to reset now that the tab is the only choice — the other tab is the
+            // way out, and it is right above this.
+            <p className="py-32 text-center text-[16px] text-hd-eyebrow-ink">{t.noResults}</p>
           ) : (
             <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-[62.27px]">
               {shown.map((article, i) => (

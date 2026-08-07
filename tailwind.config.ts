@@ -101,10 +101,18 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        /* The join strip's drift. It runs to 0 from -50% rather than the other way
+           round because the photos travel left to right; the track is two identical
+           copies, so half its width is one full set and the loop has no seam. */
+        "marquee-right": {
+          from: { transform: "translateX(-50%)" },
+          to: { transform: "translateX(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "marquee-right": "marquee-right 45s linear infinite",
       },
     },
   },

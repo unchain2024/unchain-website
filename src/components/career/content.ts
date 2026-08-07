@@ -77,6 +77,19 @@ export const why = {
 /** The department a role belongs to, and what the filter row offers. */
 export type DeptKey = "all" | "engineering" | "sales" | "management" | "design";
 
+/**
+ * One opening. The lists below are empty while nothing is being hired for — the section
+ * keeps its chips and falls back to `empty` — so the shape is spelled out here rather than
+ * inferred from the entries.
+ */
+export type Role = {
+  id: string;
+  dept: Exclude<DeptKey, "all">;
+  badge: string;
+  title: string;
+  location: string;
+};
+
 export const roles = {
   ja: {
     eyebrow: "OPEN POSITIONS",
@@ -92,36 +105,7 @@ export const roles = {
     empty: "この職種で募集中のポジションはありません。",
     /** Announced to screen readers on each row's button. */
     open: "このポジションに応募する",
-    items: [
-      {
-        id: "ai-llm",
-        dept: "engineering",
-        badge: "Engineering",
-        title: "AI / LLMエンジニア",
-        location: "Tokyo · Remote",
-      },
-      {
-        id: "fullstack",
-        dept: "engineering",
-        badge: "Engineering",
-        title: "フルスタックエンジニア",
-        location: "Tokyo · Remote",
-      },
-      {
-        id: "enterprise-ae",
-        dept: "sales",
-        badge: "Sales",
-        title: "エンタープライズアカウントエグゼクティブ",
-        location: "Tokyo · Hybrid",
-      },
-      {
-        id: "product-designer",
-        dept: "design",
-        badge: "Design",
-        title: "プロダクトデザイナー",
-        location: "Tokyo · Remote",
-      },
-    ],
+    items: [] as readonly Role[],
   },
   en: {
     eyebrow: "OPEN POSITIONS",
@@ -135,36 +119,7 @@ export const roles = {
     ],
     empty: "There are no open positions in this department right now.",
     open: "Apply for this role",
-    items: [
-      {
-        id: "ai-llm",
-        dept: "engineering",
-        badge: "Engineering",
-        title: "AI / LLM Engineer",
-        location: "Tokyo · Remote",
-      },
-      {
-        id: "fullstack",
-        dept: "engineering",
-        badge: "Engineering",
-        title: "Full-Stack Engineer",
-        location: "Tokyo · Remote",
-      },
-      {
-        id: "enterprise-ae",
-        dept: "sales",
-        badge: "Sales",
-        title: "Enterprise Account Executive",
-        location: "Tokyo · Hybrid",
-      },
-      {
-        id: "product-designer",
-        dept: "design",
-        badge: "Design",
-        title: "Product Designer",
-        location: "Tokyo · Remote",
-      },
-    ],
+    items: [] as readonly Role[],
   },
 } as const;
 

@@ -15,15 +15,15 @@
  * and `src/components/career/content.ts` drop, so it is dropped here too; the cost is that
  * item's first two lines fitting one more character than the export's do.
  *
- * The hero heading is an array because the export breaks it by hand — Japanese breaks
- * anywhere, and letting the browser wrap it would not reproduce the design's two lines.
- * Each entry is one line as Figma drew it, mid-word break included ("情報セキュリ" /
- * "ティ基本方針"); the export's own 72px measure is what puts the break there.
+ * The hero heading is an array because each entry is drawn as its own line. The export
+ * hard-breaks the Japanese mid-word ("情報セキュリ" / "ティ基本方針") to fit its 72px
+ * measure, but the title reads as one phrase and clears the 1280px gutter on one line, so
+ * it is kept whole here and only wraps where the viewport is genuinely too narrow.
  */
 
 export const hero = {
   ja: {
-    heading: ["情報セキュリ", "ティ基本方針"],
+    heading: ["情報セキュリティ基本方針"],
     date: "2026年3月1日制定",
   },
   en: {

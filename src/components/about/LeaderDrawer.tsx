@@ -57,8 +57,12 @@ const PANEL_FROM = {
  *
  * A 480px panel inset 32px from the top and bottom of the viewport over a dimmed, blurred
  * page (5% black plus the export's own `backdrop-filter: blur(50px)`). Inside: name and
- * role on 40px padding, a 299x329.75 photo frame holding the mosaic and the portrait, the
- * bio, then prev/next centred 40px off the bottom.
+ * role on 40px padding, a 299x329.75 photo frame holding the mosaic and the portrait, then
+ * the bio.
+ *
+ * The export draws prev/next as a pair centred off the bottom; they sit hard against the
+ * panel's left and right edges instead, level with the portrait, so the reading column
+ * keeps its full measure.
  *
  * Horizontally it tracks the open member's card — see PANEL_X. The export only draws the
  * third card's state, which is the right-hand position.
@@ -101,7 +105,7 @@ const LeaderDrawer = ({ members, index, onClose, onSelect, labels }: Props) => {
 
   return (
     <AnimatePresence>
-      {open && member && photo && (
+      {open && member && (
         <div className="fixed inset-0 z-[60]">
           <motion.button
             type="button"
@@ -150,34 +154,20 @@ const LeaderDrawer = ({ members, index, onClose, onSelect, labels }: Props) => {
               </p>
             </div>
 
-            {/* 299 x 329.75 frame, centred in the panel's 400px measure. */}
-            {/* Border on an overlay, not the frame: the portrait is placed as a share of
-                the 299 x 329.746 box and a border would shrink that basis. */}
-            <div className="relative mx-auto mt-[42.6px] aspect-[299/329.746] w-full max-w-[299px] shrink-0 overflow-hidden rounded-[12px]">
-              <DrawerMosaic className="pointer-events-none absolute inset-0 h-full w-full select-none" />
-              <img
-                src={photo.src}
-                alt={member.alt}
-                className="absolute left-[-3.597%] top-[15.427%] w-[107.455%] max-w-none object-cover"
-                style={{ aspectRatio: "1 / 1" }}
-              />
-              <div className="pointer-events-none absolute inset-0 rounded-[12px] border-[0.77px] border-hd-card-line" />
-            </div>
+            {/* The photo's row, which is also what the prev/next arrows flank.
 
-            <p
-              data-probe="drawer-bio"
-              className="mt-[44.7px] text-[14px] leading-[20px] text-hd-eyebrow-ink"
-            >
-              {member.bio}
-            </p>
-
-            <div className="mt-auto flex items-center justify-center gap-4 pt-10">
+                The negative margins cancel the panel's own padding so this one row runs
+                the full width of the panel: that is what lets the arrows sit hard against
+                its left and right edges while the frame stays centred on `mx-auto`. They
+                keep the leader cards' translucent plate, since on a narrow panel there is
+                no gutter left and they ride over the photo. */}
+            <div className="relative -mx-6 mt-[42.6px] shrink-0 sm:-mx-10">
               <button
                 type="button"
                 onClick={() => onSelect(index - 1)}
                 disabled={index === 0}
                 aria-label={labels.prev}
-                className="flex h-[50px] w-[50px] items-center justify-center rounded-full border border-hd-hairline transition-colors enabled:text-hd-chevron enabled:hover:bg-black/5 disabled:cursor-default disabled:text-hd-eyebrow"
+                className="absolute left-2 top-1/2 z-10 flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-hd-hairline bg-white/80 backdrop-blur-sm transition-colors enabled:text-hd-chevron enabled:hover:bg-white disabled:cursor-default disabled:text-hd-eyebrow"
               >
                 <ChevronLeft />
               </button>
@@ -187,11 +177,35 @@ const LeaderDrawer = ({ members, index, onClose, onSelect, labels }: Props) => {
                 onClick={() => onSelect(index + 1)}
                 disabled={index === members.length - 1}
                 aria-label={labels.next}
-                className="flex h-[50px] w-[50px] items-center justify-center rounded-full border border-hd-hairline transition-colors enabled:text-hd-chevron enabled:hover:bg-black/5 disabled:cursor-default disabled:text-hd-eyebrow"
+                className="absolute right-2 top-1/2 z-10 flex h-[50px] w-[50px] -translate-y-1/2 items-center justify-center rounded-full border border-hd-hairline bg-white/80 backdrop-blur-sm transition-colors enabled:text-hd-chevron enabled:hover:bg-white disabled:cursor-default disabled:text-hd-eyebrow"
               >
                 <ChevronRight />
               </button>
+
+              {/* 299 x 329.75 frame, centred in the panel's 400px measure. */}
+              {/* Border on an overlay, not the frame: the portrait is placed as a share of
+                  the 299 x 329.746 box and a border would shrink that basis. */}
+              <div className="relative mx-auto aspect-[299/329.746] w-full max-w-[299px] overflow-hidden rounded-[12px]">
+                <DrawerMosaic className="pointer-events-none absolute inset-0 h-full w-full select-none" />
+                {/* A member with no portrait yet still opens — the frame shows the mosaic. */}
+                {photo && (
+                  <img
+                    src={photo.src}
+                    alt={member.alt}
+                    className="absolute left-[-3.597%] top-[15.427%] w-[107.455%] max-w-none object-cover"
+                    style={{ aspectRatio: "1 / 1" }}
+                  />
+                )}
+                <div className="pointer-events-none absolute inset-0 rounded-[12px] border-[0.77px] border-hd-card-line" />
+              </div>
             </div>
+
+            <p
+              data-probe="drawer-bio"
+              className="mt-[44.7px] text-[14px] leading-[20px] text-hd-eyebrow-ink"
+            >
+              {member.bio}
+            </p>
           </motion.div>
         </div>
       )}

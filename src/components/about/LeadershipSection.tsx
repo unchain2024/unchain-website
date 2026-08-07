@@ -60,18 +60,21 @@ const LeadershipSection = () => {
                   >
                     <LeaderMosaic className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 
-                    <img
-                      src={photo.src}
-                      alt={member.alt}
-                      loading="lazy"
-                      className="pointer-events-none absolute max-w-none select-none object-cover"
-                      style={{
-                        left: photo.card.left,
-                        top: photo.card.top,
-                        width: photo.card.width,
-                        aspectRatio: photo.card.aspect,
-                      }}
-                    />
+                    {/* A member with no portrait yet keeps the card — just the mosaic. */}
+                    {photo && (
+                      <img
+                        src={photo.src}
+                        alt={member.alt}
+                        loading="lazy"
+                        className="pointer-events-none absolute max-w-none select-none object-cover"
+                        style={{
+                          left: photo.card.left,
+                          top: photo.card.top,
+                          width: photo.card.width,
+                          aspectRatio: photo.card.aspect,
+                        }}
+                      />
+                    )}
 
                     <div className="pointer-events-none absolute inset-0 rounded-2xl border border-hd-card-line" />
 
