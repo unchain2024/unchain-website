@@ -12,8 +12,10 @@ import { pageItems } from "./pageItems";
  * nothing visually and keeps the control readable to a screen reader.
  */
 
+/* The mobile export draws the same circles at 48 on a 12px gap, which is what keeps a
+   `< 1 … 25 >` row inside the 345px measure. */
 const cell =
-  "flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full border border-hd-hairline text-[16px] leading-none text-black";
+  "flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full border border-hd-hairline text-[16px] leading-none text-black sm:h-[50px] sm:w-[50px]";
 
 const Arrow = ({ dir }: { dir: "prev" | "next" }) => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -43,7 +45,11 @@ const Pagination = ({
   const step = (delta: number) => () => onPage(Math.min(total, Math.max(1, page + delta)));
 
   return (
-    <nav data-probe="pager" className="flex items-center justify-center gap-4" aria-label={t.page}>
+    <nav
+      data-probe="pager"
+      className="flex items-center justify-center gap-3 sm:gap-4"
+      aria-label={t.page}
+    >
       <button
         type="button"
         onClick={step(-1)}

@@ -46,7 +46,7 @@ const ApproachSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-approach" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[99.5px] lg:pt-[102px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-12 sm:px-10 sm:py-16 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[99.5px] lg:pt-[102px]">
         <ScrollReveal>
           <p
             data-probe="approach-eyebrow"
@@ -60,7 +60,7 @@ const ApproachSection = () => {
               trust rows in `tools/design/trust_fit.json`. */}
           <h2
             data-probe="approach-heading"
-            className="mt-[22.4px] text-[36px] font-bold leading-[1.11] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
+            className="mt-[22.4px] text-[32px] font-bold leading-[1.0925926] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">
@@ -76,10 +76,13 @@ const ApproachSection = () => {
             return (
               <li key={card.id}>
                 <ScrollReveal delay={i * 0.08}>
-                  <div className="relative overflow-hidden rounded-2xl border border-hd-card-line bg-white px-4 pb-6 pt-6 lg:min-h-[320px] lg:pb-0 lg:pt-[229px]">
-                    {/* Top of the card in the export; on the stacked mobile card it leads
-                        the copy instead of being pinned. */}
-                    <Art className={`mb-6 select-none lg:absolute lg:mb-0 ${box}`} />
+                  <div className="relative min-h-[279px] overflow-hidden rounded-2xl border border-hd-card-line bg-white p-4 sm:min-h-0 sm:pb-6 sm:pt-6 lg:min-h-[320px] lg:pb-0 lg:pt-[229px]">
+                    {/* Top of the card in the export. The mobile export keeps every glyph
+                        at its drawn size and centres it on the card's axis 28px below the
+                        padding box; from `lg` each returns to its own measured offset. */}
+                    <Art
+                      className={`mx-auto mb-[45px] mt-[28px] block select-none sm:mx-0 sm:mb-6 sm:mt-0 lg:absolute lg:mb-0 ${box}`}
+                    />
 
                     <h3
                       data-probe={`approach-title-${card.id}`}

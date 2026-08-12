@@ -5,7 +5,7 @@ import { Menu, X, Check } from "lucide-react";
 import { useLang } from "@/lib/language";
 import { nav as navContent, languages } from "@/components/home/content";
 import { UnchainLogo } from "@/components/home/Logo";
-import { Globe, ArrowUpRight } from "@/components/home/icons";
+import { Globe, ArrowUpRight, ChevronRight } from "@/components/home/icons";
 import { FlagUS, FlagJP } from "@/components/home/flags";
 import {
   DropdownMenu,
@@ -25,7 +25,15 @@ import { User } from "@supabase/supabase-js";
  * "Neuron" pill and a 94x36 white "Book a demo" button, each separated by 8px.
  * Outlines are #D5D7DA. The bar never hides; once the page scrolls it gains the
  * 68px-tall `black @ 50%` scrim the scrolling SVG draws behind the row.
+ *
+ * Mobile geometry, from the exports in `public/mobile` — all ten draw the same bar:
+ * 63.3px tall on a 24px gutter, the same 141x31.4 logo at the left and a 24px
+ * hamburger at the right, closed off by a 1px #E9EAEB hairline. (The exports also
+ * draw an information banner above it; the site does not carry one, so it is not
+ * built here.)
  */
+const NAV_H = "h-[63.3px] lg:h-[68px]";
+
 const Navigation = () => {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -75,6 +83,16 @@ const Navigation = () => {
     return () => observer.disconnect();
   }, []);
 
+  /* The drawer covers the page, so the page behind it must not scroll under it. */
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [mobileOpen]);
+
   const isLight = theme === "light";
   const t = navContent[lang];
 
@@ -87,15 +105,28 @@ const Navigation = () => {
     <nav className="fixed left-0 right-0 top-0 z-50">
       {/* Scrolled scrim — the full-bleed 68px `black @ 50%` rect from
           `public/Navigation PC - Scrolling.svg`, mirrored to white over the
-          light sections so the dark ink stays legible. */}
-      <div
-        aria-hidden
-        className={`pointer-events-none absolute inset-x-0 top-0 h-[68px] transition-colors duration-300 ${
-          scrolled ? (isLight ? "bg-white/50" : "bg-black/50") : "bg-transparent"
-        }`}
-      />
+          light sections so the dark ink stays legible.
 
-      <div className="relative mx-auto flex h-[68px] w-full max-w-[1440px] items-center justify-between px-6 lg:px-10">
+          Below `lg` the mobile exports draw the bar itself: solid white with a
+          #E9EAEB hairline on the light pages, and nothing at all over the home
+          hero, where the dark gradient shows through. */}
+      <div className={`relative ${NAV_H}`}>
+        <div
+          aria-hidden
+          className={`pointer-events-none absolute inset-0 transition-colors duration-300 ${
+            isLight
+              ? "border-b border-hd-card-line bg-white lg:border-0 lg:bg-transparent"
+              : ""
+          } ${
+            scrolled
+              ? isLight
+                ? "lg:bg-white/50"
+                : "bg-black/50"
+              : "lg:bg-transparent"
+          }`}
+        />
+
+        <div className="relative mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-6 lg:px-10">
         {/* Logo + primary links */}
         <div className="flex items-center gap-10 xl:gap-[37px]">
           <Link to={localePath("/")} aria-label="UNCHAIN">
@@ -204,36 +235,47 @@ const Navigation = () => {
           </Link>
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile toggle — the exports draw a 24px, 2px-stroke hamburger whose ink
+            runs x 348..366, i.e. flush to the same 24px gutter as the logo. */}
         <button
-          className={`transition-colors duration-500 md:hidden ${
-            isLight ? "text-black" : "text-white"
+          className={`-mr-[3px] transition-colors duration-500 xl:hidden ${
+            mobileOpen || isLight ? "text-black" : "text-white"
           }`}
           onClick={() => setMobileOpen(!mobileOpen)}
+          aria-expanded={mobileOpen}
           aria-label="Menu"
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
+        </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu.
+
+          The exports draw the closed header only, so the sheet is built from the
+          same parts the rest of the mobile design uses: the 24px gutter, #E9EAEB
+          hairlines between rows, and the full-measure 50px pill the mobile buttons
+          are drawn as. It fills the rest of the viewport under the bar so the page
+          behind it is never half-visible. */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-b border-border bg-background xl:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="max-h-[calc(100svh-var(--nav-h))] overflow-y-auto overscroll-contain border-t border-hd-card-line bg-white xl:hidden"
           >
-            <div className="flex w-full flex-col gap-4 px-6 py-6 sm:px-8 lg:px-12">
+            <div className="flex w-full flex-col px-6 pb-10 pt-2">
               {t.items.map((item) => (
                 <Link
                   key={item.href}
                   to={localePath(item.href)}
                   onClick={() => setMobileOpen(false)}
-                  className="py-2 text-lg text-foreground"
+                  className="flex items-center justify-between border-b border-hd-card-line py-[18px] text-[18px] leading-none text-black"
                 >
                   {item.label}
+                  <ChevronRight className="text-hd-chevron" />
                 </Link>
               ))}
 
@@ -242,7 +284,7 @@ const Navigation = () => {
                   <Link
                     to="/admin"
                     onClick={() => setMobileOpen(false)}
-                    className="py-2 text-lg font-bold text-primary"
+                    className="border-b border-hd-card-line py-[18px] text-[18px] font-bold leading-none text-primary"
                   >
                     Admin Dashboard
                   </Link>
@@ -251,14 +293,14 @@ const Navigation = () => {
                       handleLogout();
                       setMobileOpen(false);
                     }}
-                    className="py-2 text-left text-lg text-destructive"
+                    className="border-b border-hd-card-line py-[18px] text-left text-[18px] leading-none text-destructive"
                   >
                     Logout
                   </button>
                 </>
               )}
 
-              <div className="mt-2 flex flex-wrap items-center gap-3">
+              <div className="mt-6 flex items-center gap-2">
                 {languages.map((option) => {
                   const Flag = option.code === "en" ? FlagUS : FlagJP;
                   const active = lang === option.code;
@@ -270,10 +312,10 @@ const Navigation = () => {
                         setMobileOpen(false);
                       }}
                       aria-current={active ? "true" : undefined}
-                      className={`flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                      className={`flex h-[42px] flex-1 items-center justify-center gap-2 rounded-full border text-[15px] leading-none transition-colors ${
                         active
-                          ? "border-foreground bg-foreground text-background"
-                          : "border-foreground/30 text-foreground hover:bg-foreground/5"
+                          ? "border-black bg-black text-white"
+                          : "border-hd-hairline text-black"
                       }`}
                     >
                       <Flag className="h-[14px] w-5 shrink-0 rounded-[2px]" />
@@ -281,14 +323,26 @@ const Navigation = () => {
                     </button>
                   );
                 })}
-                <Link
-                  to={localePath("/contact")}
-                  onClick={() => setMobileOpen(false)}
-                  className="rounded-full bg-black px-4 py-1.5 text-sm text-white"
-                >
-                  {t.demo}
-                </Link>
               </div>
+
+              <a
+                href={t.neuronHref}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className="mt-4 flex h-[50px] items-center justify-center gap-[11px] rounded-full border border-hd-hairline text-[16px] leading-none text-black"
+              >
+                {t.neuron}
+                <ArrowUpRight className="text-hd-eyebrow" />
+              </a>
+
+              <Link
+                to={localePath("/contact")}
+                onClick={() => setMobileOpen(false)}
+                className="mt-4 flex h-[50px] items-center justify-center rounded-full bg-black text-[16px] leading-none text-white"
+              >
+                {t.demo}
+              </Link>
             </div>
           </motion.div>
         )}

@@ -17,6 +17,10 @@ import { PlaceholderCard } from "./art/PlaceholderArt";
  * export's 442.07px pitch when the CMS hands over a shorter or longer headline.
  *
  * A row with no image falls back to the design's own placeholder art rather than a gap.
+ *
+ * The mobile exports draw the same card at the full 345px measure: the photo keeps its
+ * aspect but rounds 12 instead of 16, and the title steps up to 18/22 — every other
+ * measurement, including the 16.5px gap under the photo, is unchanged.
  */
 const NewsCard = ({ article, slug }: { article: Article; slug: string }) => {
   const { lang, localePath } = useLang();
@@ -34,7 +38,7 @@ const NewsCard = ({ article, slug }: { article: Article; slug: string }) => {
 
   const body = (
     <>
-      <div className="relative w-full overflow-hidden rounded-2xl bg-hd-panel">
+      <div className="relative w-full overflow-hidden rounded-xl bg-hd-panel sm:rounded-2xl">
         {/* 384 x 243.07 in the export. */}
         <div className="aspect-[384/243.07] w-full">
           {article.image_url && !imageFailed ? (
@@ -70,7 +74,7 @@ const NewsCard = ({ article, slug }: { article: Article; slug: string }) => {
 
       <h3
         data-probe="card-title"
-        className="mt-[13.83px] line-clamp-2 min-h-[44px] text-[16px] font-bold leading-[22px] text-black transition-colors group-hover:text-hd-navy"
+        className="mt-[13.83px] line-clamp-2 min-h-[44px] text-[18px] font-bold leading-[22px] text-black transition-colors group-hover:text-hd-navy sm:text-[16px]"
       >
         {title}
       </h3>

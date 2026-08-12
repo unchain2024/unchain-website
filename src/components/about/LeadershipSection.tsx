@@ -23,7 +23,7 @@ const LeadershipSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-leadership" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[101px] lg:pt-[101px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-12 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[101px] lg:pt-[101px]">
         <ScrollReveal>
           <p
             data-probe="leadership-eyebrow"
@@ -34,7 +34,7 @@ const LeadershipSection = () => {
 
           <h2
             data-probe="leadership-heading"
-            className="mt-[23px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
+            className="mt-[23px] text-[32px] font-bold leading-[1.0925926] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">
@@ -44,7 +44,8 @@ const LeadershipSection = () => {
           </h2>
         </ScrollReveal>
 
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:mt-[76px] lg:grid-cols-3">
+        {/* One 345x400 card per row on mobile; the export's three-up grid from `lg`. */}
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-[76px] lg:grid-cols-3">
           {t.members.map((member, i) => {
             const photo = LEADER_PHOTOS[member.id];
             return (
@@ -56,7 +57,7 @@ const LeadershipSection = () => {
                       inside the box, so it goes on an overlay instead. */}
                   <div
                     data-probe={`leader-card-${member.id}`}
-                    className="relative aspect-[389.333/460] overflow-hidden rounded-2xl bg-white"
+                    className="relative aspect-[345/400] overflow-hidden rounded-2xl bg-white sm:aspect-[389.333/460]"
                   >
                     <LeaderMosaic className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 

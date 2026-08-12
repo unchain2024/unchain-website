@@ -198,7 +198,7 @@ const ArticleFallback = ({ loading, error }: { loading: boolean; error: string |
   return (
     <section
       data-nav-theme="light"
-      className="w-full bg-white pt-[68px]"
+      className="w-full bg-white pt-nav"
     >
       <div className="mx-auto w-full max-w-[680px] px-6 py-32 text-center lg:px-0">
         {loading ? (

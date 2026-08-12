@@ -26,7 +26,7 @@ const PrivacyHero = () => {
     <section
       data-nav-theme="light"
       data-probe="s-hero"
-      className="w-full bg-white pt-[68px]"
+      className="w-full bg-white pt-nav"
     >
       <div className="relative mx-auto w-full max-w-[1440px] overflow-hidden lg:min-h-[660px]">
         <GradientCorner className="pointer-events-none absolute right-[-221.37px] top-[70.294px] hidden h-[589.084px] w-[589.07px] select-none lg:block" />
@@ -36,14 +36,14 @@ const PrivacyHero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="relative px-6 py-16 sm:px-10 lg:px-[clamp(40px,5.5556vw,80px)] lg:py-0 lg:pt-[79.5px]"
+          className="relative px-6 pb-12 pt-12 sm:px-10 sm:py-16 lg:px-[clamp(40px,5.5556vw,80px)] lg:py-0 lg:pt-[79.5px]"
         >
           {/* Tracked in like the other 72px headings: the export's Japanese font sets katakana
               tighter than Noto Sans JP does, and here that is 14px over the first line's six
               cells — -0.039em, the same figure the terms and news heroes need. */}
           <h1
             data-probe="hero-heading"
-            className="text-[44px] font-bold leading-[1.11] tracking-[-0.039em] text-black sm:text-[56px] lg:text-[clamp(48px,5vw,72px)] lg:leading-[1.0972222]"
+            className="text-[40px] font-bold leading-[44px] tracking-[-0.039em] text-black lg:text-[clamp(48px,5vw,72px)] lg:leading-[1.0972222]"
           >
             {lang === "ja" ? (
               <>

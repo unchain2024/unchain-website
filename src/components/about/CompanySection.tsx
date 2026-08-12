@@ -16,7 +16,7 @@ const CompanySection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-company" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[102px] lg:pt-[101px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-12 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[102px] lg:pt-[101px]">
         <ScrollReveal>
           <p
             data-probe="company-eyebrow"
@@ -27,23 +27,25 @@ const CompanySection = () => {
 
           <h2
             data-probe="company-heading"
-            className="mt-[26px] text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]"
+            className="mt-[26px] text-[32px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]"
           >
             {t.heading}
           </h2>
         </ScrollReveal>
 
         <ScrollReveal delay={0.1} className="mt-10 lg:mt-[38px]">
+          {/* The mobile export keeps the two columns: labels on the page gutter and
+              values on a 120px offset from it. */}
           <dl data-probe="company-table">
             {t.rows.map((row) => (
               <div
                 key={row.label}
-                className="flex flex-col border-b border-hd-card-line py-[18px] sm:flex-row sm:pb-[21px] sm:pt-[26px]"
+                className="flex border-b border-hd-card-line pb-[21px] pt-[26px]"
               >
-                <dt className="text-[14px] leading-[20px] text-hd-eyebrow-ink sm:w-[300px] sm:shrink-0">
+                <dt className="w-[120px] shrink-0 text-[14px] leading-[20px] text-hd-eyebrow-ink sm:w-[300px]">
                   {row.label}
                 </dt>
-                <dd className="mt-1 text-[14px] font-medium leading-[20px] text-black sm:mt-0">
+                <dd className="text-[14px] font-medium leading-[20px] text-black">
                   {Array.isArray(row.value)
                     ? row.value.map((line) => (
                         <span key={line} className="block">

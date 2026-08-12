@@ -39,8 +39,9 @@ const NeuronSection = () => {
 
   return (
     <section id="neuron" data-nav-theme="light" className="w-full scroll-mt-24 bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-4 pb-4 pt-4">
-        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:p-[clamp(32px,6.9444vw,100px)]">
+      {/* The mobile export insets the panel 8px, rounds it 12 and pads it 24. */}
+      <div className="mx-auto w-full max-w-[1440px] p-2 sm:p-4">
+        <div className="rounded-xl bg-hd-panel px-6 py-12 sm:rounded-2xl sm:px-10 sm:py-16 lg:p-[clamp(32px,6.9444vw,100px)]">
           {/* ── Product intro ─────────────────────────────────────────────── */}
           <div className="lg:flex lg:items-start lg:justify-between">
             <ScrollReveal data-probe="neuron-intro" className="lg:w-[48.0132%] lg:shrink-0">
@@ -63,7 +64,7 @@ const NeuronSection = () => {
                 target="_blank"
                 rel="noreferrer"
                 data-probe="neuron-cta"
-                className="mt-[14px] inline-flex h-[50px] items-center gap-[13px] rounded-full border border-hd-hairline pl-[16px] pr-[24px] text-[16px] leading-none text-black transition-colors hover:bg-white/60"
+                className="mt-[14px] flex h-[50px] items-center justify-center gap-[13px] rounded-full border border-hd-hairline text-[16px] leading-none text-black transition-colors hover:bg-white/60 sm:inline-flex sm:justify-start sm:pl-[16px] sm:pr-[24px]"
               >
                 {t.cta.label}
                 <ExternalArrow className="h-[10px] w-[10px] text-hd-chevron" />
@@ -95,7 +96,7 @@ const NeuronSection = () => {
                 {t.features.eyebrow}
               </p>
 
-              <h2 className="mt-[22px] text-[36px] font-bold leading-[1.09] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]">
+              <h2 className="mt-[22px] text-[32px] font-bold leading-[1.0925926] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
                 {t.features.heading.map((line) => (
                   <span key={line} className="block">
                     {line}
@@ -142,7 +143,7 @@ const NeuronSection = () => {
                 {t.ontology.eyebrow}
               </p>
 
-              <h2 className="mt-[22px] max-w-[500px] text-[36px] font-bold leading-[1.09] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]">
+              <h2 className="mt-[22px] max-w-[500px] text-[32px] font-bold leading-[1.0925926] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
                 {t.ontology.heading.map((line) => (
                   <span key={line} className="block">
                     {line}
@@ -161,7 +162,7 @@ const NeuronSection = () => {
                 target="_blank"
                 rel="noreferrer"
                 data-probe="ontology-cta"
-                className="mt-[40px] inline-flex h-[50px] items-center gap-[15px] rounded-full border border-hd-hairline pl-[16px] pr-[25px] text-[16px] leading-none text-black transition-colors hover:bg-white/60"
+                className="mt-[40px] flex h-[50px] items-center justify-center gap-[15px] rounded-full border border-hd-hairline text-[16px] leading-none text-black transition-colors hover:bg-white/60 sm:inline-flex sm:justify-start sm:pl-[16px] sm:pr-[25px]"
               >
                 {t.ontology.cta.label}
                 <ChevronRight className="text-hd-chevron" />
@@ -171,14 +172,16 @@ const NeuronSection = () => {
             {/* The figure is a scale drawing, so it shrinks as a whole rather than
                 reflowing. `--ont` is the largest scale that still fits the panel's
                 content width at the narrowest viewport in each range — the side inset
-                is 80px below sm and 112px from sm up, and from md the figure fits at
-                the 642px it was drawn at. The wrapper tracks the same factor so no
-                dead vertical space is left behind. (A fluid factor is not expressible
-                here: dividing a length by a length is not valid CSS.) */}
+                is 64px below sm (the mobile export's 8px panel inset plus its 24px
+                padding) and 112px from sm up, and from md the figure fits at the 642px
+                it was drawn at. That puts it at 0.51 on a 393px page, which is the
+                345px the mobile export draws it at. The wrapper tracks the same factor
+                so no dead vertical space is left behind. (A fluid factor is not
+                expressible here: dividing a length by a length is not valid CSS.) */}
             <ScrollReveal
               delay={0.1}
               data-probe="ontology-figure"
-              className="mt-12 [--ont:0.35] min-[420px]:[--ont:0.5] min-[560px]:[--ont:0.68] sm:[--ont:0.79] min-[788px]:[--ont:1] min-[1440px]:mt-0 min-[1440px]:shrink-0"
+              className="mt-12 [--ont:0.51] min-[420px]:[--ont:0.55] min-[560px]:[--ont:0.77] sm:[--ont:0.79] min-[788px]:[--ont:1] min-[1440px]:mt-0 min-[1440px]:shrink-0"
             >
               <div
                 style={{ height: "calc(579px * var(--ont, 1))" }}

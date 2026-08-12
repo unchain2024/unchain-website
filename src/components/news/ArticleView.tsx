@@ -57,9 +57,9 @@ const ArticleView = ({ article }: { article: Article }) => {
     <section
       data-nav-theme="light"
       data-probe="s-article"
-      className="w-full bg-white pt-[68px]"
+      className="w-full bg-white pt-nav"
     >
-      <article className="mx-auto w-full max-w-[680px] px-6 pb-24 pt-16 lg:px-0 lg:pb-[98.9px] lg:pt-[100.5px]">
+      <article className="mx-auto w-full max-w-[680px] px-6 pb-16 pt-12 sm:pb-24 sm:pt-16 lg:px-0 lg:pb-[98.9px] lg:pt-[100.5px]">
         {/* Above the fold, so this reveals on mount rather than on scroll. */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -81,7 +81,7 @@ const ArticleView = ({ article }: { article: Article }) => {
 
           <h1
             data-probe="art-title"
-            className="mt-6 text-[32px] font-bold leading-[1.1] tracking-[-0.047em] text-black sm:text-[40px] lg:mt-[20.7px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0962963]"
+            className="mt-[17px] text-[30px] font-bold leading-[33px] tracking-[-0.047em] text-black sm:mt-6 sm:text-[40px] sm:leading-[1.1] lg:mt-[20.7px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0962963]"
           >
             {title}
           </h1>
@@ -92,10 +92,11 @@ const ArticleView = ({ article }: { article: Article }) => {
           >
             <span>{formatCardDate(article.created_at)}</span>
 
-            {/* 477..899 in the export, so it takes whatever the row has left over. */}
-            <span aria-hidden="true" className="mx-6 hidden h-px flex-1 bg-hd-card-line sm:block" />
+            {/* 477..899 in the export, so it takes whatever the row has left over. The
+                mobile export draws the same rule, just shorter — 121..210. */}
+            <span aria-hidden="true" className="mx-6 h-px flex-1 bg-hd-card-line" />
 
-            <div className="ml-auto flex items-center gap-3 sm:ml-0">
+            <div className="flex items-center gap-3">
               <span
                 aria-hidden="true"
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#D9D9D9] text-[13px] font-bold leading-none text-white"
@@ -108,7 +109,7 @@ const ArticleView = ({ article }: { article: Article }) => {
         </motion.div>
 
         {article.image_url && (
-          <div data-probe="art-cover" className="mt-10 overflow-hidden rounded-2xl bg-hd-panel">
+          <div data-probe="art-cover" className="mt-8 overflow-hidden rounded-xl bg-hd-panel sm:mt-10 sm:rounded-2xl">
             {article.image_url.match(/\.(mp4|webm|ogg)$/i) ? (
               <video src={article.image_url} className="h-auto w-full" controls />
             ) : (

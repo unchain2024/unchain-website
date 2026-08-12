@@ -22,13 +22,17 @@ const AboutSection = () => {
     >
       <AboutArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 
-      <div className="relative z-10 mx-auto flex min-h-[520px] max-w-[1440px] flex-col items-center justify-center px-6 py-24 text-center lg:min-h-[700px] lg:py-0">
-        <ScrollReveal className="flex flex-col items-center">
+      {/* The mobile export keeps the section at the desktop's 700px and centres the
+          same stack in it, on a 16px gutter rather than 24 — the copy is set to wrap
+          across the full measure, so it is the one block on the page that runs wider
+          than the 24px page gutter. */}
+      <div className="relative z-10 mx-auto flex min-h-[700px] max-w-[1440px] flex-col items-center justify-center px-4 py-16 text-center lg:px-6 lg:py-0">
+        <ScrollReveal className="flex w-full flex-col items-center">
           <p className="font-mono text-[14px] leading-none text-hd-eyebrow">
             {t.eyebrow}
           </p>
 
-          <h2 className="mt-[21px] max-w-[1100px] text-[20px] font-bold leading-[1.36] text-white sm:text-[24px] lg:text-[28px] lg:leading-[38px]">
+          <h2 className="mt-[21px] max-w-[1100px] text-[18px] font-bold leading-[25px] text-white lg:text-[28px] lg:leading-[38px]">
             {t.lines.map((line) => (
               <span key={line} className="block">
                 {line}
@@ -38,7 +42,7 @@ const AboutSection = () => {
 
           <Link
             to={localePath(t.cta.href)}
-            className="mt-[41px] inline-flex h-[50px] items-center gap-[14px] rounded-full border border-hd-hairline pl-[18px] pr-[21px] text-[16px] leading-none text-white transition-colors hover:bg-white/10"
+            className="mt-11 flex h-[50px] w-full max-w-[345px] items-center justify-center gap-[14px] rounded-full border border-hd-hairline text-[16px] leading-none text-white transition-colors hover:bg-white/10 lg:mt-[41px] lg:w-auto lg:max-w-none lg:pl-[18px] lg:pr-[21px]"
           >
             {t.cta.label}
             <ChevronRight className="text-white" />

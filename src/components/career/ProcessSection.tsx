@@ -13,10 +13,29 @@ import { NumberOne, NumberTwo, NumberThree } from "./art/ProcessArt";
  * The numerals are drawn shapes rather than type — each is a stack of gradient shards — and
  * none shares a box with the others, so each carries the offset Figma drew it at.
  */
+/**
+ * The mobile export stacks the three columns into 345x260 blocks, each still opened by the
+ * left-hand rule, with the numeral at 79% of the desktop size sitting 24px in from it.
+ */
 const ART = {
-  application: { Art: NumberOne, box: "left-[54.5px] top-[26px] h-[102px] w-[43px]" },
-  intro: { Art: NumberTwo, box: "left-[41.781px] top-[26.516px] h-[100.968px] w-[68.436px]" },
-  founder: { Art: NumberThree, box: "left-[39.906px] top-[24.571px] h-[104.858px] w-[72.184px]" },
+  application: {
+    Art: NumberOne,
+    box:
+      "ml-[24px] h-[80.2px] w-[33.8px] " +
+      "sm:ml-0 sm:h-[102px] sm:w-[43px] lg:absolute lg:left-[54.5px] lg:top-[26px] lg:mb-0",
+  },
+  intro: {
+    Art: NumberTwo,
+    box:
+      "ml-[24px] h-[79.4px] w-[53.8px] " +
+      "sm:ml-0 sm:h-[100.968px] sm:w-[68.436px] lg:absolute lg:left-[41.781px] lg:top-[26.516px] lg:mb-0",
+  },
+  founder: {
+    Art: NumberThree,
+    box:
+      "ml-[24px] h-[82.4px] w-[56.7px] " +
+      "sm:ml-0 sm:h-[104.858px] sm:w-[72.184px] lg:absolute lg:left-[39.906px] lg:top-[24.571px] lg:mb-0",
+  },
 } as const;
 
 const ProcessSection = () => {
@@ -25,7 +44,7 @@ const ProcessSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-process" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[100px] lg:pt-[101px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-12 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[100px] lg:pt-[101px]">
         <ScrollReveal>
           <p
             data-probe="process-eyebrow"
@@ -36,7 +55,7 @@ const ProcessSection = () => {
 
           <h2
             data-probe="process-heading"
-            className="mt-[23.5px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
+            className="mt-[23.5px] text-[32px] font-bold leading-[1.0925926] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">
@@ -52,12 +71,12 @@ const ProcessSection = () => {
             return (
               <li
                 key={step.id}
-                className="relative border-l border-hd-card-line pb-6 pl-6 pt-6 lg:min-h-[300px] lg:pb-0 lg:pl-[23px] lg:pt-[202.5px]"
+                className="relative min-h-[260px] border-l border-hd-card-line pb-6 pl-6 pt-6 sm:min-h-0 lg:min-h-[300px] lg:pb-0 lg:pl-[23px] lg:pt-[202.5px]"
               >
                 {/* Top of the column in the export; on the stacked mobile column it runs
                     above the copy instead of being pinned. Outside the reveal on purpose —
                     its transform would otherwise become the containing block for this. */}
-                <Art className={`mb-6 select-none lg:absolute lg:mb-0 ${box}`} />
+                <Art className={`mb-[56px] select-none sm:mb-6 ${box}`} />
 
                 <ScrollReveal delay={i * 0.08}>
                   <h3

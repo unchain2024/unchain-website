@@ -24,11 +24,17 @@ const CtaSection = () => {
     >
       <CtaArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-center px-6 py-24 text-center lg:min-h-[597px] lg:py-0 lg:pt-[118px]">
-        <ScrollReveal className="flex flex-col items-center">
-          <UnchainMark className="h-[75px] w-[64px] text-[#0A0A0A]" />
+      {/* The mobile export keeps the banner at 700px tall and centres the same stack
+          in it: a 49x59 mark, the heading at 32px, the two-line body, and the pair of
+          links as full-measure 50px pills on a 16px gutter. */}
+      {/* The 16px gutter is what lets the Japanese heading keep the export's two-line
+          break: at 32px the first line measures 352px, which a 24px gutter is 7px short
+          of. The links keep their own 345px measure inside it. */}
+      <div className="relative z-10 mx-auto flex min-h-[700px] w-full max-w-[1440px] flex-col items-center justify-center px-4 py-16 text-center sm:px-6 lg:min-h-[597px] lg:justify-start lg:py-0 lg:pt-[118px]">
+        <ScrollReveal className="flex w-full flex-col items-center">
+          <UnchainMark className="h-[59px] w-[49px] text-[#0A0A0A] lg:h-[75px] lg:w-[64px]" />
 
-          <h2 className="mt-[41px] text-[34px] font-bold leading-[1.13] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.1111111]">
+          <h2 className="mt-[41px] text-[32px] font-bold leading-[1.1111111] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
             {t.headline.map((line) => (
               <span key={line} className="block">
                 {line}
@@ -36,14 +42,16 @@ const CtaSection = () => {
             ))}
           </h2>
 
-          <p className="mt-[15px] text-[16px] leading-none text-black">
+          {/* 250px is the measure the export sets this on, which is what breaks the
+              line after the first clause rather than mid-phrase. */}
+          <p className="mt-[15px] max-w-[250px] text-[16px] leading-[22px] text-black lg:max-w-none lg:leading-none">
             {t.body}
           </p>
 
-          <div className="mt-[41px] flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-[41px] flex w-full max-w-[345px] flex-col gap-4 lg:max-w-none lg:flex-row lg:flex-wrap lg:items-center lg:justify-center">
             <Link
               to={localePath(t.primary.href)}
-              className="inline-flex h-[50px] items-center gap-[14px] rounded-full bg-black pl-[17px] pr-[23px] text-[16px] leading-none text-white transition-opacity hover:opacity-90"
+              className="flex h-[50px] items-center justify-center gap-[14px] rounded-full bg-black text-[16px] leading-none text-white transition-opacity hover:opacity-90 lg:inline-flex lg:pl-[17px] lg:pr-[23px]"
             >
               {t.primary.label}
               <ChevronRight className="text-white" />
@@ -51,7 +59,7 @@ const CtaSection = () => {
 
             <Link
               to={localePath(t.secondary.href)}
-              className="inline-flex h-[50px] items-center rounded-full border border-hd-hairline px-[17px] text-[16px] leading-none text-black transition-colors hover:bg-black/5"
+              className="flex h-[50px] items-center justify-center rounded-full border border-hd-hairline text-[16px] leading-none text-black transition-colors hover:bg-black/5 lg:inline-flex lg:px-[17px]"
             >
               {t.secondary.label}
             </Link>

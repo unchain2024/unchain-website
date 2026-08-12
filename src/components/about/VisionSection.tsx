@@ -19,7 +19,7 @@ const VisionSection = () => {
           needs that much more above it; the bottom padding absorbs the difference and the
           section stays the export's 352px tall in both languages. */}
       <div
-        className={`mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[101px] ${
+        className={`mx-auto w-full max-w-[1440px] px-6 py-12 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[101px] ${
           lang === "ja" ? "lg:pb-[95px]" : "lg:pb-[99px]"
         }`}
       >
@@ -41,7 +41,7 @@ const VisionSection = () => {
                 20px the Latin heading needs. */}
             <h2
               data-probe="vision-heading"
-              className={`text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] ${
+              className={`text-[32px] font-bold leading-[1.11] text-black ${
                 lang === "ja"
                   ? "mt-[24px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
                   : "mt-[20px] lg:text-[clamp(38px,3.6806vw,53px)] lg:leading-[1.1132075]"

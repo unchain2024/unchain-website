@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLang } from "@/lib/language";
+import { lineGap } from "@/lib/headingLines";
 import { ChevronRight } from "@/components/home/icons";
 import { roles, type DeptKey } from "./content";
 import { MapPin } from "./icons";
@@ -55,8 +56,9 @@ const RolesSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-roles" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] p-4">
-        <div className="rounded-2xl bg-hd-panel px-6 py-12 sm:px-10 lg:px-[clamp(32px,6.9444vw,100px)] lg:pb-[100px] lg:pt-[101px]">
+      {/* The mobile export insets the panel 8px, rounds it 12 and pads it 24. */}
+      <div className="mx-auto w-full max-w-[1440px] p-2 sm:p-4">
+        <div className="rounded-xl bg-hd-panel px-6 py-12 sm:rounded-2xl sm:px-10 lg:px-[clamp(32px,6.9444vw,100px)] lg:pb-[100px] lg:pt-[101px]">
           <ScrollReveal>
             <p
               data-probe="roles-eyebrow"
@@ -67,10 +69,11 @@ const RolesSection = () => {
 
             <h2
               data-probe="roles-heading"
-              className="mt-[22.7px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
+              className="mt-[22.7px] text-[32px] font-bold leading-[1.0925926] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]"
             >
-              {t.heading.map((line) => (
-                <span key={line} className="block">
+              {t.heading.map((line, i) => (
+                <span key={line} className="lg:block">
+                  {lineGap(t.heading[i - 1])}
                   {line}
                 </span>
               ))}
@@ -78,7 +81,13 @@ const RolesSection = () => {
           </ScrollReveal>
 
           {/* ── Department chips ─────────────────────────────────────────────── */}
-          <ScrollReveal delay={0.05} className="mt-8 flex flex-wrap gap-4 lg:mt-[20.3px]">
+          {/* The mobile export draws them 35px tall on a single row that runs past the
+              panel's right edge, so below `sm` the row scrolls instead of wrapping. The
+              negative margins let it bleed to the panel edge the way the export does. */}
+          <ScrollReveal
+            delay={0.05}
+            className="-mx-6 mt-6 flex gap-3 overflow-x-auto px-6 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:mt-8 sm:flex-wrap sm:gap-4 sm:overflow-visible sm:px-0 lg:mt-[20.3px]"
+          >
             {t.filters.map((f) => {
               const on = f.key === dept;
               return (
@@ -88,7 +97,7 @@ const RolesSection = () => {
                   aria-pressed={on}
                   onClick={() => setDept(f.key as DeptKey)}
                   data-probe={`roles-chip-${f.key}`}
-                  className={`h-[50px] rounded-full border px-[15px] text-[16px] leading-none transition-colors ${
+                  className={`h-[36px] shrink-0 whitespace-nowrap rounded-full border px-[15px] text-[14px] leading-none transition-colors sm:h-[50px] sm:text-[16px] ${
                     on
                       ? "border-black bg-black text-white"
                       : "border-hd-hairline text-black hover:border-hd-chevron"
@@ -101,16 +110,25 @@ const RolesSection = () => {
           </ScrollReveal>
 
           {/* ── The rows ─────────────────────────────────────────────────────── */}
-          <ul data-probe="roles-list" className="mt-10 space-y-6 lg:mt-[60px]">
+          {/* Rows sit on a 149px pitch on mobile, closed off by the export's #D5D7DA
+              hairline rather than the desktop's white hover plate. */}
+          <ul data-probe="roles-list" className="mt-12 sm:mt-10 sm:space-y-6 lg:mt-[60px]">
             {shown.map((role, i) => (
-              <li key={role.id}>
+              <li
+                key={role.id}
+                className={
+                  i === 0
+                    ? ""
+                    : "border-t border-hd-hairline pt-[21px] sm:border-0 sm:pt-0"
+                }
+              >
                 <ScrollReveal delay={i * 0.05}>
                   <button
                     type="button"
                     onClick={() => openApply(role.id)}
                     aria-label={`${role.title} — ${t.open}`}
                     data-probe={`roles-row-${role.id}`}
-                    className="group flex w-full items-center gap-4 rounded-2xl px-6 py-6 text-left outline-none transition-[background-color,box-shadow] hover:bg-white hover:shadow-[0px_10px_20px_0px_rgba(0,0,0,0.04)] focus-visible:bg-white focus-visible:shadow-[0px_10px_20px_0px_rgba(0,0,0,0.04)] lg:min-h-[98px] lg:gap-0 lg:py-0 lg:pl-[32.5px] lg:pr-8"
+                    className="group flex w-full items-center gap-4 rounded-2xl pb-[21px] text-left outline-none transition-[background-color,box-shadow] sm:px-6 sm:py-6 sm:pb-6 sm:hover:bg-white sm:hover:shadow-[0px_10px_20px_0px_rgba(0,0,0,0.04)] sm:focus-visible:bg-white sm:focus-visible:shadow-[0px_10px_20px_0px_rgba(0,0,0,0.04)] lg:min-h-[98px] lg:gap-0 lg:py-0 lg:pl-[32.5px] lg:pr-8"
                   >
                     {/* 223.5 + 561 + 309 across the row's 1093.5px measure — the pill's
                         column, the title's, and the location filling what is left. Held as
@@ -132,7 +150,7 @@ const RolesSection = () => {
                           export's own 443.8. */}
                       <span
                         data-probe={`roles-title-${role.id}`}
-                        className="text-[18px] font-bold leading-none text-black lg:mt-[4px] lg:w-[51.3037%] lg:shrink-0 lg:text-[20px]"
+                        className="text-[16px] font-bold leading-[20px] text-black sm:text-[18px] sm:leading-none lg:mt-[4px] lg:w-[51.3037%] lg:shrink-0 lg:text-[20px]"
                       >
                         {role.title}
                       </span>
@@ -146,8 +164,8 @@ const RolesSection = () => {
                       </span>
                     </span>
 
-                    <span className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full border border-hd-hairline text-hd-chevron transition-colors group-hover:border-black group-hover:bg-black group-hover:text-white group-focus-visible:border-black group-focus-visible:bg-black group-focus-visible:text-white">
-                      <ChevronRight />
+                    <span className="flex h-[35px] w-[35px] shrink-0 items-center justify-center rounded-full border border-hd-hairline text-hd-chevron transition-colors sm:h-[50px] sm:w-[50px] sm:group-hover:border-black sm:group-hover:bg-black sm:group-hover:text-white sm:group-focus-visible:border-black sm:group-focus-visible:bg-black sm:group-focus-visible:text-white">
+                      <ChevronRight className="h-[10px] w-[5px] sm:h-3 sm:w-1.5" />
                     </span>
                   </button>
                 </ScrollReveal>

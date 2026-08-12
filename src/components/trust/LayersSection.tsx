@@ -55,8 +55,8 @@ const LayersSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-layers" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] p-4">
-        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-[clamp(32px,7.2222vw,104px)] lg:pb-[100px] lg:pt-[101.8px]">
+      <div className="mx-auto w-full max-w-[1440px] p-2 sm:p-4">
+        <div className="rounded-xl bg-hd-panel px-6 py-12 sm:rounded-2xl sm:px-10 sm:py-16 lg:px-[clamp(32px,7.2222vw,104px)] lg:pb-[100px] lg:pt-[101.8px]">
           <ScrollReveal className="lg:text-center">
             <p
               data-probe="layers-eyebrow"
@@ -67,7 +67,7 @@ const LayersSection = () => {
 
             <h2
               data-probe="layers-heading"
-              className="mt-[22.5px] text-[36px] font-bold leading-[1.11] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
+              className="mt-[22.5px] text-[32px] font-bold leading-[1.0925926] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]"
             >
               {t.heading.map((line) => (
                 <span key={line} className="block">
@@ -81,9 +81,12 @@ const LayersSection = () => {
               than a fixed height: every position inside it is a share of that box, so the
               whole composition — stack, labels, leader lines — scales together when the
               measure is narrower than 1200 instead of drifting apart. */}
-          <div className="mt-10 lg:relative lg:mt-[55.75px] lg:aspect-[1200/516.977]">
+          {/* The mobile export keeps the same two parts but turns the composition on its
+              side: the stack runs down the left, bleeding off the page edge, with the four
+              labels in a column beside it rather than leadered off both flanks. */}
+          <div className="mt-10 flex items-center gap-4 lg:relative lg:mt-[55.75px] lg:block lg:aspect-[1200/516.977]">
             {/* The stack, with its numerals in an overlay on the same viewBox. */}
-            <div className="relative mx-auto w-full max-w-[464.484px] lg:absolute lg:left-[30.6465%] lg:top-0 lg:mx-0 lg:w-[38.707%] lg:max-w-none">
+            <div className="relative -ml-[142px] w-[258px] shrink-0 sm:mx-auto sm:ml-auto sm:w-full sm:max-w-[464.484px] lg:absolute lg:left-[30.6465%] lg:top-0 lg:mx-0 lg:w-[38.707%] lg:max-w-none">
               <LayerStack className="h-auto w-full select-none" />
 
               <svg
@@ -106,8 +109,9 @@ const LayersSection = () => {
               </svg>
             </div>
 
-            {/* On desktop each card is placed off the stack; stacked below it on mobile. */}
-            <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-0 lg:contents">
+            {/* On desktop each card is placed off the stack; a plain column beside it on
+                mobile, and a two-up grid under it in between. */}
+            <ul className="flex min-w-0 flex-1 flex-col gap-6 sm:mt-8 sm:grid sm:grid-cols-2 sm:gap-4 lg:mt-0 lg:contents">
               {t.items.map((item, i) => {
                 const Glyph = GLYPHS[item.id as keyof typeof GLYPHS];
                 const { box, side } = LABELS[item.id as keyof typeof LABELS];
@@ -119,24 +123,24 @@ const LayersSection = () => {
                     className={`relative lg:absolute lg:min-h-[94px] lg:w-[26.6667%] ${box}`}
                   >
                     <ScrollReveal delay={i * 0.08}>
-                      <div className="flex items-start gap-[18px] rounded-2xl bg-white p-6 lg:min-h-[94px] lg:p-0 lg:pl-6 lg:pt-[22px]">
+                      <div className="flex items-start gap-[13px] sm:gap-[18px] sm:rounded-2xl sm:bg-white sm:p-6 lg:min-h-[94px] lg:p-0 lg:pl-6 lg:pt-[22px]">
                         <span
                           aria-hidden="true"
-                          className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full bg-black text-white"
+                          className="flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full bg-black text-white sm:h-[50px] sm:w-[50px]"
                         >
-                          <Glyph className="h-6 w-6" />
+                          <Glyph className="h-5 w-5 sm:h-6 sm:w-6" />
                         </span>
 
                         <div className="min-w-0 lg:pt-[4.2px]">
                           <p
                             data-probe={`layers-title-${item.id}`}
-                            className="text-[20px] font-bold leading-none text-black"
+                            className="text-[16px] font-bold leading-none text-black sm:text-[20px]"
                           >
                             {item.title}
                           </p>
                           <p
                             data-probe={`layers-body-${item.id}`}
-                            className="mt-[11px] text-[14px] leading-none text-hd-eyebrow-ink"
+                            className="mt-[11px] text-[14px] leading-[18px] text-hd-eyebrow-ink sm:leading-none"
                           >
                             {item.body}
                           </p>

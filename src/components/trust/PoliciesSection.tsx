@@ -21,7 +21,7 @@ const PoliciesSection = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-policies" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[100px] lg:pt-[102px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 py-12 sm:px-10 sm:py-16 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[100px] lg:pt-[102px]">
         <ScrollReveal>
           <p
             data-probe="policies-eyebrow"
@@ -32,7 +32,7 @@ const PoliciesSection = () => {
 
           <h2
             data-probe="policies-heading"
-            className="mt-[22.4px] text-[36px] font-bold leading-[1.11] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]"
+            className="mt-[22.4px] text-[32px] font-bold leading-[1.0925926] tracking-[-0.006em] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]"
           >
             {t.heading.map((line) => (
               <span key={line} className="block">
