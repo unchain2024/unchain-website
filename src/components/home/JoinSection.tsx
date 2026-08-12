@@ -31,14 +31,14 @@ const JoinSection = () => {
     >
       <JoinArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 pt-20 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[122px]">
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 pt-12 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[122px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
           <ScrollReveal>
             <p className="font-mono text-[14px] leading-none text-hd-eyebrow-light">
               {t.eyebrow}
             </p>
 
-            <h2 className="mt-[18px] text-[34px] font-bold leading-[1.13] text-white sm:text-[42px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]">
+            <h2 className="mt-[18px] text-[32px] font-bold leading-[1.0925926] text-white sm:text-[42px] lg:text-[clamp(38px,3.75vw,54px)]">
               {t.headline.map((line) => (
                 <span key={line} className="block">
                   {line}
@@ -46,18 +46,20 @@ const JoinSection = () => {
               ))}
             </h2>
 
-            <p className="mt-[17px] text-[16px] leading-none text-hd-eyebrow-light">
+            {/* The mobile export wraps this to two lines at 16/23; the desktop draws
+                it on one, which is why the leading only kicks in below `lg`. */}
+            <p className="mt-[17px] text-[16px] leading-[23px] text-hd-eyebrow-light lg:leading-none">
               {t.body}
             </p>
           </ScrollReveal>
 
           <ScrollReveal
             delay={0.1}
-            className="shrink-0 self-start lg:mb-[-2px] lg:self-auto"
+            className="shrink-0 lg:mb-[-2px] lg:self-auto"
           >
             <Link
               to={localePath(t.cta.href)}
-              className="inline-flex h-[50px] items-center gap-[15px] rounded-full bg-white pl-[14px] pr-[25px] text-[16px] leading-none text-black transition-opacity hover:opacity-90"
+              className="flex h-[50px] w-full items-center justify-center gap-[15px] rounded-full bg-white text-[16px] leading-none text-black transition-opacity hover:opacity-90 lg:inline-flex lg:w-auto lg:pl-[14px] lg:pr-[25px]"
             >
               {t.cta.label}
               <ChevronRight className="text-hd-chevron" />
@@ -77,7 +79,7 @@ const JoinSection = () => {
           the wrap is invisible. The 16px gutter is a margin on every card rather than a
           flex `gap`, which is what makes half the track's width a whole number of cards —
           with `gap` it would be half a gutter short and the loop would jump. */}
-      <ScrollReveal className="relative z-10 mt-16 overflow-hidden pb-4 lg:mt-[123px]">
+      <ScrollReveal className="relative z-10 mt-20 overflow-hidden pb-4 lg:mt-[123px]">
         <div className="flex w-max animate-marquee-right hover:[animation-play-state:paused] motion-reduce:animate-none">
           {[...SHOTS, ...SHOTS].map((src, i) => (
             <img
@@ -85,7 +87,7 @@ const JoinSection = () => {
               src={src}
               alt=""
               loading="lazy"
-              className="mr-4 h-[220px] w-[181px] shrink-0 rounded-2xl bg-[#D9D9D9] object-cover lg:h-[354px] lg:w-[292px]"
+              className="mr-4 h-[180.6px] w-[149px] shrink-0 rounded-lg bg-[#D9D9D9] object-cover lg:h-[354px] lg:w-[292px] lg:rounded-2xl"
             />
           ))}
         </div>

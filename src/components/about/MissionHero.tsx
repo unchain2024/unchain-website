@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useLang } from "@/lib/language";
+import { lineGap } from "@/lib/headingLines";
 import { mission } from "./content";
 import { BladeTopLeft, BladeBottomRight } from "./art/HeroArt";
 import briefingShot from "@/assets/about/mission-briefing.webp";
@@ -34,7 +35,7 @@ const MissionHero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="relative px-6 pt-16 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[101px]"
+          className="relative px-6 pt-12 sm:px-10 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[101px]"
         >
           <div className="lg:flex lg:items-start lg:justify-between">
             <div className="lg:shrink-0">
@@ -47,10 +48,12 @@ const MissionHero = () => {
 
               <h1
                 data-probe="mission-heading"
-                className="mt-[18px] text-[36px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.6806vw,53px)] lg:leading-[1.1132075]"
+                className="mt-[18px] text-[32px] font-bold leading-[1.11] text-black sm:text-[44px] lg:text-[clamp(38px,3.6806vw,53px)] lg:leading-[1.1132075]"
               >
-                {t.heading.map((line) => (
-                  <span key={line} className="block">
+                {/* One line at 32px on mobile, the export's own two from `lg`. */}
+                {t.heading.map((line, i) => (
+                  <span key={line} className="lg:block">
+                    {lineGap(t.heading[i - 1])}
                     {line}
                   </span>
                 ))}
@@ -62,7 +65,7 @@ const MissionHero = () => {
             <div className="mt-10 lg:mt-[34px] lg:w-[43.3333%] lg:shrink-0">
               <p
                 data-probe="mission-lead"
-                className="text-[18px] font-bold leading-[26px] text-black lg:text-[20px] lg:leading-[28px]"
+                className="text-[16px] font-bold leading-[22px] text-black lg:text-[20px] lg:leading-[28px]"
               >
                 {t.lead}
               </p>
@@ -78,20 +81,24 @@ const MissionHero = () => {
 
           {/* 403 + 16 + 781 across the 1200px measure. As `fr` rather than a share each:
               percentages of the row do not account for the gap between them, which puts the
-              pair 16px over the measure once it is narrower than 1200. */}
-          <div className="mt-12 grid gap-4 lg:mt-[79px] lg:grid-cols-[403fr_781fr]">
+              pair 16px over the measure once it is narrower than 1200.
+
+              The mobile export keeps the pair side by side at the same ratio, scaled to the
+              345px measure — 115.9 + 4.6 + 224.5 — with the gutter and the corner radius
+              shrinking to 4.6 along with it. */}
+          <div className="mt-10 grid grid-cols-[403fr_781fr] gap-[4.6px] lg:mt-[79px] lg:gap-4">
             <img
               src={briefingShot}
               alt={t.photos[0].alt}
               loading="eager"
               data-probe="mission-photo-1"
-              className="aspect-[403/518] w-full rounded-2xl bg-[#D9D9D9] object-cover object-center"
+              className="aspect-[403/518] w-full rounded-[4.6px] bg-[#D9D9D9] object-cover object-center lg:rounded-2xl"
             />
             <img
               src={advisorShot}
               alt={t.photos[1].alt}
               loading="eager"
-              className="aspect-[781/518] w-full rounded-2xl bg-[#D9D9D9] object-cover object-center"
+              className="aspect-[781/518] w-full rounded-[4.6px] bg-[#D9D9D9] object-cover object-center lg:rounded-2xl"
             />
           </div>
         </motion.div>

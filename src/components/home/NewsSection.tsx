@@ -61,27 +61,30 @@ const NewsSection = () => {
 
   return (
     <section id="s-news" data-nav-theme="light" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-6 py-20 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[106px] lg:pt-[102px]">
+      <div className="mx-auto w-full max-w-[1440px] px-6 pb-12 pt-10 sm:py-20 lg:px-[clamp(48px,8.3333vw,120px)] lg:pb-[106px] lg:pt-[102px]">
         <ScrollReveal>
           <p className="font-mono text-[14px] leading-none text-hd-eyebrow-ink">
             {t.eyebrow}
           </p>
 
-          <div className="mt-[28px] flex flex-wrap items-center justify-between gap-6">
-            <h2 className="text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
+          {/* The mobile export moves the "all news" link out of the heading row and
+              down to a full-measure pill under the list, so the row is heading-only
+              until there is space beside it. */}
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-6 lg:mt-[28px]">
+            <h2 className="text-[32px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
               {t.heading}
             </h2>
 
             <Link
               to={localePath(t.cta.href)}
-              className="inline-flex h-[50px] items-center rounded-full border border-hd-hairline px-[16px] text-[16px] leading-none text-black transition-colors hover:bg-black/5"
+              className="hidden h-[50px] items-center rounded-full border border-hd-hairline px-[16px] text-[16px] leading-none text-black transition-colors hover:bg-black/5 sm:inline-flex"
             >
               {t.cta.label}
             </Link>
           </div>
         </ScrollReveal>
 
-        <div className="mt-[55px] grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-7 grid gap-9 sm:mt-[55px] sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {loading
             ? [0, 1, 2].map((i) => (
                 <div key={i} aria-hidden="true">
@@ -100,6 +103,15 @@ const NewsSection = () => {
                 </ScrollReveal>
               ))}
         </div>
+
+        <ScrollReveal className="sm:hidden">
+          <Link
+            to={localePath(t.cta.href)}
+            className="mt-9 flex h-[50px] w-full items-center justify-center rounded-full border border-hd-hairline text-[16px] leading-none text-black"
+          >
+            {t.cta.label}
+          </Link>
+        </ScrollReveal>
       </div>
     </section>
   );

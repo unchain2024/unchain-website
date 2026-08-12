@@ -20,6 +20,11 @@ import HeroArt from "./art/HeroArt";
  *   copy      top 329      -> 36.5556%
  *   collage   145.48/59.07 -> top 16.1644%, right 4.1021%, 50.2278% x 74.7722%
  *   scroll    bottom 35    -> 3.8889%
+ *
+ * `public/mobile/Home Page - Mobile.svg` rebuilds the same hero as a single column:
+ * the collage moves above the copy and runs 381px wide (x 6..387) at the export's own
+ * 724:674 aspect, the eyebrow drops to 16px, the heading to 40/44, and the two links
+ * become full-measure 50px pills stacked on a 16px gutter. There is no scroll cue.
  */
 const HeroSection = () => {
   const { lang, localePath } = useLang();
@@ -34,25 +39,29 @@ const HeroSection = () => {
         data-home="hero"
         className="relative mx-auto w-full max-w-[1440px] md:min-h-[640px] lg:h-[100svh] lg:min-h-[720px]"
       >
-        {/* Logo-shaped photo collage */}
-        <HeroArt className="pointer-events-none absolute right-0 top-[100px] hidden h-[298px] w-[320px] select-none md:block lg:right-[4.1021%] lg:top-[16.1644%] lg:h-[74.7722%] lg:w-[50.2278%]" />
+        {/* Logo-shaped photo collage. Below `lg` it leads the column, sized by the
+            mobile export's 381px measure and its own aspect; from `lg` it returns to
+            the absolutely-placed right-hand position the desktop export draws. */}
+        <div className="pt-nav lg:contents">
+          <HeroArt className="pointer-events-none mx-auto mt-[21px] block aspect-[724/674] w-[381px] max-w-full select-none lg:absolute lg:right-[4.1021%] lg:top-[16.1644%] lg:mt-0 lg:aspect-auto lg:h-[74.7722%] lg:w-[50.2278%]" />
+        </div>
 
         {/* Copy — revealed on mount rather than on scroll; it is above the fold. */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
-          className="relative z-10 px-6 pb-20 pt-[140px] sm:px-10 sm:pt-[160px] md:max-w-[56%] md:pt-[230px] lg:absolute lg:left-[clamp(40px,5.5556vw,80px)] lg:top-[36.5556%] lg:max-w-none lg:p-0"
+          className="relative z-10 px-6 pb-16 pt-9 sm:px-10 lg:absolute lg:left-[clamp(40px,5.5556vw,80px)] lg:top-[36.5556%] lg:max-w-none lg:p-0"
         >
           <p className="font-mono text-[16px] leading-none tracking-normal text-hd-eyebrow lg:text-[20px]">
             {t.eyebrow}
           </p>
 
           <h1
-            className={`mt-6 max-w-[640px] font-bold text-white lg:mt-[25px] ${
+            className={`mt-5 max-w-[640px] font-bold text-white lg:mt-[25px] ${
               lang === "ja"
-                ? "text-[44px] leading-[1.13] sm:text-[56px] lg:text-[clamp(48px,4.8611vw,70px)] lg:leading-[1.1285714]"
-                : "text-[40px] leading-[1.13] sm:text-[48px] lg:text-[clamp(40px,3.8889vw,56px)] lg:leading-[1.125]"
+                ? "text-[40px] leading-[44px] lg:text-[clamp(48px,4.8611vw,70px)] lg:leading-[1.1285714]"
+                : "text-[32px] leading-[38px] lg:text-[clamp(40px,3.8889vw,56px)] lg:leading-[1.125]"
             }`}
           >
             {t.headline.map((line) => (
@@ -62,10 +71,11 @@ const HeroSection = () => {
             ))}
           </h1>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4 lg:mt-[35px]">
+          {/* Stacked full-measure pills on mobile, an inline pair from `lg`. */}
+          <div className="mt-8 flex flex-col gap-4 lg:mt-[35px] lg:flex-row lg:flex-wrap lg:items-center">
             <Link
               to={localePath(t.primary.href)}
-              className="inline-flex h-[50px] items-center gap-[15px] rounded-full bg-white pl-[18px] pr-[22px] text-[16px] leading-none text-black transition-opacity hover:opacity-90"
+              className="inline-flex h-[50px] items-center justify-center gap-[15px] rounded-full bg-white text-[16px] leading-none text-black transition-opacity hover:opacity-90 lg:justify-start lg:pl-[18px] lg:pr-[22px]"
             >
               {t.primary.label}
               <ChevronRight className="text-hd-chevron" />
@@ -73,7 +83,7 @@ const HeroSection = () => {
 
             <Link
               to={localePath(t.secondary.href)}
-              className="inline-flex h-[50px] items-center rounded-full border border-hd-hairline px-[15px] text-[16px] leading-none text-white transition-colors hover:bg-white/10"
+              className="inline-flex h-[50px] items-center justify-center rounded-full border border-hd-hairline text-[16px] leading-none text-white transition-colors hover:bg-white/10 lg:px-[15px]"
             >
               {t.secondary.label}
             </Link>

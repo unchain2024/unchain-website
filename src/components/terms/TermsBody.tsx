@@ -32,8 +32,8 @@ const TermsBody = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-body" className="w-full bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-4 py-4">
-        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-0 lg:pb-[99px] lg:pt-[101px]">
+      <div className="mx-auto w-full max-w-[1440px] p-2 sm:p-4">
+        <div className="rounded-xl bg-hd-panel px-6 py-12 sm:rounded-2xl sm:px-10 sm:py-16 lg:px-0 lg:pb-[99px] lg:pt-[101px]">
           <div className="mx-auto w-full max-w-[648px]">
             <ScrollReveal>
               <p
@@ -47,7 +47,7 @@ const TermsBody = () => {
             <ScrollReveal>
               <h2
                 data-probe="body-heading"
-                className="mt-[46px] text-[36px] font-bold leading-[1.11] text-black sm:text-[42px] lg:mt-[48.2px] lg:text-[48px] lg:leading-[56px]"
+                className="mt-[46px] text-[32px] font-bold leading-[1.11] text-black sm:text-[42px] lg:mt-[48.2px] lg:text-[48px] lg:leading-[56px]"
               >
                 {t.heading}
               </h2>

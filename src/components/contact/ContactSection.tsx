@@ -126,12 +126,12 @@ const ContactSection = () => {
     <section
       data-nav-theme="light"
       data-probe="s-contact"
-      className="w-full overflow-hidden bg-white pt-[68px]"
+      className="w-full overflow-hidden bg-white pt-nav"
     >
       {/* `min-h`, not `h`: below 1440 the two columns narrow and the form grows taller than
           the export's 1052px canvas. The frame clips its own blades rather than leaving that
           to the section, so past 1440 they still crop at the 1440 edge the export draws. */}
-      <div className="relative mx-auto w-full max-w-[1440px] overflow-hidden px-6 py-16 sm:px-10 lg:min-h-[1052px] lg:px-[clamp(48px,8.3333vw,120px)] lg:py-0">
+      <div className="relative mx-auto w-full max-w-[1440px] overflow-hidden px-6 py-12 sm:px-10 sm:py-16 lg:min-h-[1052px] lg:px-[clamp(48px,8.3333vw,120px)] lg:py-0">
         {/* Both blades run off the canvas at their corner; the frame clips them. Their
             offsets are a share of the 1440 frame so they hold the corner as it narrows. */}
         <BladeTopRight className="pointer-events-none absolute left-[81.2583%] top-[-45px] hidden h-[356.7px] w-[469.16px] select-none lg:block" />
@@ -151,7 +151,7 @@ const ContactSection = () => {
           >
             <h1
               data-probe="hero-heading"
-              className="text-[40px] font-semibold leading-[1.1] tracking-[-0.044em] text-black sm:text-[56px] lg:text-[clamp(48px,5vw,72px)] lg:leading-[1.0972222]"
+              className="text-[40px] font-semibold leading-[44px] tracking-[-0.044em] text-black lg:text-[clamp(48px,5vw,72px)] lg:leading-[1.0972222]"
             >
               {copy.heading}
             </h1>
@@ -165,13 +165,16 @@ const ContactSection = () => {
 
           {/* ── right column: the card ──────────────────────────────────────
               39px of padding plus the 1px border is the export's 40px from the card's
-              outer edge to its 540px column; `p-10` would put it at 41. */}
+              outer edge to its 540px column; `p-10` would put it at 41.
+
+              The mobile export pads it 16 instead, which is what leaves the topic pills a
+              313px measure and so puts the last two of the four on one row. */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
             data-probe="card"
-            className="mt-12 rounded-2xl border border-hd-card-line bg-white p-6 sm:p-10 lg:mt-0 lg:p-[39px]"
+            className="mt-11 rounded-2xl border border-hd-card-line bg-white p-4 sm:mt-12 sm:p-10 lg:mt-0 lg:p-[39px]"
           >
             {sent ? (
               /* The exports stop at the submit button, so the sent state is built from

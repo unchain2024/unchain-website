@@ -85,12 +85,12 @@ const PolicyBody = () => {
 
   return (
     <section data-nav-theme="light" data-probe="s-policy" className="w-full bg-white">
-      <div data-probe="policy-frame" className="mx-auto w-full max-w-[1440px] p-4">
+      <div data-probe="policy-frame" className="mx-auto w-full max-w-[1440px] p-2 sm:p-4">
         {/* 102/98 rather than a symmetric 100: the export's first line box sits at y=117 and
             its last ends at 3307, both measured against the card's own 16px inset. */}
         <div
           data-probe="policy-card"
-          className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-0 lg:pb-[98px] lg:pt-[102px]"
+          className="rounded-xl bg-hd-panel px-6 py-12 sm:rounded-2xl sm:px-10 sm:py-16 lg:px-0 lg:pb-[98px] lg:pt-[102px]"
         >
           <div data-probe="policy-measure" className="mx-auto w-full max-w-[648px]">
             <ScrollReveal amount={0.15}>

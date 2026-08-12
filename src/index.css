@@ -49,6 +49,23 @@
     --sidebar-accent-foreground: 0 0% 8%;
     --sidebar-border: 0 0% 90%;
     --sidebar-ring: 213 100% 50%;
+
+    /* Header height: 63.3px on the mobile exports, 68px on the desktop ones. Kept as
+       a variable so the sections that reserve it stay in step with the bar itself. */
+    --nav-h: 63.3px;
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --nav-h: 68px;
+    }
+  }
+}
+
+@layer utilities {
+  /* Reserve the fixed header in the page flow. */
+  .pt-nav {
+    padding-top: var(--nav-h);
   }
 }
 

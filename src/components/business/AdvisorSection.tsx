@@ -23,14 +23,15 @@ const AdvisorSection = () => {
 
   return (
     <section id="advisor" data-nav-theme="light" className="w-full scroll-mt-24 bg-white">
-      <div className="mx-auto w-full max-w-[1440px] px-4 pb-4 pt-4">
-        <div className="rounded-2xl bg-hd-panel px-6 py-16 sm:px-10 lg:px-[clamp(32px,6.9444vw,100px)] lg:pb-[112px] lg:pt-[100px]">
+      {/* Same panel as the Neuron section: 8px inset and 12 radius on mobile. */}
+      <div className="mx-auto w-full max-w-[1440px] p-2 sm:p-4">
+        <div className="rounded-xl bg-hd-panel px-6 py-12 sm:rounded-2xl sm:px-10 sm:py-16 lg:px-[clamp(32px,6.9444vw,100px)] lg:pb-[112px] lg:pt-[100px]">
           {/* ── Intro ─────────────────────────────────────────────────────── */}
           <div className="lg:flex lg:items-start lg:justify-between">
             <ScrollReveal data-probe="advisor-intro" className="lg:w-[48.0132%] lg:shrink-0">
               <NumberTwo className="ml-[4px] mt-[13.5px] h-[48px] w-[67.41px]" />
 
-              <h2 data-probe="advisor-heading" className="mt-[32px] text-[36px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
+              <h2 data-probe="advisor-heading" className="mt-[32px] text-[32px] font-bold leading-none text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
                 {t.heading}
               </h2>
 
@@ -54,7 +55,8 @@ const AdvisorSection = () => {
           </div>
 
           {/* ── Engagement track ──────────────────────────────────────────── */}
-          <ol data-probe="steps" className="mt-[84px] grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Two-up on mobile, as the export draws it, and four across from `lg`. */}
+          <ol data-probe="steps" className="mt-[84px] grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-8 lg:grid-cols-4">
             {t.steps.map((step, i) => (
               <li key={step.n}>
                 <ScrollReveal delay={i * 0.08} data-probe={`step-${step.n}`}>
@@ -81,7 +83,7 @@ const AdvisorSection = () => {
                 {t.audience.eyebrow}
               </p>
 
-              <h2 className="mt-[25px] text-[36px] font-bold leading-[1.09] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)] lg:leading-[1.0925926]">
+              <h2 className="mt-[25px] text-[32px] font-bold leading-[1.0925926] text-black sm:text-[44px] lg:text-[clamp(38px,3.75vw,54px)]">
                 {t.audience.heading.map((line) => (
                   <span key={line} className="block">
                     {line}
