@@ -1,26 +1,93 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import {
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionStyle,
+} from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLang } from "@/lib/language";
 import { about } from "./content";
 import { ChevronRight } from "./icons";
-import AboutArt from "./art/AboutArt";
+import AboutArt, { type Blade } from "./art/AboutArt";
 
 /**
  * About — `public/home/Section (Original).svg` (1440x700).
  *
  * Background gradient and the four corner blades are taken verbatim from the
  * export: #000 -> #283756 @32.35% -> #768DAF @75% -> #fff.
+ *
+ * The blades slide in along their own 60-degree axis as the section comes up out of
+ * the hero: the top pair leads and the bottom pair overlaps it, so the frame assembles
+ * top-down in the direction of the scroll. The whole gesture is mapped onto the
+ * section's entrance, so it is complete the moment the section stands fully in the
+ * viewport and nothing is left to finish once the reader has stopped. It is a live
+ * mapping of scroll position rather than a one-shot reveal, so scrolling back up sends
+ * them out again.
  */
+
+/** How far out of frame a blade parks, along its axis. ~1440x700 user units. */
+const TRAVEL_X = 380;
+const TRAVEL_Y = 265;
+
 const AboutSection = () => {
   const { lang, localePath } = useLang();
   const t = about[lang];
+  const reduce = useReducedMotion();
+
+  const sectionRef = useRef<HTMLElement>(null);
+  // The window is exactly the section's own entrance: 0 when its top reaches the
+  // bottom of the viewport, 1 when its bottom does — i.e. the instant the section
+  // stands fully in view. Everything is timed inside that, so the composition is
+  // finished by the time the reader has the whole section in front of them.
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end end"],
+  });
+  // Stiff enough that the spring's own lag does not push the landing past the end
+  // of the window; it is here only to take the edge off a flicked wheel.
+  const glide = useSpring(scrollYProgress, {
+    stiffness: 200,
+    damping: 34,
+    mass: 0.3,
+  });
+
+  // 1 = parked outside the frame, 0 = seated in the corner. The top pair leads and
+  // the bottom pair overlaps it, both landing by the end of the window.
+  const top = useTransform(glide, [0, 0.55], [1, 0], { clamp: true });
+  const bottom = useTransform(glide, [0.35, 0.92], [1, 0], { clamp: true });
+
+  // Each blade leaves through its own corner, so x is signed by side and y by row.
+  // The pair sharing a row shares one driver, which keeps them in lockstep.
+  const topX = useTransform(top, (v) => v * TRAVEL_X);
+  const topY = useTransform(top, (v) => v * -TRAVEL_Y);
+  const bottomX = useTransform(bottom, (v) => v * TRAVEL_X);
+  const bottomY = useTransform(bottom, (v) => v * TRAVEL_Y);
+  const topXFlip = useTransform(topX, (v) => -v);
+  const bottomXFlip = useTransform(bottomX, (v) => -v);
+  // Held back a touch, so a blade is already on its way in before it is visible.
+  const topOpacity = useTransform(top, [1, 0.4], [0, 1]);
+  const bottomOpacity = useTransform(bottom, [1, 0.4], [0, 1]);
+
+  const bladeStyle: Partial<Record<Blade, MotionStyle>> = {
+    topLeft: { x: topXFlip, y: topY, opacity: topOpacity },
+    topRight: { x: topX, y: topY, opacity: topOpacity },
+    bottomLeft: { x: bottomXFlip, y: bottomY, opacity: bottomOpacity },
+    bottomRight: { x: bottomX, y: bottomY, opacity: bottomOpacity },
+  };
 
   return (
     <section
+      ref={sectionRef}
       id="s-about" data-nav-theme="dark"
       className="relative w-full overflow-hidden bg-[linear-gradient(180deg,#000000_0%,#283756_32.3488%,#768DAF_75%,#FFFFFF_100%)]"
     >
-      <AboutArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
+      <AboutArt
+        className="pointer-events-none absolute inset-0 h-full w-full select-none"
+        bladeStyle={reduce ? undefined : bladeStyle}
+      />
 
       {/* The mobile export keeps the section at the desktop's 700px and centres the
           same stack in it, on a 16px gutter rather than 24 — the copy is set to wrap

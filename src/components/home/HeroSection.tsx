@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useLang } from "@/lib/language";
 import { hero } from "./content";
 import { ChevronRight } from "./icons";
@@ -21,6 +21,12 @@ import HeroArt from "./art/HeroArt";
  *   collage   145.48/59.07 -> top 16.1644%, right 4.1021%, 50.2278% x 74.7722%
  *   scroll    bottom 35    -> 3.8889%
  *
+ * The scroll cue is the one element that deliberately leaves the 1440px content
+ * frame: it hangs off the section itself, hard against the left edge of the window,
+ * so it reads as chrome rather than as part of the composition. Scroll position drives
+ * it — the label slides down the exact height of the rule while the rule retracts into
+ * its own baseline, and both reverse on the way back up.
+ *
  * `public/mobile/Home Page - Mobile.svg` rebuilds the same hero as a single column:
  * the collage moves above the copy and runs 381px wide (x 6..387) at the export's own
  * 724:674 aspect, the eyebrow drops to 16px, the heading to 40/44, and the two links
@@ -29,6 +35,19 @@ import HeroArt from "./art/HeroArt";
 const HeroSection = () => {
   const { lang, localePath } = useLang();
   const t = hero[lang];
+
+  // Scroll cue motion. The first 240px of the page maps to the whole gesture, and a
+  // spring smooths it so a flicked wheel does not snap the rule shut. It is a live
+  // mapping rather than a one-shot, so scrolling back up plays it in reverse.
+  const { scrollY } = useScroll();
+  const cue = useSpring(
+    useTransform(scrollY, [0, 240], [0, 1], { clamp: true }),
+    { stiffness: 140, damping: 24, mass: 0.4 },
+  );
+  // The rule collapses onto its bottom edge, so its top travels its own 70px height;
+  // the label follows by the same 70px and the 13px gap holds all the way through.
+  const cueLabelY = useTransform(cue, [0, 1], [0, 70]);
+  const cueRuleScale = useTransform(cue, [0, 1], [1, 0]);
 
   return (
     <section
@@ -89,14 +108,21 @@ const HeroSection = () => {
             </Link>
           </div>
         </motion.div>
+      </div>
 
-        {/* Scroll cue — vertical label above a 2x70 rule, centred on x=96 */}
-        <div className="pointer-events-none absolute bottom-[3.8889%] left-20 hidden w-8 flex-col items-center gap-[13px] lg:flex">
-          <span className="rotate-180 font-mono text-[14px] leading-none text-white [writing-mode:vertical-rl]">
+      {/* Scroll cue — vertical label above a 2x70 rule. Anchored to the section rather
+          than to the 1440px frame, so on wide screens it sits left of the content
+          column, hard against the window edge. */}
+      <div className="pointer-events-none absolute bottom-[3.8889%] left-[clamp(24px,2.5vw,48px)] z-10 hidden w-8 flex-col items-center gap-[13px] lg:flex">
+        <motion.span style={{ y: cueLabelY }} className="block">
+          <span className="block rotate-180 font-mono text-[14px] leading-none text-white [writing-mode:vertical-rl]">
             {t.scroll}
           </span>
-          <span className="h-[70px] w-[2px] rounded-full bg-white" />
-        </div>
+        </motion.span>
+        <motion.span
+          style={{ scaleY: cueRuleScale }}
+          className="h-[70px] w-[2px] origin-bottom rounded-full bg-white"
+        />
       </div>
     </section>
   );
