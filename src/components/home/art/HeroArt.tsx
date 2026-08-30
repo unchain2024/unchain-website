@@ -171,6 +171,15 @@ const HeroArt = ({ className }: { className?: string }) => {
           </clipPath>
         ))}
 
+        {/* The collage's silhouette, held at the export's own coordinates. The shards are
+            drawn along these very edges, so the photo only tucks under them cleanly while
+            it sits exactly here — anything that moves the outline, a drift included, walks
+            it out from behind the shards and shows the photo's own edge. Clipping to this
+            lets the drift below scale the image without the silhouette following. */}
+        <clipPath id="hero-collage-edge">
+          <path fillRule="evenodd" clipRule="evenodd" d={COLLAGE} />
+        </clipPath>
+
         {/* The photo's sweep. The collage is a slab lying along the shards' 60 degrees —
             it measures ~776 units end to end that way against ~364 across, so the sweep
             travels the long way, out of the bottom-left corner and up to the top-right,
@@ -218,14 +227,19 @@ const HeroArt = ({ className }: { className?: string }) => {
           softness. The rise outlasts the sweep by half a second, so the photo goes on
           strengthening after the front has crossed rather than arriving finished; going
           out it is a plain dissolve, which is what the reference does. In between it
-          drifts, so the hold is never quite still. */}
-      <g mask={reduce ? undefined : "url(#hero-photo-wipe)"}>
+          drifts, so the hold is never quite still.
+
+          The drift stays inside hero-collage-edge and never drops below 1.012, so the
+          silhouette is always the clip's rather than the scaled shape's own — the photo
+          zooms, its edges do not move, and they stay tucked under the shards throughout.
+          Reduced motion sits at 1 with no clip, which is the export untouched. */}
+      <g clipPath={reduce ? undefined : "url(#hero-collage-edge)"} mask={reduce ? undefined : "url(#hero-photo-wipe)"}>
         <g transform={`translate(${CENTRE.x} ${CENTRE.y})`}>
           <motion.g
             animate={
               reduce
                 ? { scale: 1, opacity: 1 }
-                : { scale: [1.06, 1.06, 1, 1.025, 1.025], opacity: [0, 0, 1, 1, 0, 0] }
+                : { scale: [1.06, 1.06, 1.012, 1.032, 1.032], opacity: [0, 0, 1, 1, 0, 0] }
             }
             transition={
               reduce

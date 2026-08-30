@@ -1,28 +1,82 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import {
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionStyle,
+} from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLang } from "@/lib/language";
 import { cta } from "./content";
 import { ChevronRight } from "./icons";
 import { UnchainMark } from "./Logo";
-import CtaArt from "./art/CtaArt";
+import CtaArt, { type CtaBlade } from "./art/CtaArt";
 
 /**
  * CTA banner — `public/home/CTA Banner - Desktop.svg` (1440x597).
  *
  * White canvas, centred stack, and the two 80% gradient blades from the export
  * bleeding in from the left and right edges.
+ *
+ * The blades draw themselves in as the banner arrives: both slide along the export's
+ * shared axis, out of their own edge and into place, and the pair moves together
+ * rather than in sequence. The gesture is mapped onto the banner's entrance, so it is
+ * complete the moment the banner stands fully in the viewport. It is a live mapping of
+ * scroll position rather than a one-shot reveal, so scrolling back up sends them out
+ * again.
  */
+
+/** How far out of frame a blade parks, along the axis both of them share (1440x597). */
+const TRAVEL_X = 380;
+const TRAVEL_Y = 420;
+
 const CtaSection = () => {
   const { lang, localePath } = useLang();
   const t = cta[lang];
+  const reduce = useReducedMotion();
+
+  const sectionRef = useRef<HTMLElement>(null);
+  // 0 when the banner's top reaches the bottom of the viewport, 1 when its bottom does
+  // — i.e. the instant the banner stands fully in view.
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end end"],
+  });
+  const glide = useSpring(scrollYProgress, {
+    stiffness: 200,
+    damping: 34,
+    mass: 0.3,
+  });
+
+  // 1 = parked outside the frame, 0 = seated. Landing at 0.85 leaves the spring room
+  // to settle inside the window instead of trailing past the end of it.
+  const out = useTransform(glide, [0, 0.85], [1, 0], { clamp: true });
+  const x = useTransform(out, (v) => v * TRAVEL_X);
+  const y = useTransform(out, (v) => v * TRAVEL_Y);
+  // The left blade leaves through the top-left, the right one through the bottom-right,
+  // so they mirror each other about the centre of the banner.
+  const xFlip = useTransform(x, (v) => -v);
+  const yFlip = useTransform(y, (v) => -v);
+  const opacity = useTransform(out, [1, 0.4], [0, 1]);
+
+  const bladeStyle: Partial<Record<CtaBlade, MotionStyle>> = {
+    left: { x: xFlip, y: yFlip, opacity },
+    right: { x, y, opacity },
+  };
 
   return (
     <section
+      ref={sectionRef}
       id="s-cta"
       data-nav-theme="light"
       className="relative w-full overflow-hidden bg-white"
     >
-      <CtaArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
+      <CtaArt
+        className="pointer-events-none absolute inset-0 h-full w-full select-none"
+        bladeStyle={reduce ? undefined : bladeStyle}
+      />
 
       {/* The mobile export keeps the banner at 700px tall and centres the same stack
           in it: a 49x59 mark, the heading at 32px, the two-line body, and the pair of
