@@ -5,6 +5,7 @@ import { useLang } from "@/lib/language";
 import { hero, topics, form } from "./content";
 import { BladeTopRight, BladeBottomLeft } from "./art/HeroArt";
 import { Chevron, Tick } from "./icons";
+import ContactSuccess from "./ContactSuccess";
 
 /**
  * Contact — `public/contact/Frame 21472261322.svg` (empty) and `Frame 2147226132.svg`
@@ -177,15 +178,10 @@ const ContactSection = () => {
             className="mt-11 rounded-2xl border border-hd-card-line bg-white p-4 sm:mt-12 sm:p-10 lg:mt-0 lg:p-[39px]"
           >
             {sent ? (
-              /* The exports stop at the submit button, so the sent state is built from
-                 the scale the card already uses rather than invented: the value size for
-                 the confirmation, the standfirst's for the line under it. */
-              <div className="lg:min-h-[732px]">
-                <p className="text-[20px] leading-[28px] text-black">{t.successHeading}</p>
-                <p className="mt-3 text-[16px] leading-[22px] text-hd-eyebrow-ink">
-                  {t.successBody}
-                </p>
-              </div>
+              /* The exports stop at the submit button; `ContactSuccess` builds the sent
+                 state out of the card's own vocabulary and offers the overview one-pager
+                 in either language. */
+              <ContactSuccess />
             ) : (
               <form onSubmit={handleSubmit}>
                 {/* topic — the four pills */}

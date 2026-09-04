@@ -82,6 +82,44 @@ export const form = {
   },
 } as const;
 
+/**
+ * The sent state — what replaces the form once the message is away.
+ *
+ * The submission is confirmed first, then the overview one-pager is offered as a
+ * download in either language, then NEURON as the one thing worth doing next.
+ *
+ * `file` is the PDF's real name in `public/downloads`, verbatim — spaces, parentheses
+ * and Japanese characters included. It is stored unescaped and percent-encoded where
+ * the href is built, so the name here stays greppable against the file on disk and the
+ * bare `download` attribute saves it under exactly that name.
+ */
+export const success = {
+  ja: {
+    heading: "送信しました。",
+    body:
+      "お問い合わせありがとうございます。2営業日以内にご連絡いたします。それまでの間、UNCHAINの会社概要をご覧ください。言語をお選びください。",
+    downloads: [
+      { lang: "en" as const, label: "英語版をダウンロード", file: "New_UNCHAIN_Company_Deck_EN (2).pdf" },
+      { lang: "ja" as const, label: "日本語版をダウンロード", file: "Copy of NEURON_向けご提案資料_統合版.pptx.pdf" },
+    ],
+    nextPrompt: "NEURONの実際の動きもご覧いただけます。",
+    nextLabel: "NEURONを見る",
+    nextHref: "https://the-neuron.com/ja",
+  },
+  en: {
+    heading: "Message sent.",
+    body:
+      "Thank you for reaching out. We will come back to you within two business days. In the meantime, here is the UNCHAIN overview — pick your language.",
+    downloads: [
+      { lang: "en" as const, label: "Download (English)", file: "New_UNCHAIN_Company_Deck_EN (2).pdf" },
+      { lang: "ja" as const, label: "Download (日本語)", file: "Copy of NEURON_向けご提案資料_統合版.pptx.pdf" },
+    ],
+    nextPrompt: "Want to see NEURON in action?",
+    nextLabel: "Explore NEURON",
+    nextHref: "https://the-neuron.com/ja",
+  },
+} as const;
+
 export const meta = {
   ja: {
     title: "お問い合わせ",

@@ -54,3 +54,28 @@ export const Tick = ({ className }: Props) => (
     />
   </svg>
 );
+
+/**
+ * Download glyph for the sent state's two one-pager buttons. Drawn on the same 20x20
+ * box and 1.67px round stroke the header icons in `home/icons.tsx` use, so it sits at
+ * the same weight as the rest of the site's line art.
+ */
+export const Download = ({ className }: Props) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    <path
+      d="M17.5 12.5V15.8333C17.5 16.7538 16.7538 17.5 15.8333 17.5H4.16667C3.24619 17.5 2.5 16.7538 2.5 15.8333V12.5M5.83333 8.33333L10 12.5L14.1667 8.33333M10 12.5V2.5"
+      stroke="currentColor"
+      strokeWidth="1.67"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
