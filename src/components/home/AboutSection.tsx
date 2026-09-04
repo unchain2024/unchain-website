@@ -2,12 +2,11 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   useReducedMotion,
-  useScroll,
-  useSpring,
   useTransform,
   type MotionStyle,
 } from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
+import { useSectionEntrance } from "@/hooks/use-section-entrance";
 import { useLang } from "@/lib/language";
 import { about } from "./content";
 import { ChevronRight } from "./icons";
@@ -22,13 +21,20 @@ import AboutArt, { type Blade } from "./art/AboutArt";
  * The blades slide in along their own 60-degree axis as the section comes up out of
  * the hero: the top pair leads and the bottom pair overlaps it, so the frame assembles
  * top-down in the direction of the scroll. The whole gesture is mapped onto the
- * section's entrance, so it is complete the moment the section stands fully in the
- * viewport and nothing is left to finish once the reader has stopped. It is a live
+ * section's arrival, so nothing is left to finish once the reader has the section in
+ * front of them — on a viewport too short to hold the whole band that is the moment it
+ * fills the screen, which is what keeps the timing honest on a phone. It is a live
  * mapping of scroll position rather than a one-shot reveal, so scrolling back up sends
  * them out again.
  */
 
-/** How far out of frame a blade parks, along its axis. ~1440x700 user units. */
+/**
+ * How far out of frame a blade parks, along its axis, in the export's 1440x700 user
+ * units. The frame is stretched to the section rather than fitted (`preserveAspectRatio
+ * ="none"`), and an SVG transform rides that same stretch, so this travel stays the
+ * same fraction of the frame — and stays parallel to the blade it moves — at every
+ * width the section is drawn at.
+ */
 const TRAVEL_X = 380;
 const TRAVEL_Y = 265;
 
@@ -38,21 +44,11 @@ const AboutSection = () => {
   const reduce = useReducedMotion();
 
   const sectionRef = useRef<HTMLElement>(null);
-  // The window is exactly the section's own entrance: 0 when its top reaches the
-  // bottom of the viewport, 1 when its bottom does — i.e. the instant the section
-  // stands fully in view. Everything is timed inside that, so the composition is
-  // finished by the time the reader has the whole section in front of them.
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end end"],
-  });
-  // Stiff enough that the spring's own lag does not push the landing past the end
-  // of the window; it is here only to take the edge off a flicked wheel.
-  const glide = useSpring(scrollYProgress, {
-    stiffness: 200,
-    damping: 34,
-    mass: 0.3,
-  });
+  // Everything is timed inside the section's own arrival, so the composition is
+  // finished by the time the reader has the section in front of them — on a phone,
+  // where the 700px band runs taller than the window, that is the moment it fills
+  // the screen rather than the moment its bottom edge lands.
+  const glide = useSectionEntrance(sectionRef);
 
   // 1 = parked outside the frame, 0 = seated in the corner. The top pair leads and
   // the bottom pair overlaps it, both landing by the end of the window.

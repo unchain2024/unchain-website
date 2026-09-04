@@ -2,12 +2,11 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   useReducedMotion,
-  useScroll,
-  useSpring,
   useTransform,
   type MotionStyle,
 } from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
+import { useSectionEntrance } from "@/hooks/use-section-entrance";
 import { useLang } from "@/lib/language";
 import { cta } from "./content";
 import { ChevronRight } from "./icons";
@@ -22,13 +21,18 @@ import CtaArt, { type CtaBlade } from "./art/CtaArt";
  *
  * The blades draw themselves in as the banner arrives: both slide along the export's
  * shared axis, out of their own edge and into place, and the pair moves together
- * rather than in sequence. The gesture is mapped onto the banner's entrance, so it is
- * complete the moment the banner stands fully in the viewport. It is a live mapping of
- * scroll position rather than a one-shot reveal, so scrolling back up sends them out
- * again.
+ * rather than in sequence. The gesture is mapped onto the banner's arrival, so it is
+ * complete once the reader has the banner in front of them — on a viewport too short to
+ * hold it whole, the moment it fills the screen instead. It is a live mapping of scroll
+ * position rather than a one-shot reveal, so scrolling back up sends them out again.
  */
 
-/** How far out of frame a blade parks, along the axis both of them share (1440x597). */
+/**
+ * How far out of frame a blade parks, along the axis both of them share, in the export's
+ * 1440x597 user units. The frame is stretched to the banner rather than fitted, and an
+ * SVG transform rides that same stretch, so this travel stays the same fraction of the
+ * frame — and stays parallel to the blades — at every width the banner is drawn at.
+ */
 const TRAVEL_X = 380;
 const TRAVEL_Y = 420;
 
@@ -38,17 +42,10 @@ const CtaSection = () => {
   const reduce = useReducedMotion();
 
   const sectionRef = useRef<HTMLElement>(null);
-  // 0 when the banner's top reaches the bottom of the viewport, 1 when its bottom does
-  // — i.e. the instant the banner stands fully in view.
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end end"],
-  });
-  const glide = useSpring(scrollYProgress, {
-    stiffness: 200,
-    damping: 34,
-    mass: 0.3,
-  });
+  // Timed inside the banner's own arrival. On a phone the banner is the taller of the
+  // two, so that is the moment it fills the window rather than the moment its bottom
+  // edge lands — see the hook.
+  const glide = useSectionEntrance(sectionRef);
 
   // 1 = parked outside the frame, 0 = seated. Landing at 0.85 leaves the spring room
   // to settle inside the window instead of trailing past the end of it.

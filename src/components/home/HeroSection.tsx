@@ -28,9 +28,12 @@ import HeroArt from "./art/HeroArt";
  * its own baseline, and both reverse on the way back up.
  *
  * `public/mobile/Home Page - Mobile.svg` rebuilds the same hero as a single column:
- * the collage moves above the copy and runs 381px wide (x 6..387) at the export's own
- * 724:674 aspect, the eyebrow drops to 16px, the heading to 40/44, and the two links
- * become full-measure 50px pills stacked on a 16px gutter. There is no scroll cue.
+ * the collage moves above the copy at the export's own 724:674 aspect, the eyebrow drops
+ * to 16px, the heading to 40/44, and the two links become full-measure 50px pills stacked
+ * on a 16px gutter. There is no scroll cue. The export draws the collage 381px wide
+ * (x 6..387 of 393, so a 6px bleed past the copy's 24px gutter); here it sits on the
+ * copy's gutters instead and runs fluid — a little narrower than the export at that one
+ * frame, in exchange for holding the column at every other — see the note on it below.
  */
 const HeroSection = () => {
   const { lang, localePath } = useLang();
@@ -58,11 +61,26 @@ const HeroSection = () => {
         data-home="hero"
         className="relative mx-auto w-full max-w-[1440px] md:min-h-[640px] lg:h-[100svh] lg:min-h-[720px]"
       >
-        {/* Logo-shaped photo collage. Below `lg` it leads the column, sized by the
-            mobile export's 381px measure and its own aspect; from `lg` it returns to
-            the absolutely-placed right-hand position the desktop export draws. */}
-        <div className="pt-nav lg:contents">
-          <HeroArt className="pointer-events-none mx-auto mt-[21px] block aspect-[724/674] w-[381px] max-w-full select-none lg:absolute lg:right-[4.1021%] lg:top-[16.1644%] lg:mt-0 lg:aspect-auto lg:h-[74.7722%] lg:w-[50.2278%]" />
+        {/* Logo-shaped photo collage. Below `lg` it leads the column; from `lg` it returns
+            to the absolutely-placed right-hand position the desktop export draws.
+
+            In the single column it takes the copy's own gutters and then fills whatever
+            is left, rather than holding the mobile export's flat 381px. That measure only
+            reads as intended at the 393px frame it was drawn for: on a 320px phone it ran
+            the art edge to edge with no gutter at all, and on a tablet it left a 381px
+            island adrift in a 688px column while the pills either side of it spanned the
+            full measure. Fluid width keeps the art on the same left and right edges as
+            the copy at every size — 36px narrower than the export at 393px, since it
+            gives up the export's 6px bleed to sit on the 24px gutter. The cap stops it
+            from turning the tablet hero into a 600px-tall photo before the two-column
+            layout takes over at `lg`, where `max-w-none` hands sizing back to the
+            export's percentages.
+
+            The art inside needs nothing per breakpoint: every offset in HeroArt is in the
+            SVG's own user units, so the whole cycle scales with the viewBox and reads the
+            same at 272px as at 723px. */}
+        <div className="px-6 pt-nav sm:px-10 lg:contents">
+          <HeroArt className="pointer-events-none mx-auto mt-[21px] block aspect-[724/674] w-full max-w-[560px] select-none lg:absolute lg:right-[4.1021%] lg:top-[16.1644%] lg:mt-0 lg:aspect-auto lg:h-[74.7722%] lg:w-[50.2278%] lg:max-w-none" />
         </div>
 
         {/* Copy — revealed on mount rather than on scroll; it is above the fold. */}
