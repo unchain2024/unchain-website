@@ -82,26 +82,47 @@ export const form = {
   },
 } as const;
 
+/** One overview deck sitting in `public/downloads`. */
+export type Deck = {
+  /** The language the deck is written in. Also the link's `hrefLang`. */
+  readonly lang: "en" | "ja";
+  readonly label: string;
+  /** The PDF's real name on disk, verbatim. */
+  readonly file: string;
+};
+
 /**
  * The sent state — what replaces the form once the message is away.
  *
- * The submission is confirmed first, then the overview one-pager is offered as a
- * download in either language, then NEURON as the one thing worth doing next.
+ * The submission is confirmed first, then the overview deck is offered as a download,
+ * then NEURON as the one thing worth doing next.
  *
- * `file` is the PDF's real name in `public/downloads`, verbatim — spaces, parentheses
- * and Japanese characters included. It is stored unescaped and percent-encoded where
- * the href is built, so the name here stays greppable against the file on disk and the
- * bare `download` attribute saves it under exactly that name.
+ * Which decks are offered is not the same in both languages, because the audiences are
+ * not symmetrical. A reader on `/en` is being served in English and is offered the
+ * English deck alone — one button, no choice to make. A reader on the Japanese site is
+ * likely to work across both languages, so both decks are offered, Japanese first. The
+ * copy follows: only the Japanese standfirst asks the reader to pick.
+ *
+ * `file` is the PDF's name in `public/downloads`, verbatim — spaces, parentheses, the
+ * Japanese deck's double extension and all. It is stored unescaped and percent-encoded
+ * where the href is built, so the name here stays greppable against the file on disk and
+ * the bare `download` attribute saves it under exactly that name.
  */
+/* The two PDFs, named once. The label that fronts each one is not shared, because it
+   is written in the language of the page rather than the language of the deck. */
+const FILE_EN = "New_UNCHAIN_Company_Deck_EN (2).pdf";
+const FILE_JA = "Copy of NEURON_向けご提案資料_統合版.pptx.pdf";
+
 export const success = {
   ja: {
     heading: "送信しました。",
     body:
-      "お問い合わせありがとうございます。2営業日以内にご連絡いたします。それまでの間、UNCHAINの会社概要をご覧ください。言語をお選びください。",
+      "お問い合わせありがとうございます。2営業日以内にご連絡いたします。それまでの間、UNCHAINの会社紹介資料をご覧ください。言語をお選びください。",
+    /* Japanese first — it is the language the reader came in on. */
     downloads: [
-      { lang: "en" as const, label: "英語版をダウンロード", file: "New_UNCHAIN_Company_Deck_EN (2).pdf" },
-      { lang: "ja" as const, label: "日本語版をダウンロード", file: "Copy of NEURON_向けご提案資料_統合版.pptx.pdf" },
-    ],
+      { lang: "ja", label: "日本語版をダウンロード", file: FILE_JA },
+      { lang: "en", label: "英語版をダウンロード", file: FILE_EN },
+    ] as readonly Deck[],
     nextPrompt: "NEURONの実際の動きもご覧いただけます。",
     nextLabel: "NEURONを見る",
     nextHref: "https://the-neuron.com/ja",
@@ -109,11 +130,11 @@ export const success = {
   en: {
     heading: "Message sent.",
     body:
-      "Thank you for reaching out. We will come back to you within two business days. In the meantime, here is the UNCHAIN overview — pick your language.",
+      "Thank you for reaching out. We will come back to you within two business days. In the meantime, here is the UNCHAIN company overview.",
+    /* One deck, so the label names the thing rather than the language. */
     downloads: [
-      { lang: "en" as const, label: "Download (English)", file: "New_UNCHAIN_Company_Deck_EN (2).pdf" },
-      { lang: "ja" as const, label: "Download (日本語)", file: "Copy of NEURON_向けご提案資料_統合版.pptx.pdf" },
-    ],
+      { lang: "en", label: "Download the overview", file: FILE_EN },
+    ] as readonly Deck[],
     nextPrompt: "Want to see NEURON in action?",
     nextLabel: "Explore NEURON",
     nextHref: "https://the-neuron.com/ja",

@@ -66,9 +66,11 @@ const ContactSuccess = () => {
           {t.body}
         </p>
 
-        {/* The two one-pagers carry equal weight — the choice is a language, not a
-            hierarchy — so both take the submit button's fill. They stack below `sm`,
-            where the card's measure is too narrow to hold both labels on one row. */}
+        {/* However many decks the language offers — one on `/en`, both on the Japanese
+            site — they carry equal weight, since the choice is a language and not a
+            hierarchy, so each takes the submit button's fill. `flex-1` means the single
+            English button fills the measure exactly as the submit button did, and the
+            row stacks below `sm`, where the card is too narrow for two labels. */}
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           {t.downloads.map((file) => (
             <a

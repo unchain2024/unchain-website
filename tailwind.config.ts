@@ -108,11 +108,19 @@ export default {
           from: { transform: "translateX(-50%)" },
           to: { transform: "translateX(0)" },
         },
+        /* The partner wall's drift, the mirror of the join strip: the logos travel
+           right to left, so the track runs from 0 to -50%. Same two-copy trick — half
+           the track is one whole set, so the wrap has no seam. */
+        "marquee-left": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "marquee-right": "marquee-right 45s linear infinite",
+        "marquee-left": "marquee-left 55s linear infinite",
       },
     },
   },
