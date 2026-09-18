@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
   },
+  // The Supabase database is provisioned through the Vercel Marketplace, which injects
+  // its credentials as NEXT_PUBLIC_SUPABASE_* (browser-safe by contract). Expose that
+  // narrow prefix alongside the usual VITE_ one so the client can read them.
+  envPrefix: ["VITE_", "NEXT_PUBLIC_SUPABASE_"],
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
     alias: {
