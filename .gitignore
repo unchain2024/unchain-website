@@ -27,3 +27,6 @@ CLAUDE.md
 # design pipeline scratch (screenshots, extracted rasters, chrome profile)
 tools/design/.work/
 .vercel
+.env
+.agents/
+.claude/
