@@ -27,9 +27,18 @@ import {
 
 export const config = { runtime: "edge" };
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "";
+// Injected by the Vercel Marketplace Supabase resource (SUPABASE_* server-side,
+// NEXT_PUBLIC_SUPABASE_* browser-safe). VITE_* is the legacy hand-set fallback.
+const SUPABASE_URL =
+  process.env.SUPABASE_URL ||
+  process.env.NEXT_PUBLIC_SUPABASE_URL ||
+  process.env.VITE_SUPABASE_URL ||
+  "";
 const SUPABASE_ANON_KEY =
-  process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || "";
+  process.env.SUPABASE_ANON_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.VITE_SUPABASE_ANON_KEY ||
+  "";
 
 const DEFAULT_IMAGE = `${SITE_URL}/logo-black.webp`;
 const VIDEO_RE = /\.(mp4|webm|ogg|mov)(\?|#|$)/i;
