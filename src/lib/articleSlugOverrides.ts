@@ -22,7 +22,16 @@
  * working — the old derived slug and the bare id both still resolve.
  */
 export const ARTICLE_SLUG_OVERRIDES: Record<string, string> = {
+  // --- News: URLs kept from before the 2026-09 database rebuild -----------
+  // UNCHAIN Co., Ltd. to Exhibit at "Eight EXPO 2026 Summer" — the original post
+  // had a longer English title, and its URL is still linked from outside.
+  "e86ad8d6-39b5-4f0a-8087-728a1247e15f": "unchain-inc-to-make-its-debut-at-the-3rd-ai-practical-applications-expo-ai-pax",
+
   // --- News: Japanese-only titles ---------------------------------------
+  // NOTE: the three ids below belong to the database that was deleted in 2026-09.
+  // The articles were not in the Google Drive export and have not been recreated;
+  // the entries are kept so the URLs are reserved if the posts are ever re-entered
+  // (insert them with these ids — see supabase/seed/import-articles.mjs).
   // UNCHAIN、AIツール「NEURON」を「読むAI」から「動くAI」へ進化。…POC導入企業を募集
   "a2b5d4cf-daaf-461d-8e66-6031cef74468": "neuron-reading-ai-to-acting-ai-poc",
   // UNCHAIN、プロダクトの意思決定を「いつ・誰が・なぜ」で可視化するAIツール「NEURON」をリリース
