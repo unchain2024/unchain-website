@@ -27,6 +27,13 @@ export const ARTICLE_SLUG_OVERRIDES: Record<string, string> = {
   // had a longer English title, and its URL is still linked from outside.
   "e86ad8d6-39b5-4f0a-8087-728a1247e15f": "unchain-inc-to-make-its-debut-at-the-3rd-ai-practical-applications-expo-ai-pax",
 
+  // [Recap] Gartner Digital Workplace Summit 2026 — "[Recap]"/"[Highlights]" was dropped from the title; the URL keeps it.
+  "bd191870-dd3b-46ca-bc7c-67f539ad93ac": "recap-gartner-digital-workplace-summit-2026",
+  // [Recap] NEXT BUSINESS EXPO SUMMER 2026 — "[Recap]"/"[Highlights]" was dropped from the title; the URL keeps it.
+  "2e51ccbe-dbf3-4a52-a086-5e9118490fbc": "recap-next-business-expo-summer-2026",
+  // [Highlights] JAPAN FUTURE GATE at Back Office World / Marketing & Sales World 2026 — "[Recap]"/"[Highlights]" was dropped from the title; the URL keeps it.
+  "6ea2ece1-6911-4d2c-9b52-e500c560b385": "highlights-japan-future-gate-at-back-office-world-marketing-sales-world-2026",
+
   // --- News: Japanese-only titles ---------------------------------------
   // NOTE: the three ids below belong to the database that was deleted in 2026-09.
   // The articles were not in the Google Drive export and have not been recreated;

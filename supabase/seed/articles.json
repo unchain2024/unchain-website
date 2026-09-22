@@ -1,7 +1,7 @@
 [
   {
     "id": "e86ad8d6-39b5-4f0a-8087-728a1247e15f",
-    "created_at": "2026-05-20T01:00:00+09:00",
+    "created_at": "2026-05-20T12:00:00+09:00",
     "category": "Event",
     "image": "eight-expo-2026-announcement.webp",
     "title": "UNCHAIN株式会社、「Eight EXPO 2026 夏」内「【AI-PAX 2026 夏】第3回 AIの実践的な活用展に初出展",
@@ -14,7 +14,7 @@
   },
   {
     "id": "92fc8b9b-f4d7-44f5-b806-bbc337b80ef1",
-    "created_at": "2026-06-24T01:00:00+09:00",
+    "created_at": "2026-06-24T12:00:00+09:00",
     "category": "Event",
     "image": "japan-future-gate-2026-announcement.webp",
     "title": "「バックオフィスDXPO / マーケティング・営業支援DXPO 2026 — JAPAN FUTURE GATE」出展のお知らせ",
@@ -27,7 +27,7 @@
   },
   {
     "id": "55f7f5c9-61c0-418d-a7c1-93b60de8f69b",
-    "created_at": "2026-07-01T01:00:00+09:00",
+    "created_at": "2026-07-01T12:00:00+09:00",
     "category": "Event",
     "image": "next-business-expo-2026-announcement.webp",
     "title": "「NEXT BUSINESS EXPO SUMMER 2026」出展のお知らせ",
@@ -40,7 +40,7 @@
   },
   {
     "id": "cfbb29f0-b098-4a52-9aae-4c1a5f8d16dc",
-    "created_at": "2026-07-08T01:00:00+09:00",
+    "created_at": "2026-07-08T12:00:00+09:00",
     "category": "Event",
     "image": "ai-world-2026-announcement.webp",
     "title": "「AI World 2026 夏 東京」出展のお知らせ",
@@ -53,11 +53,11 @@
   },
   {
     "id": "6ea2ece1-6911-4d2c-9b52-e500c560b385",
-    "created_at": "2026-07-16T01:00:00+09:00",
+    "created_at": "2026-07-16T12:00:00+09:00",
     "category": "Report",
     "image": "japan-future-gate-2026-recap.webp",
     "title": "【出展レポート】バックオフィスDXPO / マーケティング・営業支援DXPO 2026 — JAPAN FUTURE GATE",
-    "title_en": "[Highlights] JAPAN FUTURE GATE at Back Office World / Marketing & Sales World 2026",
+    "title_en": "JAPAN FUTURE GATE at Back Office World / Marketing & Sales World 2026",
     "description": "UNCHAIN株式会社は、2026年7月8日（水）〜10日（金）に東京ビッグサイトで開催された「バックオフィスDXPO / マーケティング・営業支援DXPO 2026」内の特設エリア「JAPAN FUTURE GATE」に出展いたしました。3日間にわたり、当社ブースにお立ち寄りいただいた皆様、誠にありがとうございました。",
     "description_en": "UNCHAIN Inc. exhibited in JAPAN FUTURE GATE, a special area featuring selected startups, at Back Office World / Marketing & Sales World 2026, held July 8–10 at Tokyo Big Sight. Thank you to everyone who visited our booth over the three days.",
     "content": "会期中は、エンジニアリング、製造・生産、財務、マーケティングなど、実に幅広い業種・職種の皆様にご来場いただきました。この多様さは、まさにNEURONが向き合う課題そのものです。重要な意思決定は部門の垣根を越えて行われる一方で、その背景にあるデータは各部門に分断されたまま残されています。\n当社ブースでは、意思決定インテリジェンスプラットフォーム「NEURON（ニューロン）」をご紹介いたしました。NEURONは、組織で既に導入されているチャット、文書管理、タスク管理などのツールと連携し、蓄積された業務データを分析することで、繰り返される失敗、要件のズレ、部門をまたぐリスクを、意思決定が下される前に可視化します。\nブースでの会話の中で、繰り返し話題に上がったテーマがあります。「経験豊富な社員が退職すると、過去の意思決定の背景や理由もその人と共に失われてしまう」という課題です。これは多くの組織に共通する悩みであり、まさにNEURONが解決を目指すものです。NEURONは、意思決定の文脈を個人の記憶ではなく、組織のナレッジとして蓄積します。\n今月は当社にとって展示会シーズンの始まりです。NEXT BUSINESS EXPOをはじめ、来週開催のAI Worldなど、ほぼ毎週さまざまな展示会・カンファレンスに出展を予定しております。東京ビッグサイトでお会いできなかった方も、ぜひ次の機会に当社チームとNEURONのデモをご覧ください。\n主催者の皆様、そしてご来場いただいたすべての皆様に、心より御礼申し上げます。NEURONのデモや、組織の意思決定改善についてのご相談にご興味のある方は、ぜひお気軽にお問い合わせください。\nhttps://www.the-unchain.com/contact",
@@ -66,11 +66,11 @@
   },
   {
     "id": "2e51ccbe-dbf3-4a52-a086-5e9118490fbc",
-    "created_at": "2026-07-20T01:00:00+09:00",
+    "created_at": "2026-07-20T12:00:00+09:00",
     "category": "Report",
     "image": "next-business-expo-2026-recap.webp",
     "title": "【出展レポート】NEXT BUSINESS EXPO SUMMER 2026",
-    "title_en": "[Recap] NEXT BUSINESS EXPO SUMMER 2026",
+    "title_en": "NEXT BUSINESS EXPO SUMMER 2026",
     "description": "UNCHAIN株式会社は、2026年7月16日（木）・17日（金）に東京都立産業貿易センター浜松町館で開催された「NEXT BUSINESS EXPO SUMMER 2026」に出展いたしました。当社ブースにお立ち寄りいただいた皆様、また主催者の皆様に、心より御礼申し上げます。",
     "description_en": "UNCHAIN exhibited at NEXT BUSINESS EXPO SUMMER 2026, held July 16–17 at the Tokyo Metropolitan Industrial Trade Center in Hamamatsucho. Thank you to everyone who visited our booth, and to the organizers for having us.",
     "content": "2日間を通じて、意思決定インテリジェンスプラットフォーム「NEURON」をご紹介し、多くのご来場者様と「日々のツールにデータが散在し、意思決定に活かしきれない」という多くの組織に共通する課題についてお話しすることができました。\n当社の展示会シーズンはまだまだ続きます。来週開催の「AI World」にも出展いたしますので、浜松町でお会いできなかった方は、ぜひ幕張メッセの当社ブースにお立ち寄りください。",
@@ -79,7 +79,7 @@
   },
   {
     "id": "84c43f2f-5244-4824-a0f2-f7779c267aa8",
-    "created_at": "2026-08-20T01:00:00+09:00",
+    "created_at": "2026-08-20T12:00:00+09:00",
     "category": "Announcement",
     "image": null,
     "title": "NEURON Webサイトをリニューアルしました。",
@@ -92,11 +92,11 @@
   },
   {
     "id": "bd191870-dd3b-46ca-bc7c-67f539ad93ac",
-    "created_at": "2026-09-01T01:00:00+09:00",
+    "created_at": "2026-09-01T12:00:00+09:00",
     "category": "Report",
     "image": "gartner-dws-2026-recap.webp",
     "title": "【出展・登壇レポート】Gartner Digital Workplace Summit 2026",
-    "title_en": "[Recap] Gartner Digital Workplace Summit 2026",
+    "title_en": "Gartner Digital Workplace Summit 2026",
     "description": "UNCHAINは、2026年8月26日（水）〜27日（木）にウェスティンホテル東京で開催された「Gartner Digital Workplace Summit 2026」に出展いたしました。ブースにお立ち寄りいただいた皆様、セッションにご参加いただいた皆様、そして運営の皆様に、心より御礼申し上げます。",
     "description_en": "UNCHAIN exhibited at Gartner Digital Workplace Summit 2026, held on August 26–27 at The Westin Tokyo. Thank you to everyone who visited our booth and attended our session, and to the organizers for having us.",
     "content": "セッションでは、当社代表取締役CEOの朴善優（Christian Park）が、オントロジーによるAI活用型データ基盤の構築についてお話ししました。出発点となったのは、2つの数字です。生成AI導入プロジェクトのうち95%が損益へのインパクトを出せておらず、自社のデータがAI活用に向けて「完全に準備できている」と答えた企業はわずか7%。いずれの調査も、その原因はAIモデルの性能ではないと指摘しています。\n現在のLLMは、すでに十分に賢い。ただし、目の前の組織のことは何も知りません。どう判断してきたのか、誰が何をどのツールで動かしているのか、モノとコトがどう関係しているのか。こうした「組織の文脈」はどの企業にも存在しますが、機械が読める形で構造化されてきませんでした。検索だけでは解決できません。意味の近さで拾う仕組みでは、文書をまたいだ関係をたどれず、漏れがないことを保証できず、「経済産業省」「経産省」「METI」が同じ組織であることも判別できないためです。\nオントロジーは、実体と実体どうしの関係を明示的に定義するものです。これにより3つとも可能になり、さらに、どの文書のどの記述が根拠かをたどって示せるようになります。セッションの最後には、製造業の品質保証を例に取り上げました。6か所に散らばっていた検査結果・図面・苦情報告書・上長のコメントが、1つの製品シリアル番号を軸に、ひと続きの文脈としてつながります。\nブースでは「NEURON」をご紹介し、ご来場の皆様が自社の生成AI活用のどこでつまずいているのか、直接お話を伺うことができました。今回の出展に合わせて制作した新しい製品パンフレットも、初めてお披露目いたしました。\n自社にとってのAI活用型データ基盤がどのようなものになるか、ぜひ一度お聞かせください。お気軽にお問い合わせいただければ幸いです。",
@@ -105,7 +105,7 @@
   },
   {
     "id": "0eef0967-af6e-46bb-91fa-0b8477e9d246",
-    "created_at": "2026-09-05T01:00:00+09:00",
+    "created_at": "2026-09-05T12:00:00+09:00",
     "category": "Announcement",
     "image": "unchain-website-renewal.webp",
     "title": "UNCHAINコーポレートサイト リニューアルのお知らせ",
@@ -119,7 +119,7 @@
   {
     "id": "8a3bb42d-fdb7-40ed-83ce-111a1e6022ba",
     "is_draft": true,
-    "created_at": "2026-09-10T01:00:00+09:00",
+    "created_at": "2026-09-10T12:00:00+09:00",
     "category": "Announcement",
     "image": null,
     "title": "オフィスを日本橋に移転しました",
