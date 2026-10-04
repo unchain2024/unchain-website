@@ -139,6 +139,17 @@ export const news = {
   },
 } as const;
 
+export const partners = {
+  ja: {
+    eyebrow: "OUR PARTNERS",
+    heading: "世界トップクラスのパートナー",
+  },
+  en: {
+    eyebrow: "OUR PARTNERS",
+    heading: "World-class partners",
+  },
+} as const;
+
 export const join = {
   ja: {
     eyebrow: "JOIN US",
