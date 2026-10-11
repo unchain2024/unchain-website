@@ -3,7 +3,6 @@ import { useLang } from "@/lib/language";
 import { lineGap } from "@/lib/headingLines";
 import { mission } from "./content";
 import { BladeTopLeft, BladeBottomRight } from "./art/HeroArt";
-import briefingShot from "@/assets/about/mission-briefing.webp";
 import advisorShot from "@/assets/about/mission-advisor.webp";
 
 /**
@@ -11,8 +10,8 @@ import advisorShot from "@/assets/about/mission-advisor.webp";
  *
  * The first of the numbered sections, sitting directly under the hero. White canvas on a
  * 120px page gutter, unlike the 80px the hero and the home and business pages use. The
- * heading sits on the left, the mission statement in a 520px column at x=800, and two
- * photos fill the 1200px measure below (403 + 16 + 781).
+ * heading sits on the left, the mission statement in a 520px column at x=800, and a
+ * photo fills the 1200px measure below.
  *
  * The two gradient blades are the export's own vector art and run off the page edges, so
  * each is anchored to its own edge and the canvas clips them exactly as Figma does.
@@ -79,25 +78,15 @@ const MissionHero = () => {
             </div>
           </div>
 
-          {/* 403 + 16 + 781 across the 1200px measure. As `fr` rather than a share each:
-              percentages of the row do not account for the gap between them, which puts the
-              pair 16px over the measure once it is narrower than 1200.
-
-              The mobile export keeps the pair side by side at the same ratio, scaled to the
-              345px measure — 115.9 + 4.6 + 224.5 — with the gutter and the corner radius
-              shrinking to 4.6 along with it. */}
-          <div className="mt-10 grid grid-cols-[403fr_781fr] gap-[4.6px] lg:mt-[79px] lg:gap-4">
+          {/* The export drew two photos here (403 + 16 + 781); the first was dropped, so the
+              remaining one keeps its 781/518 framing and spans the full measure. The corner
+              radius shrinks to 4.6 on mobile along with the rest of the export. */}
+          <div className="mt-10 lg:mt-[79px]">
             <img
-              src={briefingShot}
+              src={advisorShot}
               alt={t.photos[0].alt}
               loading="eager"
               data-probe="mission-photo-1"
-              className="aspect-[403/518] w-full rounded-[4.6px] bg-[#D9D9D9] object-cover object-center lg:rounded-2xl"
-            />
-            <img
-              src={advisorShot}
-              alt={t.photos[1].alt}
-              loading="eager"
               className="aspect-[781/518] w-full rounded-[4.6px] bg-[#D9D9D9] object-cover object-center lg:rounded-2xl"
             />
           </div>

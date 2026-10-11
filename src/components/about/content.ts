@@ -25,20 +25,14 @@ export const mission = {
     heading: ["UNCHAIN THE", "WORLD"],
     lead: "人の可能性を、組織の可能性を解き放ち、それぞれのMISSIONをUNCHAINする。",
     body: "時間や人手の不足、分散した知識、複雑化した組織、過去の常識。本来向き合うべきMISSIONの時間が、日々の制約に奪われています。テクノロジー、とりわけAIは、そのCHAINを解くために存在する。私たちはそう信じています。",
-    photos: [
-      { id: "briefing", alt: "UNCHAINの社内ミーティングで説明するメンバー" },
-      { id: "advisor", alt: "クライアントと打ち合わせをするメンバー" },
-    ],
+    photos: [{ id: "advisor", alt: "クライアントと打ち合わせをするメンバー" }],
   },
   en: {
     eyebrow: "MISSION",
     heading: ["UNCHAIN THE", "WORLD"],
     lead: "Unchain the potential of people, the potential of organisations, and the mission each of them carries.",
     body: "Too little time and too few hands, knowledge scattered everywhere, organisations grown complex, the habits of the past. The hours that should go to the mission are taken by the constraints of the day. Technology, and AI above all, exists to break those chains. That is what we believe.",
-    photos: [
-      { id: "briefing", alt: "A team member presenting at an internal UNCHAIN meeting" },
-      { id: "advisor", alt: "Team members in a working session with a client" },
-    ],
+    photos: [{ id: "advisor", alt: "Team members in a working session with a client" }],
   },
 } as const;
 
@@ -132,16 +126,9 @@ export const leadership = {
     next: "次のメンバー",
     members: [
       {
-        id: "park",
-        name: "朴 善優",
-        role: "共同創業者 兼 CEO",
-        alt: "朴 善優",
-        bio: "東京大学松尾研究室の社長室にてAI研究プロジェクトを担当。同研究室で出会ったメンバーとともに、AIスタートアップ「株式会社Deepreneur」を共同創業。同社はForbes「日本のAI企業トップ50」に選出。その後同社を離れ、現在はUNCHAIN株式会社を創業し代表を務める。AIセキュリティに関する研究成果もForbesに取り上げられている。18歳という最年少でソフトバンクグループの後継者育成機関「ソフトバンクアカデミア」に選抜され、米日カウンシルではパネリストとしても登壇している。",
-      },
-      {
         id: "ebina",
         name: "蛯名 瑠偉",
-        role: "共同創業者 兼 CTO",
+        role: "共同創業者 兼 CEO",
         alt: "蛯名 瑠偉",
         bio: "中学卒業後すぐにIT業界へスカウトされ、10代からエンジニアとしてのキャリアを歩む。大規模データプラットフォームをゼロから設計・構築し、NTT西日本の全国規模データパイプラインや、政府記録のデジタル化を担うB2Bプラットフォームの開発を主導してきた。現在は機械学習・LLM領域の研究開発に軸足を置き、その知見をプロダクトに還元している。",
       },
@@ -170,16 +157,9 @@ export const leadership = {
     next: "Next member",
     members: [
       {
-        id: "park",
-        name: "Sunwoo Park",
-        role: "Co-Founder & CEO",
-        alt: "Sunwoo Park",
-        bio: "Led an AI research project in the president's office of the Matsuo Lab at the University of Tokyo. With people he met there, he co-founded the AI startup Deepreneur, which Forbes named one of Japan's top 50 AI companies. He has since left the company and now founds and leads UNCHAIN Inc. His research on AI security has also been covered by Forbes. At 18 he became the youngest person selected for SoftBank Academia, the SoftBank Group's successor-development programme, and he has spoken as a panellist for the U.S.-Japan Council.",
-      },
-      {
         id: "ebina",
         name: "Lui Ebina",
-        role: "Co-Founder & CTO",
+        role: "Co-Founder & CEO",
         alt: "Lui Ebina",
         bio: "Recruited into the IT industry straight out of junior high school, he began his engineering career in his teens. He has designed and built large-scale data platforms from nothing, leading a nationwide data pipeline for NTT West and the development of a B2B platform for digitising government records. His focus is now research and development in machine learning and LLMs, feeding what he learns back into the product.",
       },
