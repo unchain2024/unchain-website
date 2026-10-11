@@ -5,7 +5,31 @@ import { ChevronRight } from "@/components/home/icons";
 import { NumberOne, NeuronWordmark, ExternalArrow } from "./art/Marks";
 import { RiskRadarArt, DecisionMemoryArt, ContextArt, AskAnythingArt } from "./art/CardArt";
 import OntologyDiagram from "./OntologyDiagram";
-import neuronShot from "@/assets/business/neuron-shot.webp";
+import neuronShotEn from "@/assets/business/neuron-shot.webp";
+import neuronShotJa from "@/assets/business/neuron-shot-ja.webp";
+
+/**
+ * The product shot differs per language: the English page shows the English UI, the
+ * Japanese page the Japanese one.
+ *
+ * The English image is the raw photo, cropped the way the export's pattern crops it — the
+ * design zooms well past `cover`, so the scale and offset are reproduced with
+ * background-size and background-position. The Japanese image was cut from its own
+ * export (`Neuron.svg`, 580.52 x 439.191 frame) to exactly that frame, so it just covers
+ * the box. Both share the frame's aspect, which the mobile export keeps at 345px wide.
+ */
+const NEURON_SHOT = {
+  en: {
+    backgroundImage: `url(${neuronShotEn})`,
+    backgroundSize: "213.924% 148.467%",
+    backgroundPosition: "77.91% 32.83%",
+  },
+  ja: {
+    backgroundImage: `url(${neuronShotJa})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+} as const;
 
 /**
  * Neuron — `public/business/Section.svg` (1440x1943).
@@ -14,9 +38,7 @@ import neuronShot from "@/assets/business/neuron-shot.webp";
  * stacked blocks: the product intro next to the product shot, the four capability
  * cards, and the ontology figure.
  *
- * The photo is cropped exactly as the export's pattern crops it — the design zooms
- * well past `cover`, so the scale and offset are reproduced with background-size and
- * background-position rather than object-fit.
+ * The photo is per language — see NEURON_SHOT.
  */
 const CARD_ART = {
   risk: RiskRadarArt,
@@ -79,11 +101,7 @@ const NeuronSection = () => {
               <div
                 role="img"
                 aria-label={t.photoAlt}
-                style={{
-                  backgroundImage: `url(${neuronShot})`,
-                  backgroundSize: "213.924% 148.467%",
-                  backgroundPosition: "77.91% 32.83%",
-                }}
+                style={NEURON_SHOT[lang]}
                 className="aspect-[580.52/439.191] w-full rounded-2xl bg-[#D9D9D9] bg-no-repeat"
               />
             </ScrollReveal>
