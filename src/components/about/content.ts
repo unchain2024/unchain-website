@@ -25,14 +25,12 @@ export const mission = {
     heading: ["UNCHAIN THE", "WORLD"],
     lead: "人の可能性を、組織の可能性を解き放ち、それぞれのMISSIONをUNCHAINする。",
     body: "時間や人手の不足、分散した知識、複雑化した組織、過去の常識。本来向き合うべきMISSIONの時間が、日々の制約に奪われています。テクノロジー、とりわけAIは、そのCHAINを解くために存在する。私たちはそう信じています。",
-    photos: [{ id: "advisor", alt: "クライアントと打ち合わせをするメンバー" }],
   },
   en: {
     eyebrow: "MISSION",
     heading: ["UNCHAIN THE", "WORLD"],
     lead: "Unchain the potential of people, the potential of organisations, and the mission each of them carries.",
     body: "Too little time and too few hands, knowledge scattered everywhere, organisations grown complex, the habits of the past. The hours that should go to the mission are taken by the constraints of the day. Technology, and AI above all, exists to break those chains. That is what we believe.",
-    photos: [{ id: "advisor", alt: "Team members in a working session with a client" }],
   },
 } as const;
 
@@ -159,9 +157,9 @@ export const leadership = {
       {
         id: "ebina",
         name: "Lui Ebina",
-        role: "Co-Founder & CEO",
+        role: "CEO & Co-Founder",
         alt: "Lui Ebina",
-        bio: "Recruited into the IT industry straight out of junior high school, he began his engineering career in his teens. He has designed and built large-scale data platforms from nothing, leading a nationwide data pipeline for NTT West and the development of a B2B platform for digitising government records. His focus is now research and development in machine learning and LLMs, feeding what he learns back into the product.",
+        bio: "He began his career as a software engineer immediately after graduating from junior high school. Since then, he has designed and built large-scale data platforms from the ground up, leading the development of nationwide data pipelines for NTT West and a B2B platform for digitizing government records. He currently focuses on machine learning and large language model (LLM) research and development, translating cutting-edge technologies into practical products.",
       },
       {
         id: "harada",
@@ -233,7 +231,7 @@ export const company = {
     heading: "会社情報",
     rows: [
       { label: "企業名", value: "UNCHAIN株式会社" },
-      { label: "代表取締役", value: "朴 善優" },
+      { label: "代表取締役", value: "蛯名 瑠偉" },
       { label: "設立", value: "2025年7月" },
       { label: "資本金", value: "200万円" },
       { label: "従業員数", value: "10名（業務委託を含む）" },
@@ -247,7 +245,7 @@ export const company = {
     heading: "Company information",
     rows: [
       { label: "Company name", value: "UNCHAIN Inc." },
-      { label: "Representative director", value: "Sunwoo Park" },
+      { label: "Representative director", value: "Lui Ebina" },
       { label: "Founded", value: "July 2025" },
       { label: "Capital", value: "¥2,000,000" },
       { label: "Employees", value: "10 (including contractors)" },

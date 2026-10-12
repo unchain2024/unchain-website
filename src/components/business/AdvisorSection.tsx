@@ -1,7 +1,7 @@
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLang } from "@/lib/language";
 import { advisor } from "./content";
-import { NumberTwo } from "./art/Marks";
+import { NumberTwo, ExternalArrow } from "./art/Marks";
 import { IconTarget, IconExperiment, IconSparkle } from "./art/AdvisorIcons";
 import advisorShot from "@/assets/business/advisor-shot.webp";
 
@@ -38,6 +38,18 @@ const AdvisorSection = () => {
               <p data-probe="advisor-body" className="mt-[20px] max-w-[390px] text-[16px] leading-[22px] text-hd-eyebrow-ink">
                 {t.body}
               </p>
+
+              {/* Same pill as the Neuron section's product-site link. */}
+              <a
+                href={t.cta.href}
+                target="_blank"
+                rel="noreferrer"
+                data-probe="advisor-cta"
+                className="mt-[32px] flex h-[50px] items-center justify-center gap-[13px] rounded-full border border-hd-hairline text-[16px] leading-none text-black transition-colors hover:bg-white/60 sm:inline-flex sm:justify-start sm:pl-[16px] sm:pr-[24px]"
+              >
+                {t.cta.label}
+                <ExternalArrow className="h-[10px] w-[10px] text-hd-chevron" />
+              </a>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1} data-probe="advisor-photo" className="mt-10 lg:mt-0 lg:w-[48.0563%] lg:shrink-0">
