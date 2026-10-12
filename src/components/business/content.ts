@@ -16,18 +16,20 @@
 export const hero = {
   ja: {
     heading: "事業紹介",
-    body: "AIが人に寄り添うとき、組織も個人も、本当に成し遂げたいことをUNCHAINできる。私たちは、プロダクト（NEURON）と伴走支援（AI Native Advisor）の両輪で、組織のAI活用を支えます。",
+    body: "AIが人に寄り添うとき、組織も個人も、本当に成し遂げたいことをUNCHAINできる。私たちは、プロダクト（NEURON、Pulse）と伴走支援（AI Native Advisor）の両輪で、組織のAI活用を支えます。",
     links: [
       { label: "Neuron", href: "#neuron" },
       { label: "AI アドバイザー", href: "#advisor" },
+      { label: "Pulse", href: "#pulse" },
     ],
   },
   en: {
     heading: "Our business",
-    body: "When AI stands beside people, organisations and individuals can unchain what they truly set out to achieve. We support AI adoption on two fronts: our product (NEURON) and hands-on guidance (AI Native Advisor).",
+    body: "When AI stands beside people, organisations and individuals can unchain what they truly set out to achieve. We support AI adoption on two fronts: our products (NEURON and Pulse) and hands-on guidance (AI Native Advisor).",
     links: [
       { label: "Neuron", href: "#neuron" },
       { label: "AI Advisor", href: "#advisor" },
+      { label: "Pulse", href: "#pulse" },
     ],
   },
 } as const;
@@ -141,11 +143,73 @@ export const ontologyLabels = {
   },
 } as const;
 
+/**
+ * Pulse — copy drawn from pulse.co.jp (en and ja), condensed to the measure the
+ * Neuron and Advisor blocks set. The product site's Japanese pages live under `/ja`.
+ */
+export const pulse = {
+  ja: {
+    index: "03",
+    name: "Pulse",
+    lead: "議事録から始まるコンテキストAIエージェント。",
+    body: "ボットを招待することなく会議を記録し、会話と社内情報から仕事の背景を理解。ブリーフ、議事録、次のアクションまで、チームがすぐ動ける形にします。",
+    cta: { label: "仕組みを詳しく見る", href: "https://www.pulse.co.jp/ja" },
+    photoAlt: "会議の様子。誰が何を話したかをPulseがひとつのノートにまとめる",
+    features: {
+      eyebrow: "WHAT PULSE DOES",
+      heading: ["会議から、", "次のアクションまで。"],
+      body: "会議の前・最中・あとでPulseが働き、会話の文脈を失うことなく、フォローアップが自然に始まります。",
+      cards: [
+        { id: "brief", title: "ミーティング前のブリーフ", body: "カレンダー・顧客情報・過去の会話から、参加者と今回の確認事項を整理します。" },
+        { id: "notes", title: "文字起こしとノート", body: "端末の音声から文字起こしし、自分のメモと資料リンクを会話と一緒に保存。ボットの招待は不要です。" },
+        { id: "followup", title: "フォローアップとタスク", body: "フォローメールとタスクを準備し、決まった条件・担当・期限をCRMなどの連携ツールへ反映します。" },
+        { id: "chat", title: "Pulse ChatとMCP連携", body: "過去の会話と関連資料を横断して根拠付きで回答。蓄積した文脈をClaude、ChatGPT、Cursorから参照できます。" },
+      ],
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      items: [
+        { n: "01", title: "会議の前", body: "予定と過去の会話から、参加者の背景と確認事項をまとめたブリーフを準備します。" },
+        { n: "02", title: "会議の最中", body: "端末の音声で記録し、会話とメモを整理します。" },
+        { n: "03", title: "会議のあと", body: "ノートから次のアクションを確認し、フォローメールやタスク、CRM更新を用意します。" },
+      ],
+    },
+  },
+  en: {
+    index: "03",
+    name: "Pulse",
+    lead: "The context AI agent that starts with meeting notes.",
+    body: "Pulse captures your meetings without a bot, understands the context behind your work from conversations and company knowledge, and turns it into briefs, notes and next actions your team can act on.",
+    cta: { label: "See how it works", href: "https://www.pulse.co.jp/en" },
+    photoAlt: "A team in a meeting, with Pulse keeping who said what in one note",
+    features: {
+      eyebrow: "WHAT PULSE DOES",
+      heading: ["From the meeting", "to the next action."],
+      body: "Pulse works before, during and after every meeting, so the context of each conversation is never lost and the follow-up starts on its own.",
+      cards: [
+        { id: "brief", title: "Pre-meeting briefs", body: "Calendar events, customer information and earlier conversations, turned into attendee context and open questions." },
+        { id: "notes", title: "Transcription and notes", body: "Audio transcribed on your device, with your own notes and document links kept with the conversation. No bot to invite." },
+        { id: "followup", title: "Follow-up drafts and tasks", body: "Follow-up emails and tasks drafted for you, with terms, owners and deadlines carried into tools such as your CRM." },
+        { id: "chat", title: "Pulse Chat and MCP", body: "Ask across your meeting history and documents with sources, and open that context to Claude, ChatGPT and Cursor." },
+      ],
+    },
+    steps: {
+      eyebrow: "HOW IT WORKS",
+      items: [
+        { n: "01", title: "Before the meeting", body: "A brief with attendee context and open questions, built from your calendar and past conversations." },
+        { n: "02", title: "In the meeting", body: "Audio captured on your device, with your notes organised alongside the conversation." },
+        { n: "03", title: "After the meeting", body: "Notes and next steps reviewed, follow-ups drafted and connected tools updated." },
+      ],
+    },
+  },
+} as const;
+
 export const advisor = {
   ja: {
     index: "02",
     heading: "AI Native Advisor",
     body: "提言で終わらない。戦略から実装、定着までチームの中で伴走します。",
+    cta: { label: "仕組みを詳しく見る", href: "https://the-aiadviser.com/jp" },
     photoAlt: "打ち合わせをする2人のビジネスパーソン",
     steps: [
       { n: "01", title: "発見する", body: "AI課題の棚卸しと優先順位づけ" },
@@ -167,6 +231,7 @@ export const advisor = {
     index: "02",
     heading: "AI Native Advisor",
     body: "We do not stop at recommendations. We work inside your team from strategy through implementation to adoption.",
+    cta: { label: "See how it works", href: "https://the-aiadviser.com/en" },
     photoAlt: "Two business people in a meeting",
     steps: [
       { n: "01", title: "Discover", body: "Take stock of AI opportunities and prioritise them" },

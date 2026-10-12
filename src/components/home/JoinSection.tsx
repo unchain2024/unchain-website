@@ -1,37 +1,77 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import {
+  useReducedMotion,
+  useTransform,
+  type MotionStyle,
+} from "framer-motion";
 import ScrollReveal from "@/components/ScrollReveal";
+import { useSectionEntrance } from "@/hooks/use-section-entrance";
 import { useLang } from "@/lib/language";
 import { join } from "./content";
 import { ChevronRight } from "./icons";
-import JoinArt from "./art/JoinArt";
-import join1 from "@/assets/home/join-1.webp";
-import join2 from "@/assets/home/join-2.webp";
-import join3 from "@/assets/home/join-3.webp";
-import join4 from "@/assets/home/join-4.webp";
-import join5 from "@/assets/home/join-5.webp";
+import JoinArt, { type JoinBlade } from "./art/JoinArt";
 
 /**
- * Join us — `public/home/Section-2.svg` (1440x797).
+ * Join us — `public/home/Section-2.svg` (1440x797), minus the photo strip.
  *
  * Solid #314768 with the export's blurred #CAD4E6 glow and two white 6% blades.
- * The photo strip is 5 x 292x354 cards on a 16px gutter; the row is wider than the
- * canvas so it bleeds off both edges exactly as drawn.
+ *
+ * The blades draw themselves in as the section arrives, the same gesture as the CTA
+ * banner below it: both slide along the axis they share, out of their own corner and
+ * into place, and the pair moves together. It is mapped onto the section's arrival, so
+ * it is complete once the reader has the section in front of them, and it is a live
+ * mapping of scroll position rather than a one-shot reveal — scrolling back up sends
+ * them out again.
  */
-const SHOTS = [join1, join2, join3, join4, join5];
+
+/**
+ * How far out of frame a blade parks, along the axis both of them share, in the export's
+ * 1440x797 user units. The frame is stretched to the section rather than fitted, and an
+ * SVG transform rides that same stretch, so this travel stays the same fraction of the
+ * frame — and stays parallel to the blades — at every width the section is drawn at.
+ * The blades run at roughly 404:281, which is what the two numbers keep to.
+ */
+const TRAVEL_X = 380;
+const TRAVEL_Y = 265;
 
 const JoinSection = () => {
   const { lang, localePath } = useLang();
   const t = join[lang];
+  const reduce = useReducedMotion();
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const glide = useSectionEntrance(sectionRef);
+
+  // 1 = parked outside the frame, 0 = seated. Landing at 0.85 leaves the spring room
+  // to settle inside the window instead of trailing past the end of it.
+  const out = useTransform(glide, [0, 0.85], [1, 0], { clamp: true });
+  const x = useTransform(out, (v) => v * TRAVEL_X);
+  const y = useTransform(out, (v) => v * TRAVEL_Y);
+  const xFlip = useTransform(x, (v) => -v);
+  const yFlip = useTransform(y, (v) => -v);
+  const opacity = useTransform(out, [1, 0.4], [0, 1]);
+
+  // The left blade sits in the bottom-left corner and leaves through it; the right one
+  // sits in the top-right and leaves through that, so they mirror about the centre.
+  const bladeStyle: Partial<Record<JoinBlade, MotionStyle>> = {
+    left: { x: xFlip, y, opacity },
+    right: { x, y: yFlip, opacity },
+  };
 
   return (
     <section
+      ref={sectionRef}
       id="s-join"
       data-nav-theme="dark"
       className="relative w-full overflow-hidden bg-hd-join"
     >
-      <JoinArt className="pointer-events-none absolute inset-0 h-full w-full select-none" />
+      <JoinArt
+        className="pointer-events-none absolute inset-0 h-full w-full select-none"
+        bladeStyle={reduce ? undefined : bladeStyle}
+      />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 pt-12 lg:px-[clamp(48px,8.3333vw,120px)] lg:pt-[122px]">
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 py-12 lg:px-[clamp(48px,8.3333vw,120px)] lg:py-[122px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
           <ScrollReveal>
             <p className="font-mono text-[14px] leading-none text-hd-eyebrow-light">
@@ -67,31 +107,6 @@ const JoinSection = () => {
           </ScrollReveal>
         </div>
       </div>
-
-      {/* Full-bleed photo strip, drifting left to right.
-
-          The export draws one still row wider than the canvas; this keeps that row and
-          puts it in motion, so the bleed at both edges is now where the strip comes from
-          and goes to rather than a fixed crop.
-
-          Two identical copies of SHOTS ride one track and the animation walks it from
-          -50% to 0: at -50% the second copy sits exactly where the first one starts, so
-          the wrap is invisible. The 16px gutter is a margin on every card rather than a
-          flex `gap`, which is what makes half the track's width a whole number of cards —
-          with `gap` it would be half a gutter short and the loop would jump. */}
-      <ScrollReveal className="relative z-10 mt-20 overflow-hidden pb-4 lg:mt-[123px]">
-        <div className="flex w-max animate-marquee-right hover:[animation-play-state:paused] motion-reduce:animate-none">
-          {[...SHOTS, ...SHOTS].map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt=""
-              loading="lazy"
-              className="mr-4 h-[180.6px] w-[149px] shrink-0 rounded-lg bg-[#D9D9D9] object-cover lg:h-[354px] lg:w-[292px] lg:rounded-2xl"
-            />
-          ))}
-        </div>
-      </ScrollReveal>
     </section>
   );
 };

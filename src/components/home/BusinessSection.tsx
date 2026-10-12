@@ -4,15 +4,19 @@ import { useLang } from "@/lib/language";
 import { business } from "./content";
 import { ChevronRight } from "./icons";
 import { NeuronLogo } from "./Logo";
+import { PulseMark } from "@/components/business/art/PulseMarks";
 import neuronShot from "@/assets/home/business-neuron.webp";
 import advisorShot from "@/assets/home/business-advisor.webp";
+import pulseShot from "@/assets/business/pulse-shot.webp";
 
 /**
  * Business — `public/home/Section.svg` (1440x743).
  *
  * A #F5F5F5 rounded panel inset 16px from the page edge, 100px of padding, then a
- * two-row list. The first row sits on a white card with the export's drop shadow
- * (dy 10, stdDeviation 10, black @4%); the second row is the resting state.
+ * list of the businesses. The first row sits on a white card with the export's drop
+ * shadow (dy 10, stdDeviation 10, black @4%); the rows after it are the resting state.
+ * The export drew two rows; Pulse is the third, drawn the same way, and every row
+ * links to its own section of the business page.
  *
  * The thumbnails are cropped exactly as the SVG patterns crop them — the design
  * zooms past `cover`, so the scale/offset is reproduced with background-size and
@@ -34,6 +38,11 @@ const CROPS: Record<string, React.CSSProperties> = {
     backgroundImage: `url(${advisorShot})`,
     backgroundSize: "138.941% 134.695%",
     backgroundPosition: "62.25% 63.66%",
+  },
+  pulse: {
+    backgroundImage: `url(${pulseShot})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   },
 };
 
@@ -79,8 +88,17 @@ const BusinessSection = () => {
                           after it, so title and copy share a row with it. */}
                       <div className="flex items-center gap-4 sm:contents">
                         <div className="min-w-0 flex-1">
-                          {item.logo ? (
+                          {item.id === "neuron" ? (
                             <NeuronLogo className="h-[24px] w-[87px] text-black sm:h-[31px] sm:w-[112px]" />
+                          ) : item.id === "pulse" ? (
+                            /* Mark and name at the Neuron logo's height, as on the
+                               business page. */
+                            <span className="flex items-center gap-[8px] text-black">
+                              <PulseMark className="h-[24px] w-[21.5px] sm:h-[31px] sm:w-[27.7px]" />
+                              <span className="text-[22px] font-bold leading-none tracking-[-0.02em] sm:text-[28px]">
+                                {item.title}
+                              </span>
+                            </span>
                           ) : (
                             <p className="text-[16px] font-semibold leading-none text-black sm:text-[20px] lg:text-[22px]">
                               {item.title}

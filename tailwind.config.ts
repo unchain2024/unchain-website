@@ -101,16 +101,9 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        /* The join strip's drift. It runs to 0 from -50% rather than the other way
-           round because the photos travel left to right; the track is two identical
-           copies, so half its width is one full set and the loop has no seam. */
-        "marquee-right": {
-          from: { transform: "translateX(-50%)" },
-          to: { transform: "translateX(0)" },
-        },
-        /* The partner wall's drift, the mirror of the join strip: the logos travel
-           right to left, so the track runs from 0 to -50%. Same two-copy trick — half
-           the track is one whole set, so the wrap has no seam. */
+        /* The partner wall's drift: the logos travel right to left, so the track runs
+           from 0 to -50%. The track is two identical copies, so half its width is one
+           whole set and the wrap has no seam. */
         "marquee-left": {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-50%)" },
@@ -119,7 +112,6 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "marquee-right": "marquee-right 45s linear infinite",
         "marquee-left": "marquee-left 55s linear infinite",
       },
     },
