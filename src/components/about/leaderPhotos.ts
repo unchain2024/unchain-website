@@ -13,6 +13,11 @@ import haradaShot from "@/assets/about/leader-harada.webp";
  *   harada  992.877, 392     428.84 x 571.786 (card at 930.666, 332)
  *
  * The drawer reuses the same images in one shared box — see LeaderDrawer.
+ *
+ * Advisor portraits are not in the export, so they are served from `public/about` rather
+ * than imported. `advisor-ujwal.webp` is an 837px square cut-out with a transparent
+ * background, framed like leader-ebina (head top at ~10% of the canvas), so it reuses
+ * Ebina's box. To replace it, overwrite the file with a cut-out framed the same way.
  */
 export type LeaderPhoto = {
   src: string;
@@ -28,5 +33,9 @@ export const LEADER_PHOTOS: Record<string, LeaderPhoto> = {
   harada: {
     src: haradaShot,
     card: { left: "15.980%", top: "6.304%", width: "110.147%", aspect: "428.84 / 571.786" },
+  },
+  kumar: {
+    src: `${import.meta.env.BASE_URL}about/advisor-ujwal.webp`,
+    card: { left: "15.239%", top: "17.391%", width: "107.443%", aspect: "1 / 1" },
   },
 };
