@@ -144,6 +144,13 @@ export const leadership = {
         alt: "斉藤 利治",
         bio: "高校生時代にナムコ「パックマン」の開発に携わり、その後もセガ「ドリームキャスト」をはじめ、日本のゲーム産業を代表するプロダクトの開発に従事。KDDIテクノロジー株式会社では代表取締役社長を務め、現在は株式会社アスコンの取締役CTOを務めている。",
       },
+      {
+        id: "kumar",
+        name: "Ujwal Kumar",
+        role: "AIアドバイザー",
+        alt: "Ujwal Kumar",
+        bio: "NethermindのJapan Lead of Applied AI & Engineeringとして、SMBC日興証券向けのAIシステム開発を率いる。ルネサス エレクトロニクスではAIスペシャリストとして、全世界22,000人の従業員を対象とするエンタープライズAI変革を推進。東京大学 松尾研究室のAI研究者でもある。",
+      },
     ],
   },
   en: {
@@ -174,6 +181,13 @@ export const leadership = {
         role: "Technical Advisor",
         alt: "Toshiharu Saito",
         bio: "While still in high school he worked on Namco's Pac-Man, and went on to build products that defined Japan's games industry, among them Sega's Dreamcast. He served as President and Representative Director of KDDI Technology, and is now Director and CTO of Ascon.",
+      },
+      {
+        id: "kumar",
+        name: "Ujwal Kumar",
+        role: "AI Advisor",
+        alt: "Ujwal Kumar",
+        bio: "Japan Lead of Applied AI & Engineering at Nethermind, developing AI systems for SMBC Nikko Securities. Also serves as an AI Specialist at Renesas Electronics, driving enterprise AI transformation across 22,000 employees globally. AI researcher at the University of Tokyo's Matsuo Lab.",
       },
     ],
   },
