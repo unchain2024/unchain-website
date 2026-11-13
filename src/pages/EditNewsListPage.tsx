@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
-import { Loader2, Edit3, Calendar, FileText, Trash2, ExternalLink, EyeOff, Globe } from "lucide-react";
+import { Loader2, Edit3, Calendar, FileText, Trash2, ExternalLink, EyeOff, Globe, UserRound } from "lucide-react";
+import MovePostButton from "@/components/admin/MovePostButton";
+import { authorName } from "@/lib/adminPosts";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -32,10 +34,10 @@ const EditNewsListPage = () => {
       return;
     }
 
+    // Every admin manages every post, not just their own.
     const { data, error } = await supabase
       .from("articles")
       .select("*")
-      .eq("author_id", session.user.id)
       .order("created_at", { ascending: false });
 
     if (!error && data) {
@@ -134,13 +136,14 @@ const EditNewsListPage = () => {
 
       <section data-nav-theme="light" className="bg-secondary pt-32 pb-24 px-6 md:px-12 flex-grow relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10">
-          <ScrollReveal>
+          {/* amount 0: a long form can never be 30% on screen, and would stay hidden */}
+          <ScrollReveal amount={0}>
             <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6">
               <div>
                 <span className="label text-light-label mb-3 block">Admin Portal</span>
                 <h1 className="heading-1 text-light-heading mb-4">Manage News</h1>
                 <p className="body text-light-body max-w-lg">
-                  Edit, hide, or delete your articles and drafts. Keep your content up to date.
+                  Edit, hide, move, or delete any article or draft. Keep your content up to date.
                 </p>
               </div>
 
@@ -237,6 +240,13 @@ const EditNewsListPage = () => {
                           <div className="flex items-center gap-2 text-xs text-light-body mb-4">
                             <Calendar className="w-3.5 h-3.5" />
                             {formatDate(article.created_at)}
+                            {authorName(article) && (
+                              <>
+                                <span aria-hidden="true">·</span>
+                                <UserRound className="w-3.5 h-3.5" />
+                                <span className="truncate">{authorName(article)}</span>
+                              </>
+                            )}
                           </div>
 
                           {articleCats.length > 0 && (
@@ -278,6 +288,13 @@ const EditNewsListPage = () => {
                               {deletingId === article.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                               Delete
                             </button>
+                            <MovePostButton
+                              id={article.id}
+                              kind="news"
+                              lang={lang}
+                              onMoved={() => setArticles((prev) => prev.filter((a) => a.id !== article.id))}
+                              className="col-span-2 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-border/50 hover:bg-secondary text-light-heading font-medium transition-colors text-sm disabled:opacity-50"
+                            />
                           </div>
                         </div>
                       </div>
