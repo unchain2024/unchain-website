@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { 
   Loader2, Edit3, Calendar, FileText, Trash2, ExternalLink, 
-  EyeOff, Globe, Newspaper, LayoutTemplate, Plus 
+  EyeOff, Globe, Newspaper, LayoutTemplate, Plus, UserRound
 } from "lucide-react";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
@@ -11,6 +11,8 @@ import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLang } from "@/lib/language";
 import { getCategoryColor } from "./NewsPage";
+import MovePostButton from "@/components/admin/MovePostButton";
+import { authorName, editPath as postEditPath, POST_TABLE } from "@/lib/adminPosts";
 
 type ContentType = "news" | "blog";
 type StatusFilter = "all" | "draft" | "published";
@@ -38,15 +40,11 @@ const AdminDashboardPage = () => {
       return;
     }
 
-    const table = activeTab === "news" ? "articles" : "blogs";
-    
-    let query = supabase
-      .from(table)
+    // Every admin manages every post, not just their own.
+    const { data, error } = await supabase
+      .from(POST_TABLE[activeTab])
       .select("*")
-      .eq("author_id", session.user.id)
       .order("created_at", { ascending: false });
-
-    const { data, error } = await query;
 
     if (!error && data) {
       setItems(data);
@@ -89,9 +87,9 @@ const AdminDashboardPage = () => {
         }
       }
 
-      const table = activeTab === "news" ? "articles" : "blogs";
-      const { error } = await supabase.from(table).delete().eq("id", id);
+      const { data: deleted, error } = await supabase.from(POST_TABLE[activeTab]).delete().eq("id", id).select("id");
       if (error) throw error;
+      if (!deleted || deleted.length === 0) throw new Error("You don't have permission to delete this post.");
 
       toast.success(`${activeTab === "news" ? "Article" : "Blog post"} deleted successfully.`);
       setItems(items.filter(a => a.id !== id));
@@ -155,7 +153,8 @@ const AdminDashboardPage = () => {
       
       <section data-nav-theme="light" className="bg-secondary pt-32 pb-24 px-6 md:px-12 flex-grow relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10">
-          <ScrollReveal>
+          {/* amount 0: a long form can never be 30% on screen, and would stay hidden */}
+          <ScrollReveal amount={0}>
             <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6">
               <div>
                 <span className="label text-light-label mb-3 block">Admin Portal</span>
@@ -244,7 +243,7 @@ const AdminDashboardPage = () => {
                   {statusFilter === "draft" ? "No drafts yet" : statusFilter === "published" ? "No published items yet" : "No items yet"}
                 </h3>
                 <p className="body text-light-body mb-8 max-w-sm">
-                  {statusFilter === "all" ? `You haven't created any ${activeTab} yet.` : `No ${statusFilter} ${activeTab} found.`}
+                  {statusFilter === "all" ? `There are no ${activeTab} posts yet.` : `No ${statusFilter} ${activeTab} found.`}
                 </p>
                 {statusFilter === "all" && (
                   <Link to={activeTab === "news" ? "/publish" : "/publish-blog"} className="btn-primary">
@@ -256,7 +255,8 @@ const AdminDashboardPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredItems.map((item, i) => {
                   const itemCats = item.category ? item.category.split(",").map((c: string) => c.trim()) : [];
-                  const editPath = activeTab === "news" ? `/edit/${item.id}` : `/edit-blog/${item.id}`;
+                  const editPath = postEditPath(activeTab, item.id);
+                  const author = authorName(item);
                   
                   return (
                     <ScrollReveal key={item.id} delay={i * 0.07}>
@@ -293,8 +293,15 @@ const AdminDashboardPage = () => {
                         </div>
                         <div className="p-6 flex flex-col flex-grow">
                           <div className="flex items-center gap-2 text-xs text-light-body mb-4">
-                            <Calendar className="w-3.5 h-3.5" /> 
+                            <Calendar className="w-3.5 h-3.5" />
                             {formatDate(item.created_at)}
+                            {author && (
+                              <>
+                                <span aria-hidden="true">·</span>
+                                <UserRound className="w-3.5 h-3.5" />
+                                <span className="truncate">{author}</span>
+                              </>
+                            )}
                           </div>
                           {itemCats.length > 0 && (
                             <div className="flex flex-wrap gap-1.5 mb-3">
@@ -317,6 +324,13 @@ const AdminDashboardPage = () => {
                             >
                               {deletingId === item.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />} Delete
                             </button>
+                            <MovePostButton
+                              id={item.id}
+                              kind={activeTab}
+                              lang={lang}
+                              onMoved={() => setItems((prev) => prev.filter((a) => a.id !== item.id))}
+                              className="col-span-2 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-border/50 hover:bg-secondary text-light-heading font-medium transition-colors text-sm disabled:opacity-50"
+                            />
                           </div>
                         </div>
                       </div>

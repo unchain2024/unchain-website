@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
-import { Loader2, Edit3, Calendar, FileText, Trash2, ExternalLink, EyeOff, Globe } from "lucide-react";
+import { Loader2, Edit3, Calendar, FileText, Trash2, ExternalLink, EyeOff, Globe, UserRound } from "lucide-react";
+import MovePostButton from "@/components/admin/MovePostButton";
+import { authorName } from "@/lib/adminPosts";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -32,10 +34,10 @@ const EditBlogListPage = () => {
       return;
     }
 
+    // Every admin manages every post, not just their own.
     const { data, error } = await supabase
       .from("blogs")
       .select("*")
-      .eq("author_id", session.user.id)
       .order("created_at", { ascending: false });
 
     if (!error && data) {
@@ -127,12 +129,13 @@ const EditBlogListPage = () => {
       <Navigation />
       <section data-nav-theme="light" className="bg-secondary pt-32 pb-24 px-6 md:px-12 flex-grow relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10">
-          <ScrollReveal>
+          {/* amount 0: a long form can never be 30% on screen, and would stay hidden */}
+          <ScrollReveal amount={0}>
             <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6">
               <div>
                 <span className="label text-light-label mb-3 block">Admin Portal</span>
                 <h1 className="heading-1 text-light-heading mb-4">Manage Blog</h1>
-                <p className="body text-light-body max-w-lg">Edit or delete your blog posts and drafts.</p>
+                <p className="body text-light-body max-w-lg">Edit, move, or delete any blog post or draft.</p>
               </div>
               <div className="flex gap-4"><Link to="/publish-blog" className="btn-primary"><FileText size={18} /> New Blog Post</Link></div>
             </div>
@@ -166,7 +169,7 @@ const EditBlogListPage = () => {
                           {article.is_external && <div className="absolute top-4 right-4 bg-amber-50 border border-amber-200 px-3 py-1 font-semibold text-amber-700 text-xs rounded-full shadow-sm uppercase tracking-wider flex items-center gap-1"><ExternalLink className="w-3 h-3" /> External</div>}
                         </div>
                         <div className="p-6 flex flex-col flex-grow">
-                          <div className="flex items-center gap-2 text-xs text-light-body mb-4"><Calendar className="w-3.5 h-3.5" /> {formatDate(article.created_at)}</div>
+                          <div className="flex items-center gap-2 text-xs text-light-body mb-4"><Calendar className="w-3.5 h-3.5" /> {formatDate(article.created_at)}{authorName(article) && (<><span aria-hidden="true">·</span><UserRound className="w-3.5 h-3.5" /><span className="truncate">{authorName(article)}</span></>)}</div>
                           {articleCats.length > 0 && (
                             <div className="flex flex-wrap gap-1.5 mb-3">
                               {articleCats.filter((cat: string) => cat.toLowerCase() !== "external").slice(0, 2).map((cat: string) => (
@@ -178,6 +181,7 @@ const EditBlogListPage = () => {
                           <div className="mt-auto grid grid-cols-2 gap-3 pt-6 border-t border-border/50">
                             <Link to={`/edit-blog/${article.id}`} className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-secondary hover:bg-secondary/80 text-light-heading font-medium transition-colors text-sm"><Edit3 className="w-4 h-4" /> Edit</Link>
                             <button onClick={() => handleDelete(article.id, article.image_url)} disabled={deletingId === article.id} className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-medium transition-colors text-sm disabled:opacity-50">{deletingId === article.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />} Delete</button>
+                            <MovePostButton id={article.id} kind="blog" lang={lang} onMoved={() => setArticles((prev) => prev.filter((a) => a.id !== article.id))} className="col-span-2 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-border/50 hover:bg-secondary text-light-heading font-medium transition-colors text-sm disabled:opacity-50" />
                           </div>
                         </div>
                       </div>

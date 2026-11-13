@@ -18,6 +18,9 @@ import { EMPTY_PRESS_RELEASE, parsePressRelease } from "@/components/PressReleas
 import type { PressReleaseData } from "@/components/PressReleaseRenderer";
 import { getCategoryColor } from "./NewsPage";
 import { useLang } from "@/lib/language";
+import PostDetailsFields from "@/components/admin/PostDetailsFields";
+import MovePostButton from "@/components/admin/MovePostButton";
+import { editPath, fromDateTimeInput, toDateTimeInput } from "@/lib/adminPosts";
 
 type ContentMode = "standard" | "custom_html" | "external" | "press_release";
 
@@ -38,8 +41,17 @@ const EditNewsPage = () => {
   const [isAutoSaving, setIsAutoSaving] = useState(false);
   const [user, setUser] = useState<any>(null);
 
+  // The signed-in admin's own name (for "Use my name").
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+
+  // The post's author and published date — editable, and shown on the site.
+  const [authorFirstName, setAuthorFirstName] = useState("");
+  const [authorLastName, setAuthorLastName] = useState("");
+  const [publishedAt, setPublishedAt] = useState("");
+  // created_at is only written when the date field actually changes, so an untouched
+  // post keeps its exact timestamp (the input has minute precision).
+  const loadedPublishedAt = useRef("");
 
   const [contentMode, setContentMode] = useState<ContentMode>("standard");
 
@@ -74,7 +86,6 @@ const EditNewsPage = () => {
   // External
   const [externalUrl, setExternalUrl] = useState("");
   const [fetchingMeta, setFetchingMeta] = useState(false);
-  const [externalPublishedDate, setExternalPublishedDate] = useState<string | null>(null);
 
   const [activeTab, setActiveTab] = useState<"ja" | "en">("ja");
   const [showPreview, setShowPreview] = useState(false);
@@ -131,7 +142,6 @@ const EditNewsPage = () => {
         .from("articles")
         .select("*")
         .eq("id", id)
-        .eq("author_id", session.user.id)
         .single();
 
       if (error || !article) {
@@ -139,6 +149,12 @@ const EditNewsPage = () => {
         navigate("/admin");
         return;
       }
+
+      setAuthorFirstName(article.author_first_name || "");
+      setAuthorLastName(article.author_last_name || "");
+      const loadedDate = toDateTimeInput(article.created_at);
+      loadedPublishedAt.current = loadedDate;
+      setPublishedAt(loadedDate);
 
       if (article.category) {
         setSelectedCategories(article.category.split(",").map((c: string) => c.trim()).filter(Boolean));
@@ -227,7 +243,7 @@ const EditNewsPage = () => {
     }, 2500);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [title, description, content, selectedCategories, titleEn, descriptionEn, contentEn, mediaFile, loading, customHtml, customHtmlEn, externalUrl]);
+  }, [title, description, content, selectedCategories, titleEn, descriptionEn, contentEn, mediaFile, existingImageUrl, loading, customHtml, customHtmlEn, externalUrl, authorFirstName, authorLastName, publishedAt]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -301,14 +317,8 @@ const EditNewsPage = () => {
         }
 
         if (ogDate) {
-          try {
-            const parsedDate = new Date(ogDate);
-            if (!isNaN(parsedDate.getTime())) {
-              setExternalPublishedDate(parsedDate.toISOString());
-            }
-          } catch (e) {
-            console.error("Failed to parse date", e);
-          }
+          const parsedDate = toDateTimeInput(ogDate);
+          if (parsedDate) setPublishedAt(parsedDate);
         }
         
         toast.success("Metadata fetched successfully!");
@@ -367,8 +377,7 @@ const EditNewsPage = () => {
     const { error } = await supabase
       .from("articles")
       .update({ is_hidden: newValue })
-      .eq("id", id)
-      .eq("author_id", user.id);
+      .eq("id", id);
     if (error) {
       toast.error(lang === "ja" ? "表示設定の変更に失敗しました。" : "Failed to update visibility.");
     } else {
@@ -426,7 +435,7 @@ const EditNewsPage = () => {
     if (uploadedImageUrl) mediaUrl = uploadedImageUrl;
 
     try {
-      if (mediaFile && !uploadedImageUrl && contentMode === "standard") {
+      if (mediaFile && !uploadedImageUrl) {
         const fileExt = mediaFile.name.split(".").pop();
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
         const filePath = `${id}/${fileName}`;
@@ -462,7 +471,10 @@ const EditNewsPage = () => {
         content_en: contentMode === "external" ? ""
           : contentMode === "press_release" ? JSON.stringify(pressReleaseDataEn)
           : contentEn,
-        image_url: contentMode === "standard" ? mediaUrl : null,
+        // The cover image is also the card thumbnail, so every post type can have one.
+        image_url: mediaUrl || null,
+        author_first_name: authorFirstName.trim(),
+        author_last_name: authorLastName.trim(),
         is_draft: !isExplicitPublish ? isDraft : false,
         content_type: contentMode === "custom_html" ? "custom_html"
           : contentMode === "press_release" ? "press_release"
@@ -474,8 +486,9 @@ const EditNewsPage = () => {
         external_url: contentMode === "external" ? externalUrl : null,
       };
 
-      if (contentMode === "external" && externalPublishedDate) {
-        payload.created_at = externalPublishedDate;
+      if (publishedAt !== loadedPublishedAt.current) {
+        const iso = fromDateTimeInput(publishedAt);
+        if (iso) payload.created_at = iso;
       }
 
       // Save version before explicit publish
@@ -483,15 +496,19 @@ const EditNewsPage = () => {
         await saveVersion();
       }
 
-      const { error: updateError } = await supabase
+      const { data: updatedRows, error: updateError } = await supabase
         .from("articles")
         .update(payload)
         .eq("id", id)
-        .eq("author_id", user.id);
+        .select("id");
 
       if (updateError) throw updateError;
+      if (!updatedRows || updatedRows.length === 0) {
+        throw new Error(lang === "ja" ? "この記事を更新する権限がありません。" : "You don't have permission to update this article.");
+      }
+      if (payload.created_at) loadedPublishedAt.current = publishedAt;
 
-      if (isExplicitPublish && contentMode === "standard" && originalImageUrl && originalImageUrl !== mediaUrl) {
+      if (isExplicitPublish && originalImageUrl && originalImageUrl !== mediaUrl) {
         try {
           const parsedUrl = new URL(originalImageUrl);
           const pathSegments = parsedUrl.pathname.split("/");
@@ -537,8 +554,8 @@ const EditNewsPage = () => {
         : (activeTab === "ja" ? content : contentEn || content),
       category: selectedCategories.join(", "),
       image_url: previewUrl,
-      author_first_name: firstName,
-      author_last_name: lastName,
+      author_first_name: authorFirstName,
+      author_last_name: authorLastName,
       content_type: contentMode === "press_release" ? "press_release" : contentMode === "custom_html" ? "custom_html" : "standard",
       custom_html: activeTab === "ja" ? customHtml : customHtmlEn || customHtml,
     };
@@ -642,7 +659,8 @@ const EditNewsPage = () => {
 
       <section data-nav-theme="light" className="bg-secondary pt-32 pb-24 px-6 md:px-12 flex-grow relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
-          <ScrollReveal>
+          {/* amount 0: a long form can never be 30% on screen, and would stay hidden */}
+          <ScrollReveal amount={0}>
             <button
               onClick={() => navigate("/admin")}
               className="flex items-center gap-2 text-light-body hover:text-primary mb-8 text-sm font-medium transition-all group"
@@ -671,6 +689,14 @@ const EditNewsPage = () => {
               </div>
 
               <div className="flex gap-3 flex-wrap justify-end">
+                <MovePostButton
+                  id={id || ""}
+                  kind="news"
+                  lang={lang}
+                  beforeMove={() => performSave(false)}
+                  onMoved={(to) => navigate(editPath(to, id || ""), { replace: true })}
+                  className="btn-outline border-border/50 hover:bg-secondary py-3 px-5 h-auto whitespace-nowrap disabled:opacity-50"
+                />
                 <button
                   type="button"
                   onClick={() => setShowHistory(true)}
@@ -739,6 +765,18 @@ const EditNewsPage = () => {
                   ))}
                 </div>
               </div>
+
+              {/* Author & published date */}
+              <PostDetailsFields
+                lang={lang}
+                authorFirstName={authorFirstName}
+                authorLastName={authorLastName}
+                publishedAt={publishedAt}
+                onAuthorFirstNameChange={setAuthorFirstName}
+                onAuthorLastNameChange={setAuthorLastName}
+                onPublishedAtChange={setPublishedAt}
+                onUseMyName={() => { setAuthorFirstName(firstName); setAuthorLastName(lastName); }}
+              />
 
               {/* Category */}
               <div className="space-y-4">
@@ -953,9 +991,8 @@ const EditNewsPage = () => {
                 </div>
               </div>
 
-              {/* Standard: header image */}
-              {contentMode === "standard" && (
-                <div className="space-y-2">
+              {/* Header / cover image — also the thumbnail on news cards, for every post type */}
+              <div className="space-y-2">
                   <label className="text-sm font-semibold text-light-heading ml-1">{l.mediaLabel}</label>
                   <div className="border-2 border-dashed border-border/80 rounded-xl p-10 flex flex-col items-center justify-center hover:border-primary/50 hover:bg-primary/5 transition-colors relative overflow-hidden min-h-[240px]">
                     {mediaFile || existingImageUrl ? (
@@ -1011,7 +1048,6 @@ const EditNewsPage = () => {
                     )}
                   </div>
                 </div>
-              )}
 
               {/* Custom HTML: additional media */}
               {contentMode === "custom_html" && (

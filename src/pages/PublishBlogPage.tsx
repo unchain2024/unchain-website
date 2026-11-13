@@ -531,7 +531,8 @@ const PublishBlogPage = () => {
       <Navigation />
       <section data-nav-theme="light" className="bg-secondary pt-32 pb-24 px-6 md:px-12 flex-grow relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
-          <ScrollReveal>
+          {/* amount 0: a long form can never be 30% on screen, and would stay hidden */}
+          <ScrollReveal amount={0}>
             <button onClick={() => navigate("/admin")} className="flex items-center gap-2 text-light-body hover:text-primary mb-8 text-sm font-medium transition-all group">
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> {l.back}
             </button>

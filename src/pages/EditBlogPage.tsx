@@ -18,6 +18,9 @@ import { EMPTY_PRESS_RELEASE, parsePressRelease } from "@/components/PressReleas
 import type { PressReleaseData } from "@/components/PressReleaseRenderer";
 import { getCategoryColor } from "./NewsPage";
 import { useLang } from "@/lib/language";
+import PostDetailsFields from "@/components/admin/PostDetailsFields";
+import MovePostButton from "@/components/admin/MovePostButton";
+import { editPath, fromDateTimeInput, toDateTimeInput } from "@/lib/adminPosts";
 
 type ContentMode = "standard" | "custom_html" | "external" | "press_release";
 
@@ -38,8 +41,17 @@ const EditBlogPage = () => {
   const [isAutoSaving, setIsAutoSaving] = useState(false);
   const [user, setUser] = useState<any>(null);
 
+  // The signed-in admin's own name (for "Use my name").
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+
+  // The post's author and published date — editable, and shown on the site.
+  const [authorFirstName, setAuthorFirstName] = useState("");
+  const [authorLastName, setAuthorLastName] = useState("");
+  const [publishedAt, setPublishedAt] = useState("");
+  // created_at is only written when the date field actually changes, so an untouched
+  // post keeps its exact timestamp (the input has minute precision).
+  const loadedPublishedAt = useRef("");
 
   const [contentMode, setContentMode] = useState<ContentMode>("standard");
 
@@ -74,7 +86,6 @@ const EditBlogPage = () => {
   // External
   const [externalUrl, setExternalUrl] = useState("");
   const [fetchingMeta, setFetchingMeta] = useState(false);
-  const [externalPublishedDate, setExternalPublishedDate] = useState<string | null>(null);
 
   const [activeTab, setActiveTab] = useState<"ja" | "en">("ja");
   const [showPreview, setShowPreview] = useState(false);
@@ -130,7 +141,6 @@ const EditBlogPage = () => {
         .from("blogs")
         .select("*")
         .eq("id", id)
-        .eq("author_id", session.user.id)
         .single();
 
       if (error || !article) {
@@ -138,6 +148,12 @@ const EditBlogPage = () => {
         navigate("/admin");
         return;
       }
+
+      setAuthorFirstName(article.author_first_name || "");
+      setAuthorLastName(article.author_last_name || "");
+      const loadedDate = toDateTimeInput(article.created_at);
+      loadedPublishedAt.current = loadedDate;
+      setPublishedAt(loadedDate);
 
       if (article.category) {
         setSelectedCategories(article.category.split(",").map((c: string) => c.trim()).filter(Boolean));
@@ -211,7 +227,7 @@ const EditBlogPage = () => {
       if (!submitting) performSave(false);
     }, 2500);
     return () => clearTimeout(delayDebounceFn);
-  }, [title, description, content, selectedCategories, titleEn, descriptionEn, contentEn, mediaFile, loading, customHtml, customHtmlEn, externalUrl]);
+  }, [title, description, content, selectedCategories, titleEn, descriptionEn, contentEn, mediaFile, existingImageUrl, loading, customHtml, customHtmlEn, externalUrl, authorFirstName, authorLastName, publishedAt]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -269,10 +285,8 @@ const EditBlogPage = () => {
           if (ogDesc) setDescriptionEn(ogDesc);
         }
         if (ogDate) {
-          try {
-            const parsedDate = new Date(ogDate);
-            if (!isNaN(parsedDate.getTime())) setExternalPublishedDate(parsedDate.toISOString());
-          } catch (e) { console.error("Failed to parse date", e); }
+          const parsedDate = toDateTimeInput(ogDate);
+          if (parsedDate) setPublishedAt(parsedDate);
         }
         toast.success("Metadata fetched successfully!");
       } else { throw new Error("Failed to parse metadata"); }
@@ -310,7 +324,7 @@ const EditBlogPage = () => {
   const toggleVisibility = async () => {
     if (!user || !id) return;
     const newValue = !isHidden;
-    const { error } = await supabase.from("blogs").update({ is_hidden: newValue }).eq("id", id).eq("author_id", user.id);
+    const { error } = await supabase.from("blogs").update({ is_hidden: newValue }).eq("id", id);
     if (error) toast.error(lang === "ja" ? "表示設定の変更に失敗しました。" : "Failed to update visibility.");
     else {
       setIsHidden(newValue);
@@ -335,7 +349,7 @@ const EditBlogPage = () => {
     let mediaUrl = existingImageUrl;
     if (uploadedImageUrl) mediaUrl = uploadedImageUrl;
     try {
-      if (mediaFile && !uploadedImageUrl && contentMode === "standard") {
+      if (mediaFile && !uploadedImageUrl) {
         const fileExt = mediaFile.name.split(".").pop();
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
         const filePath = `${id}/${fileName}`;
@@ -360,7 +374,10 @@ const EditBlogPage = () => {
         content: contentMode === "external" ? "" : contentMode === "press_release" ? JSON.stringify(pressReleaseData) : content,
         title_en: finalTitleEn, description_en: finalDescEn,
         content_en: contentMode === "external" ? "" : contentMode === "press_release" ? JSON.stringify(pressReleaseDataEn) : contentEn,
-        image_url: contentMode === "standard" ? mediaUrl : null,
+        // The cover image is also the card thumbnail, so every post type can have one.
+        image_url: mediaUrl || null,
+        author_first_name: authorFirstName.trim(),
+        author_last_name: authorLastName.trim(),
         is_draft: !isExplicitPublish ? isDraft : false,
         content_type: contentMode === "custom_html" ? "custom_html" : contentMode === "press_release" ? "press_release" : "standard",
         custom_html: contentMode === "custom_html" ? customHtml : null,
@@ -369,11 +386,18 @@ const EditBlogPage = () => {
         is_external: contentMode === "external",
         external_url: contentMode === "external" ? externalUrl : null,
       };
-      if (contentMode === "external" && externalPublishedDate) payload.created_at = externalPublishedDate;
+      if (publishedAt !== loadedPublishedAt.current) {
+        const iso = fromDateTimeInput(publishedAt);
+        if (iso) payload.created_at = iso;
+      }
       if (isExplicitPublish) await saveVersion();
-      const { error: updateError } = await supabase.from("blogs").update(payload).eq("id", id).eq("author_id", user.id);
+      const { data: updatedRows, error: updateError } = await supabase.from("blogs").update(payload).eq("id", id).select("id");
       if (updateError) throw updateError;
-      if (isExplicitPublish && contentMode === "standard" && originalImageUrl && originalImageUrl !== mediaUrl) {
+      if (!updatedRows || updatedRows.length === 0) {
+        throw new Error(lang === "ja" ? "このブログ記事を更新する権限がありません。" : "You don't have permission to update this blog post.");
+      }
+      if (payload.created_at) loadedPublishedAt.current = publishedAt;
+      if (isExplicitPublish && originalImageUrl && originalImageUrl !== mediaUrl) {
         try {
           const parsedUrl = new URL(originalImageUrl);
           const pathSegments = parsedUrl.pathname.split("/");
@@ -398,7 +422,7 @@ const EditBlogPage = () => {
       title: contentMode === "external" ? (externalLanguage === "ja" ? title : titleEn || title) : (activeTab === "ja" ? title : titleEn || title),
       description: contentMode === "external" ? (externalLanguage === "ja" ? description : descriptionEn || description) : (activeTab === "ja" ? description : descriptionEn || description),
       content: contentMode === "press_release" ? JSON.stringify(activeTab === "ja" ? pressReleaseData : pressReleaseDataEn) : (activeTab === "ja" ? content : contentEn || content),
-      category: selectedCategories.join(", "), image_url: previewUrl, author_first_name: firstName, author_last_name: lastName,
+      category: selectedCategories.join(", "), image_url: previewUrl, author_first_name: authorFirstName, author_last_name: authorLastName,
       content_type: contentMode === "press_release" ? "press_release" : contentMode === "custom_html" ? "custom_html" : "standard",
       custom_html: activeTab === "ja" ? customHtml : customHtmlEn || customHtml,
     };
@@ -429,7 +453,8 @@ const EditBlogPage = () => {
       <Navigation />
       <section data-nav-theme="light" className="bg-secondary pt-32 pb-24 px-6 md:px-12 flex-grow relative overflow-hidden">
         <div className="max-w-4xl mx-auto relative z-10">
-          <ScrollReveal>
+          {/* amount 0: a long form can never be 30% on screen, and would stay hidden */}
+          <ScrollReveal amount={0}>
             <button onClick={() => navigate("/admin")} className="flex items-center gap-2 text-light-body hover:text-primary mb-8 text-sm font-medium transition-all group"><ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> {l.back}</button>
             <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/50">
               <div>
@@ -442,6 +467,7 @@ const EditBlogPage = () => {
                 </div>
               </div>
               <div className="flex gap-3 flex-wrap justify-end">
+                <MovePostButton id={id || ""} kind="blog" lang={lang} beforeMove={() => performSave(false)} onMoved={(to) => navigate(editPath(to, id || ""), { replace: true })} className="btn-outline border-border/50 hover:bg-secondary py-3 px-5 h-auto whitespace-nowrap disabled:opacity-50" />
                 <button type="button" onClick={() => setShowHistory(true)} className="btn-outline border-border/50 hover:bg-secondary py-3 px-5 h-auto whitespace-nowrap"><History size={16} /> {l.historyBtn}</button>
                 {contentMode !== "external" && <button type="button" onClick={() => setShowPreview(true)} className="btn-outline border-border/50 hover:bg-secondary py-3 px-5 h-auto whitespace-nowrap"><Eye size={16} /> {l.previewBtn}</button>}
                 {!isDraft && <button type="button" onClick={toggleVisibility} className={`flex items-center gap-2 py-3 px-5 h-auto rounded-xl border text-sm font-semibold transition-all whitespace-nowrap ${isHidden ? "border-emerald-300 bg-emerald-50 text-emerald-700 hover:bg-emerald-100" : "border-border/50 bg-white text-light-body hover:bg-secondary hover:text-foreground"}`}>{isHidden ? <Eye size={16} /> : <EyeOff size={16} />}{isHidden ? (lang === "ja" ? "表示する" : "Make Visible") : (lang === "ja" ? "非表示にする" : "Hide Post")}</button>}
@@ -450,6 +476,16 @@ const EditBlogPage = () => {
             </div>
             <form id="edit-form" onSubmit={handleSubmit} className="space-y-10 bg-white rounded-2xl p-8 sm:p-12 relative shadow-sm">
               <div className="space-y-3"><label className="text-sm font-semibold text-light-heading ml-1">{lang === "ja" ? "記事の種類" : "Article Type"}</label><div className="flex gap-2 flex-wrap">{modeOptions.map((mode) => (<button key={mode.value} type="button" onClick={() => setContentMode(mode.value)} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all ${contentMode === mode.value ? "border-primary bg-primary/5 text-primary ring-2 ring-primary/10" : "border-border/40 text-light-body hover:border-border hover:bg-secondary/30"}`}>{mode.icon}{mode.label}</button>))}</div></div>
+              <PostDetailsFields
+                lang={lang}
+                authorFirstName={authorFirstName}
+                authorLastName={authorLastName}
+                publishedAt={publishedAt}
+                onAuthorFirstNameChange={setAuthorFirstName}
+                onAuthorLastNameChange={setAuthorLastName}
+                onPublishedAtChange={setPublishedAt}
+                onUseMyName={() => { setAuthorFirstName(firstName); setAuthorLastName(lastName); }}
+              />
               <div className="space-y-4"><label className="text-sm font-semibold text-light-heading ml-1">{l.categoryHead}</label>{selectedCategories.length > 0 && (<div className="flex flex-wrap gap-2 mb-4">{selectedCategories.map((cat) => (<span key={cat} className={`flex items-center gap-1 text-xs font-bold border rounded-full px-3 py-1.5 uppercase ${getCategoryColor(cat)}`}>{cat}<button type="button" onClick={() => removeCategory(cat)} className="hover:bg-black/10 rounded-full p-0.5 ml-1 transition-colors"><X size={12} /></button></span>))}</div>)}<div className="flex gap-2"><input type="text" placeholder={l.categoryPlaceholder} value={newCategoryInput} onChange={(e) => setNewCategoryInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleAddCategory())} className="flex-grow bg-secondary/30 rounded-xl px-4 py-3 text-light-heading focus:outline-none focus:bg-secondary/60 transition-colors font-medium border border-transparent focus:border-border/30 placeholder-light-body/40" /><button type="button" onClick={handleAddCategory} className="btn-outline px-4 py-3 h-auto"><Plus size={18} /></button></div>{availableCategories.length > 0 && (<div className="mt-3"><p className="text-xs text-light-body mb-2 ml-1">{l.suggestedCats}</p><div className="flex flex-wrap gap-2">{availableCategories.map((cat) => { const isSelected = selectedCategories.includes(cat); return (<button key={cat} type="button" onClick={() => toggleCategory(cat)} className={`text-xs font-bold border rounded-full px-3 py-1.5 uppercase transition-all ${isSelected ? `${getCategoryColor(cat)} ring-2 ring-primary/20` : "bg-transparent text-light-body hover:bg-secondary"}`}>{cat}</button>); })}</div></div>)}</div>
               <div className="border border-border/50 rounded-xl overflow-hidden p-1">
                 {contentMode !== "external" ? (<div className="flex gap-2 p-1 bg-secondary/20 rounded-lg mb-4 mx-4 mt-4"><button type="button" onClick={() => setActiveTab("ja")} className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${activeTab === "ja" ? "bg-white text-primary shadow-sm" : "text-light-body hover:text-light-heading hover:bg-white/50"}`}>Japanese (日本語)</button><button type="button" onClick={() => setActiveTab("en")} className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${activeTab === "en" ? "bg-white text-primary shadow-sm" : "text-light-body hover:text-light-heading hover:bg-white/50"}`}>English (Optional)</button></div>) : (<div className="mx-5 mt-5 mb-2 space-y-3"><label className="text-sm font-semibold text-light-heading">{lang === "ja" ? "記事の言語" : "Article Language"}</label><div className="flex gap-4 border-b border-border/50 pb-5"><label className="flex items-center gap-2 cursor-pointer"><input type="radio" name="ext_lang" value="ja" checked={externalLanguage === "ja"} onChange={() => setExternalLanguage("ja")} className="w-4 h-4 text-primary" /><span className="text-sm font-medium">Japanese (日本語)</span></label><label className="flex items-center gap-2 cursor-pointer"><input type="radio" name="ext_lang" value="en" checked={externalLanguage === "en"} onChange={() => setExternalLanguage("en")} className="w-4 h-4 text-primary" /><span className="text-sm font-medium">English</span></label></div></div>)}
@@ -458,7 +494,8 @@ const EditBlogPage = () => {
                   <div className="space-y-2"><label className="text-sm font-semibold text-light-heading ml-1">{lActive.titleLabel}</label><input type="text" placeholder={lActive.titlePlaceholder} required={contentMode !== "external" ? (activeTab === "ja") : true} value={contentMode === "external" ? (externalLanguage === "ja" ? title : titleEn) : (activeTab === "ja" ? title : titleEn)} onChange={(e) => contentMode === "external" ? (externalLanguage === "ja" ? setTitle(e.target.value) : setTitleEn(e.target.value)) : (activeTab === "ja" ? setTitle(e.target.value) : setTitleEn(e.target.value))} className="w-full bg-secondary/30 rounded-xl px-5 py-4 text-light-heading focus:outline-none focus:bg-secondary/60 transition-colors font-medium text-lg placeholder-light-body/40" /></div>
                   <div className="space-y-2"><label className="text-sm font-semibold text-light-heading ml-1">{lActive.descLabel}</label><textarea placeholder={lActive.descPlaceholder} value={contentMode === "external" ? (externalLanguage === "ja" ? description : descriptionEn) : (activeTab === "ja" ? description : descriptionEn)} onChange={(e) => contentMode === "external" ? (externalLanguage === "ja" ? setDescription(e.target.value) : setDescriptionEn(e.target.value)) : (activeTab === "ja" ? setDescription(e.target.value) : setDescriptionEn(e.target.value))} rows={3} className="w-full bg-secondary/30 rounded-xl px-5 py-4 text-light-heading focus:outline-none focus:bg-secondary/60 transition-colors font-medium resize-none placeholder-light-body/40" /></div>
                   {contentMode === "standard" && (<div className="space-y-2"><label className="text-sm font-semibold text-light-heading ml-1">{lActive.contentLabel}</label><textarea placeholder={lActive.contentPlaceholder} value={activeTab === "ja" ? content : contentEn} onChange={(e) => activeTab === "ja" ? setContent(e.target.value) : setContentEn(e.target.value)} rows={12} className="w-full bg-secondary/30 rounded-xl px-5 py-4 text-light-heading focus:outline-none focus:bg-secondary/60 transition-colors font-medium resize-none placeholder-light-body/40" /></div>)}
-                  {contentMode === "standard" && (<div className="space-y-3"><label className="text-sm font-semibold text-light-heading ml-1">{lActive.mediaLabel}</label><div className={`relative border-2 border-dashed rounded-2xl transition-all ${mediaFile || uploadedImageUrl || existingImageUrl ? "border-primary/50 bg-primary/5" : "border-border/50 hover:border-primary/30 bg-secondary/20"}`}><input type="file" accept="image/*,video/*" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" /><div className="p-8 text-center">{mediaFile || uploadedImageUrl || existingImageUrl ? (<div className="flex flex-col items-center gap-4"><div className="relative w-full max-w-[200px] aspect-video rounded-lg overflow-hidden border border-border shadow-sm">{mediaFile ? (mediaFile.type.startsWith("video") ? <div className="w-full h-full bg-slate-100 flex items-center justify-center text-xs">Video Selected</div> : <img src={URL.createObjectURL(mediaFile)} className="w-full h-full object-cover" />) : (<img src={uploadedImageUrl || existingImageUrl} className="w-full h-full object-cover" />)}<button type="button" onClick={(e) => { e.preventDefault(); clearFile(); }} className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full hover:bg-black/80 z-20"><X size={14} /></button></div><p className="text-sm font-medium text-primary">{mediaFile ? mediaFile.name : (existingImageUrl && !uploadedImageUrl ? "Current Image" : "Image uploaded")}</p></div>) : (<div className="flex flex-col items-center gap-3"><div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-light-body shadow-sm"><Upload size={20} /></div><div className="space-y-1"><p className="text-sm font-semibold text-light-heading">{lActive.dragDrop} <span className="text-primary">{lActive.clickBrowse}</span></p><p className="text-xs text-light-body/60">{lActive.mediaDesc}</p></div></div>)}</div></div></div>)}
+                  {/* Header / cover image — also the card thumbnail, for every post type */}
+                  {(<div className="space-y-3"><label className="text-sm font-semibold text-light-heading ml-1">{lActive.mediaLabel}</label><div className={`relative border-2 border-dashed rounded-2xl transition-all ${mediaFile || uploadedImageUrl || existingImageUrl ? "border-primary/50 bg-primary/5" : "border-border/50 hover:border-primary/30 bg-secondary/20"}`}><input type="file" accept="image/*,video/*" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" /><div className="p-8 text-center">{mediaFile || uploadedImageUrl || existingImageUrl ? (<div className="flex flex-col items-center gap-4"><div className="relative w-full max-w-[200px] aspect-video rounded-lg overflow-hidden border border-border shadow-sm">{mediaFile ? (mediaFile.type.startsWith("video") ? <div className="w-full h-full bg-slate-100 flex items-center justify-center text-xs">Video Selected</div> : <img src={URL.createObjectURL(mediaFile)} className="w-full h-full object-cover" />) : (<img src={uploadedImageUrl || existingImageUrl} className="w-full h-full object-cover" />)}<button type="button" onClick={(e) => { e.preventDefault(); clearFile(); }} className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full hover:bg-black/80 z-20"><X size={14} /></button></div><p className="text-sm font-medium text-primary">{mediaFile ? mediaFile.name : (existingImageUrl && !uploadedImageUrl ? "Current Image" : "Image uploaded")}</p></div>) : (<div className="flex flex-col items-center gap-3"><div className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-light-body shadow-sm"><Upload size={20} /></div><div className="space-y-1"><p className="text-sm font-semibold text-light-heading">{lActive.dragDrop} <span className="text-primary">{lActive.clickBrowse}</span></p><p className="text-xs text-light-body/60">{lActive.mediaDesc}</p></div></div>)}</div></div></div>)}
                   {contentMode === "press_release" && (<div className="space-y-6"><PressReleaseForm data={activeTab === "ja" ? pressReleaseData : pressReleaseDataEn} onChange={activeTab === "ja" ? setPressReleaseData : setPressReleaseDataEn} onImagesChange={handlePRImagesChange} formLang={activeTab} articleId={id || ""} /></div>)}
                   {contentMode === "custom_html" && (<div className="space-y-6"><div className="space-y-2"><label className="text-sm font-semibold text-light-heading ml-1">{lActive.customHtmlLabel}</label><textarea placeholder={lActive.customHtmlPlaceholder} value={activeTab === "ja" ? customHtml : customHtmlEn} onChange={(e) => activeTab === "ja" ? setCustomHtml(e.target.value) : setCustomHtmlEn(e.target.value)} rows={15} className="w-full bg-secondary/30 rounded-xl px-5 py-4 text-light-heading focus:outline-none focus:bg-secondary/60 transition-colors font-mono text-sm placeholder-light-body/40" /></div><div className="space-y-4"><label className="text-sm font-semibold text-light-heading ml-1">{lActive.additionalMediaLabel}</label><div className="flex flex-wrap gap-4">{additionalMedia.map((m, idx) => (<div key={idx} className="relative w-32 h-32 rounded-xl overflow-hidden border border-border group">{m.type.startsWith("image") ? <img src={m.url} className="w-full h-full object-cover" /> : <div className="w-full h-full bg-secondary flex items-center justify-center text-xs">Video</div>}<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"><button type="button" onClick={() => copyToClipboard(m.url)} className="p-2 bg-white rounded-full hover:bg-primary hover:text-white transition-colors">{copiedUrl === m.url ? <Check size={16} /> : <Copy size={16} />}</button><button type="button" onClick={() => removeAdditionalMedia(idx)} className="p-2 bg-white rounded-full hover:bg-destructive hover:text-white transition-colors"><X size={16} /></button></div></div>))}<button type="button" onClick={() => additionalMediaRef.current?.click()} className="w-32 h-32 rounded-xl border-2 border-dashed border-border flex flex-col items-center justify-center gap-2 hover:border-primary/50 hover:bg-primary/5 transition-all">{uploadingMedia ? <Loader2 className="w-6 h-6 animate-spin text-primary" /> : <><Plus size={24} className="text-light-body" /><span className="text-[10px] font-bold text-light-body uppercase">Upload</span></>}</button></div><input type="file" multiple accept="image/*,video/*" className="hidden" ref={additionalMediaRef} onChange={handleAdditionalMediaUpload} /></div></div>)}
                 </div>
