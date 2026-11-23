@@ -92,13 +92,6 @@ export const business = {
         href: "/solutions#neuron",
       },
       {
-        id: "advisor",
-        title: "AI Native Advisor",
-        logo: false,
-        body: "戦略から定着まで伴走し、組織のAIネイティブ化を支援します。",
-        href: "/solutions#advisor",
-      },
-      {
         id: "pulse",
         title: "Pulse",
         logo: true,
@@ -117,13 +110,6 @@ export const business = {
         logo: true,
         body: "NEURON is an AI that understands your organisation's context and turns decisions into assets.",
         href: "/solutions#neuron",
-      },
-      {
-        id: "advisor",
-        title: "AI Native Advisor",
-        logo: false,
-        body: "We walk with you from strategy to adoption, making your organisation AI-native.",
-        href: "/solutions#advisor",
       },
       {
         id: "pulse",

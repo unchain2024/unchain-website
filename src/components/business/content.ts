@@ -19,7 +19,6 @@ export const hero = {
     body: "AIが人に寄り添うとき、組織も個人も、本当に成し遂げたいことをUNCHAINできる。私たちは、プロダクト（NEURON、Pulse）と伴走支援（AI Native Advisor）の両輪で、組織のAI活用を支えます。",
     links: [
       { label: "Neuron", href: "#neuron" },
-      { label: "AI アドバイザー", href: "#advisor" },
       { label: "Pulse", href: "#pulse" },
     ],
   },
@@ -28,7 +27,6 @@ export const hero = {
     body: "When AI stands beside people, organisations and individuals can unchain what they truly set out to achieve. We support AI adoption on two fronts: our products (NEURON and Pulse) and hands-on guidance (AI Native Advisor).",
     links: [
       { label: "Neuron", href: "#neuron" },
-      { label: "AI Advisor", href: "#advisor" },
       { label: "Pulse", href: "#pulse" },
     ],
   },
@@ -149,7 +147,7 @@ export const ontologyLabels = {
  */
 export const pulse = {
   ja: {
-    index: "03",
+    index: "02",
     name: "Pulse",
     lead: "議事録から始まるコンテキストAIエージェント。",
     body: "ボットを招待することなく会議を記録し、会話と社内情報から仕事の背景を理解。ブリーフ、議事録、次のアクションまで、チームがすぐ動ける形にします。",
@@ -176,7 +174,7 @@ export const pulse = {
     },
   },
   en: {
-    index: "03",
+    index: "02",
     name: "Pulse",
     lead: "The context AI agent that starts with meeting notes.",
     body: "Pulse captures your meetings without a bot, understands the context behind your work from conversations and company knowledge, and turns it into briefs, notes and next actions your team can act on.",
@@ -204,6 +202,7 @@ export const pulse = {
   },
 } as const;
 
+/** ARCHIVED — only read by the unrendered AdvisorSection. */
 export const advisor = {
   ja: {
     index: "02",
