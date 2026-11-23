@@ -4,7 +4,7 @@ import { useLang } from "@/lib/language";
 import { business } from "./content";
 import { ChevronRight } from "./icons";
 import { NeuronLogo } from "./Logo";
-import { PulseMark } from "@/components/business/art/PulseMarks";
+import { PulseLogo } from "@/components/business/art/PulseMarks";
 import neuronShot from "@/assets/home/business-neuron.webp";
 import advisorShot from "@/assets/home/business-advisor.webp";
 import pulseShot from "@/assets/business/pulse-shot.webp";
@@ -91,14 +91,12 @@ const BusinessSection = () => {
                           {item.id === "neuron" ? (
                             <NeuronLogo className="h-[24px] w-[87px] text-black sm:h-[31px] sm:w-[112px]" />
                           ) : item.id === "pulse" ? (
-                            /* Mark and name at the Neuron logo's height, as on the
-                               business page. */
-                            <span className="flex items-center gap-[8px] text-black">
-                              <PulseMark className="h-[24px] w-[21.5px] sm:h-[31px] sm:w-[27.7px]" />
-                              <span className="text-[22px] font-bold leading-none tracking-[-0.02em] sm:text-[28px]">
-                                {item.title}
-                              </span>
-                            </span>
+                            /* Full Pulse lock-up, sized so its wordmark matches the
+                               22/28px name it replaced. */
+                            <PulseLogo
+                              label={item.title}
+                              className="block h-[27px] w-[76.1px] sm:h-[34px] sm:w-[95.8px]"
+                            />
                           ) : (
                             <p className="text-[16px] font-semibold leading-none text-black sm:text-[20px] lg:text-[22px]">
                               {item.title}

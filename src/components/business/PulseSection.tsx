@@ -1,10 +1,9 @@
 import ScrollReveal from "@/components/ScrollReveal";
 import { useLang } from "@/lib/language";
 import { pulse } from "./content";
-import { ExternalArrow } from "./art/Marks";
+import { NumberTwo, ExternalArrow } from "./art/Marks";
 import {
-  NumberThree,
-  PulseMark,
+  PulseLogo,
   IconBrief,
   IconNotes,
   IconFollowUp,
@@ -13,7 +12,8 @@ import {
 import pulseShot from "@/assets/business/pulse-shot.webp";
 
 /**
- * Pulse, the third business. It has no export of its own.
+ * Pulse, the second business (the Advisor section that held "02" is archived).
+ * It has no export of its own.
  *
  * It is laid out on the same #F5F5F5 panel as the Neuron and Advisor sections and
  * borrows a block from each: the product intro beside the product shot and the
@@ -42,18 +42,12 @@ const PulseSection = () => {
           {/* ── Product intro ─────────────────────────────────────────────── */}
           <div className="lg:flex lg:items-start lg:justify-between">
             <ScrollReveal data-probe="pulse-intro" className="lg:w-[48.0132%] lg:shrink-0">
-              <NumberThree className="ml-[4px] mt-[13.5px] h-[48px] w-[63.23px]" />
+              <NumberTwo className="ml-[4px] mt-[13.5px] h-[48px] w-[67.41px]" />
 
-              {/* Mark and name together stand in for a wordmark, at the Neuron
-                  wordmark's 43.6px height. */}
-              <div className="mt-[36px] flex items-center gap-[12px]">
-                <PulseMark className="h-[43.6px] w-[39px] text-black" />
-                <span
-                  data-probe="pulse-name"
-                  className="text-[40px] font-bold leading-none tracking-[-0.02em] text-black"
-                >
-                  {t.name}
-                </span>
+              {/* Full Pulse lock-up; at 48px tall its wordmark matches the 40px bold
+                  name it replaced. */}
+              <div data-probe="pulse-name" className="mt-[36px]">
+                <PulseLogo label={t.name} className="block h-[48px] w-[135.3px]" />
               </div>
 
               <p data-probe="pulse-lead" className="mt-[24px] text-[16px] leading-[22px] text-hd-eyebrow-ink">

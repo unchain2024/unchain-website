@@ -6,6 +6,10 @@ import { IconTarget, IconExperiment, IconSparkle } from "./art/AdvisorIcons";
 import advisorShot from "@/assets/business/advisor-shot.webp";
 
 /**
+ * ARCHIVED — not rendered anywhere. Kept so the section can be restored by adding
+ * it back to SolutionsPage (and the advisor entries to the hero links and the home
+ * page's business list).
+ *
  * AI Native Advisor — `public/business/Section-1.svg` (1440x1226).
  *
  * Same #F5F5F5 panel as the Neuron section: intro beside the photo, a four-column
